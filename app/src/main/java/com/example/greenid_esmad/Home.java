@@ -28,10 +28,30 @@ public class Home extends AppCompatActivity {
 
                 switch(menuItem.getItemId()){
 
-                    
+                    case R.id.home:
+                        return true;
+
+                    case R.id.search:
+                        startActivity(new Intent(getApplicationContext(), Search.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.new_post:
+                        startActivity(new Intent(getApplicationContext(), NewPost.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(), User.class));
+                        overridePendingTransition(0,0);
+                        return true;
 
 
-// add comment
+                    case R.id.notifications:
+                        startActivity(new Intent(getApplicationContext(), Notifications.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
 
                 }
 
