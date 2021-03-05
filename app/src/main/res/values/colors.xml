@@ -19,4 +19,9 @@
 
     <color name="dark_green_bg">#0B8E68</color>
     <color name="light_green_bg">#97CA92</color>
+
+    //New colors
+    <color name="green_main">#81EFAA</color>
+    <color name="black_txt">#373737</color>
+    <color name="light_txt">#B7B7B7</color>
 </resources>

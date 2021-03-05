@@ -25,21 +25,21 @@ public class User extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
 
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(), Home.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.search:
                         startActivity(new Intent(getApplicationContext(), Search.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.new_post:
                         startActivity(new Intent(getApplicationContext(), NewPost.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.user:
@@ -47,7 +47,7 @@ public class User extends AppCompatActivity {
 
                     case R.id.notifications:
                         startActivity(new Intent(getApplicationContext(), Notifications.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
 
@@ -55,6 +55,9 @@ public class User extends AppCompatActivity {
 
                 return false;
             }
+
         });
+
+
     }
 }

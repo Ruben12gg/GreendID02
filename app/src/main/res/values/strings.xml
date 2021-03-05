@@ -6,6 +6,18 @@
     <string name="menu_home">Home</string>
     <string name="menu_search">Search</string>
     <string name="menu_new_post">New Post</string>
-    <string name="menu_user">User</string>
+    <string name="menu_user">User Name</string>
     <string name="menu_notifications">Notifications</string>
+
+    //New Strings
+
+    //Profile
+    <string name="FollowersVal">FollowersVal</string>
+    <string name="FollowingVal">FollowingVal</string>
+    <string name="Followers">Followers</string>
+    <string name="Following">Following</string>
+    <string name="Follow">Follow</string>
+    <string name="pfName">User Name</string>
+    <string name="pfRank">User Rank</string>
+    <string name="pfBio">User Biography</string>
 </resources>
