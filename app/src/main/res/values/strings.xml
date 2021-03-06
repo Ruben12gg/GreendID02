@@ -20,4 +20,12 @@
     <string name="pfName">User Name</string>
     <string name="pfRank">User Rank</string>
     <string name="pfBio">User Biography</string>
+
+    //Settings
+    <string name="settings">Settings</string>
+    <string name="profile">Change Profile</string>
+    <string name="username">Change Username</string>
+    <string name="password">Change Password</string>
+    <string name="darkmode">Dark Mode</string>
+    <string name="logout">Log Out</string>
 </resources>
