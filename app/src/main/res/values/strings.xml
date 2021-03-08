@@ -21,6 +21,10 @@
     <string name="pfRank">User Rank</string>
     <string name="pfBio">User Biography</string>
 
+    //Dashboard
+    <string name="Location">Location</string>
+
+
     //Settings
     <string name="settings">Settings</string>
     <string name="profile">Change Profile</string>
