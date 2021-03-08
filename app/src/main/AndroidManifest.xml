@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".NewPost"></activity>
+        <activity android:name=".LoginCredentialsActivity"></activity>
+        <activity android:name=".NewPost" />
         <activity android:name=".User" />
         <activity android:name=".Notifications" />
         <activity android:name=".Search" />

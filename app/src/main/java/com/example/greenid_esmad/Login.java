@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,16 +23,23 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        timerToLogin = new Timer();
-        timerToLogin.schedule(new TimerTask() {
+        Button lgnBtn = findViewById(R.id.login_email_button);
+
+        lgnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                Intent intent = new Intent(Login.this, Home.class);
-                startActivity(intent);
+            public void onClick(View view) {
+
+                Intent logIntent = new Intent( getApplicationContext(), LoginCredentialsActivity.class);
+                startActivity(logIntent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
+
+
             }
-        }, 3000);
+        });
+        
 
     }
+
+
 }
