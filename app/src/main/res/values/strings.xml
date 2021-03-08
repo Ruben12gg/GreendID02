@@ -23,7 +23,8 @@
 
     //Dashboard
     <string name="Location">Location</string>
-
+    <string name="LikesVal">0</string>
+    <string name="CommentsVal">0</string>
 
     //Settings
     <string name="settings">Settings</string>

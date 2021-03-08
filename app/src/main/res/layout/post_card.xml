@@ -9,16 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_margin="20dp"
-        app:cardCornerRadius="30dp"
-        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="40dp"
         app:cardPreventCornerOverlap="false"
-        app:cardBackgroundColor="@android:color/black" >
+        app:cardBackgroundColor="@color/white">
 
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:background="@color/black" />
+
+        <ImageView
+            android:id="@+id/cornerShade"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/corner_shade_post" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pfp"
@@ -40,27 +46,83 @@
             android:textColor="@color/white"
             android:textSize="40px" />
 
+        <ImageView
+            android:id="@+id/locationIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:layout_marginLeft="96dp"
+            android:background="@drawable/ic_baseline_location_on_24" />
+
         <TextView
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="124dp"
             android:layout_marginTop="52dp"
             android:text="@string/Location"
             android:textColor="@color/white"
             android:textSize="40px" />
 
         <ImageView
-            android:layout_width="match_parent"
+            android:id="@+id/editIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="320dp"
+            android:background="" />
+
+        <ImageView
+            android:layout_width="360dp"
             android:layout_height="64dp"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="236dp"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/post_card" />
 
         <ImageView
-            android:id="@+id/favoriteIcon"
+            android:id="@+id/favoritesIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="254dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/ic_like_empty" />
+
+        <TextView
+            android:id="@+id/likesVal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="230dp"
-            android:background="@color/white" />
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="256dp"
+            android:text="@string/LikesVal"
+            android:textAlignment="center"
+            android:textColor="@color/black_txt"
+            android:textSize="40px" />
+
+        <ImageView
+            android:id="@+id/commentsIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="254dp"
+            android:layout_marginLeft="160dp"
+            android:background="@drawable/favorite_empty" />
+
+        <TextView
+            android:id="@+id/commentsVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="256dp"
+            android:text="@string/CommentsVal"
+            android:textAlignment="center"
+            android:textColor="@color/black_txt"
+            android:textSize="40px" />
+
+        <ImageView
+            android:id="@+id/savedIcon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="254dp"
+            android:layout_marginLeft="260dp"
+            android:background="@drawable/ic_favorite_empty" />
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
