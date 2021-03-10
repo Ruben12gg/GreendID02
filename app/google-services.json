@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "846490331619",
+    "project_id": "green-id-app",
+    "storage_bucket": "green-id-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846490331619:android:fb1403965ac779343098d6",
+        "android_client_info": {
+          "package_name": "com.example.greenid_esmad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846490331619-ro6h2mf3iv19pehr4bs6425cte2pej1l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.greenid_esmad",
+            "certificate_hash": "44d0c37305bd15f555f1c05b15ef7fd14e60bad2"
+          }
+        },
+        {
+          "client_id": "846490331619-irg35pankf3m01bmohmg2t524nurqs65.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJOgH275Y_0bZl27tfdy5m-hNY2_QDemo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846490331619-irg35pankf3m01bmohmg2t524nurqs65.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
