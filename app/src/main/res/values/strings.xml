@@ -39,4 +39,8 @@
     <string name="Password">Password</string>
     <string name="Login">Login</string>
     <string name="SignTxtBtn">Not a member yet? Sign in.</string>
+
+    //Notifications
+    <string name="CommentValue" >Comment Value</string>
+
 </resources>
