@@ -26,6 +26,10 @@
     <string name="LikesVal">0</string>
     <string name="CommentsVal">0</string>
 
+    //Search
+    <string name="Caption">Caption</string>
+    <string name="Hashtag">Hashtag</string>
+
     //Settings
     <string name="settings">Settings</string>
     <string name="profile">Change Profile</string>

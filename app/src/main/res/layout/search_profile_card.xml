@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pfCardView"
+        android:layout_width="100dp"
+        android:layout_height="128dp"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardBackgroundColor="@color/white">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/pfp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/pfUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            android:textAlignment="center"
+            android:text="@string/pfName"
+            android:textColor="@color/black_txt"
+            android:textSize="32px" />
+
+        <TextView
+            android:id="@+id/pfName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="96dp"
+            android:text="@string/pfName"
+            android:textColor="@color/black_txt"
+            android:textSize="28px" />
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
