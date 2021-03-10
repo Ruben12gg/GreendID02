@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="160dp"
+        android:layout_height="220dp"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardBackgroundColor="@color/white">
+
+        <ImageView
+            android:id="@+id/postImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/hashtag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/Hashtag"
+            android:textColor="@color/dark_green_bg"
+            android:textSize="24px"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/pfName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/pfName"
+            android:textColor="@color/black_txt"
+            android:textSize="24px"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/Caption"
+            android:textColor="@color/black_txt"
+            android:textSize="24px"
+            />
+
+        <ImageView
+            android:id="@+id/favoritesIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginStart="28dp"
+            android:background="@drawable/ic_like_empty" />
+
+        <TextView
+            android:id="@+id/likesVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="184dp"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/light_green_bg"
+            android:textSize="40px" />
+
+        <ImageView
+            android:id="@+id/commentsIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginStart="88dp"
+            android:background="" />
+
+        <TextView
+            android:id="@+id/commentsVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="184dp"
+            android:text="@string/CommentsVal"
+            android:textAlignment="center"
+            android:textColor="@color/light_green_bg"
+            android:textSize="40px" />
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

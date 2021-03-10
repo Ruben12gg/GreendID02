@@ -57,8 +57,7 @@
             android:background="@drawable/btnwhite"
             android:textSize="20sp"
             android:text="@string/profile"
-            android:textColor="@color/green_main"
-            ></Button>
+            android:textColor="@color/green_main" />
 
         <Button
             android:id="@+id/btn2"
@@ -71,8 +70,7 @@
             android:background="@drawable/btnwhite"
             android:textSize="20sp"
             android:text="@string/username"
-            android:textColor="@color/green_main"
-            ></Button>
+            android:textColor="@color/green_main" />
 
         <Button
             android:id="@+id/btn3"
@@ -85,8 +83,7 @@
             android:background="@drawable/btnwhite"
             android:textSize="20sp"
             android:text="@string/password"
-            android:textColor="@color/green_main"
-            ></Button>
+            android:textColor="@color/green_main" />
 
         <Button
             android:id="@+id/btn4"
@@ -99,8 +96,7 @@
             android:background="@drawable/btnwhite"
             android:textSize="20sp"
             android:text="@string/darkmode"
-            android:textColor="@color/green_main"
-            ></Button>
+            android:textColor="@color/green_main" />
         <Button
             android:id="@+id/btn5"
             android:layout_below="@id/btn4"
@@ -112,8 +108,7 @@
             android:background="@drawable/btnwhite"
             android:textSize="20sp"
             android:text="@string/logout"
-            android:textColor="@color/colorAccent"
-            ></Button>
+            android:textColor="@color/colorAccent" />
 
     </RelativeLayout>
 
