@@ -2,11 +2,21 @@ package com.example.greenid_esmad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+
+import com.example.greenid_esmad.Home;
+import com.example.greenid_esmad.NewPost;
+import com.example.greenid_esmad.R;
+import com.example.greenid_esmad.Search;
+import com.example.greenid_esmad.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Notifications extends AppCompatActivity {
@@ -59,4 +69,5 @@ public class Notifications extends AppCompatActivity {
             }
         });
     }
+
 }
