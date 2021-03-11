@@ -51,12 +51,46 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/main_toolbar"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/sbView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
 
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/outlined_search_bar"
+            android:textColor="@color/black"
+            android:drawablePadding="16dp"
+            android:padding="12dp"
+            android:textSize="16dp"
+            android:hint="@string/SearchKeywords"
+            android:textColorHint="@color/black"
+            android:layout_margin="16dp" />
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="140dp">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="220dp">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="356dp"
+        android:layout_marginTop="320dp">
+
+    </RelativeLayout>
 </RelativeLayout>

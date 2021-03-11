@@ -27,6 +27,7 @@
     <string name="CommentsVal">0</string>
 
     //Search
+    <string name="SearchKeywords">Search Keywords...</string>
     <string name="Caption">Caption</string>
     <string name="Hashtag">Hashtag</string>
 
