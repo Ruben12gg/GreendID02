@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="340dp"
         android:layout_margin="20dp"
@@ -14,12 +14,12 @@
         app:cardBackgroundColor="@color/white">
 
         <ImageView
-            android:id="@+id/postImage"
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <ImageView
-            android:id="@+id/cornerShade"
+            android:id="@+id/corner_shade"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -36,7 +36,7 @@
             app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/pfName"
+            android:id="@+id/pf_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
@@ -46,7 +46,7 @@
             android:textSize="40px" />
 
         <ImageView
-            android:id="@+id/locationIcon"
+            android:id="@+id/location_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
@@ -64,7 +64,7 @@
             android:textSize="40px" />
 
         <ImageView
-            android:id="@+id/editIcon"
+            android:id="@+id/edit_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -79,7 +79,7 @@
             android:background="@drawable/post_card" />
 
         <ImageView
-            android:id="@+id/favoritesIcon"
+            android:id="@+id/favorites_icon"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginTop="296dp"
@@ -87,7 +87,7 @@
             android:background="@drawable/ic_like_empty" />
 
         <TextView
-            android:id="@+id/likesVal"
+            android:id="@+id/likes_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
@@ -98,7 +98,7 @@
             android:textSize="40px" />
 
         <ImageView
-            android:id="@+id/commentsIcon"
+            android:id="@+id/comments_icon"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginTop="296dp"
@@ -106,7 +106,7 @@
             android:background="@drawable/favorite_empty" />
 
         <TextView
-            android:id="@+id/commentsVal"
+            android:id="@+id/comments_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="200dp"
@@ -117,7 +117,7 @@
             android:textSize="40px" />
 
         <ImageView
-            android:id="@+id/savedIcon"
+            android:id="@+id/saved_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginTop="296dp"

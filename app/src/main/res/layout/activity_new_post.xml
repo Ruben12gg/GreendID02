@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".NewPost">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -37,7 +38,7 @@
             app:titleTextColor="#fff" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12.5dp"
@@ -53,23 +54,58 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/selected_pic_view"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="56dp">
+
+        <ImageView
+            android:layout_width="288dp"
+            android:layout_height="260dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="60dp"
+            android:background="@drawable/post_card"/>
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/options_view"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="360dp">
+        android:layout_below="@id/selected_pic_view">
 
+        <Button
+            android:id="@+id/album_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="100dp"
+            android:background="@drawable/search_button" />
+
+        <Button
+            android:id="@+id/video_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_toEndOf="@+id/album_btn"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/search_button" />
+
+        <Button
+            android:id="@+id/picture_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_toEndOf="@+id/video_btn"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/search_button" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/gallery_view"
         android:layout_width="match_parent"
-        android:layout_height="236dp"
-        android:layout_marginTop="440dp">
+        android:layout_height="240dp"
+        android:layout_below="@id/options_view">
 
     </RelativeLayout>
 </RelativeLayout>

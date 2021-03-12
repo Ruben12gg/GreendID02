@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/searchCardView"
+        android:id="@+id/search_card_view"
         android:layout_width="160dp"
         android:layout_height="300dp"
         android:layout_margin="20dp"
@@ -14,13 +14,13 @@
         app:cardBackgroundColor="@color/white">
 
         <ImageView
-            android:id="@+id/postImage"
+            android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
         <ImageView
-            android:id="@+id/postCard"
+            android:id="@+id/post_card"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="100dp"
@@ -38,7 +38,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/pfName"
+            android:id="@+id/pf_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -49,6 +49,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
@@ -59,7 +60,7 @@
             />
 
         <ImageView
-            android:id="@+id/favoritesIcon"
+            android:id="@+id/favorites_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="268dp"
@@ -67,7 +68,7 @@
             android:background="@drawable/ic_like_empty" />
 
         <TextView
-            android:id="@+id/likesVal"
+            android:id="@+id/likes_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -78,7 +79,7 @@
             android:textSize="40px" />
 
         <ImageView
-            android:id="@+id/commentsIcon"
+            android:id="@+id/comments_icon"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="268dp"
@@ -86,7 +87,7 @@
             android:background="@color/white" />
 
         <TextView
-            android:id="@+id/commentsVal"
+            android:id="@+id/comments_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"

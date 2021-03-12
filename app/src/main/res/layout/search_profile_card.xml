@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/pfCardView"
+        android:id="@+id/pf_card_view"
         android:layout_width="100dp"
         android:layout_height="128dp"
         android:layout_margin="20dp"
@@ -22,7 +22,7 @@
             app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/pfUserName"
+            android:id="@+id/pf_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -33,7 +33,7 @@
             android:textSize="32px" />
 
         <TextView
-            android:id="@+id/pfName"
+            android:id="@+id/pf_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"

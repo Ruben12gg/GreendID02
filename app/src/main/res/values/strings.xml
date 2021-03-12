@@ -28,6 +28,9 @@
 
     //Search
     <string name="SearchKeywords">Search Keywords...</string>
+    <string name="ThisWeek">This Week</string>
+    <string name="ThisMonth">This Month</string>
+    <string name="Earlier">Earlier</string>
     <string name="Caption">Caption</string>
     <string name="Hashtag">Hashtag</string>
 
@@ -46,6 +49,8 @@
     <string name="SignTxtBtn">Not a member yet? Sign in.</string>
 
     //Notifications
-    <string name="CommentValue" >Comment Value</string>
+    <string name="CommentValue">Comment Value</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
