@@ -53,4 +53,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    //Favorites
+    <string name="favorites" >Favorites</string>
+    <string name="post" >Post</string>
+    <string name="event" >Event</string>
+    <string name="product" >Product</string>
+    <string name="week" >This Week</string>
+    <string name="month" >This Month</string>
+    <string name="earlier" >Earlier</string>
+
+
+
 </resources>

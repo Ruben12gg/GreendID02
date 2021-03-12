@@ -37,12 +37,8 @@ import java.util.TimerTask;
 
 public class Login extends AppCompatActivity {
 
-    Timer timerToLogin;
-
     private static final int RC_SIGN_IN = 9001;
     GoogleSignInClient mGoogleSignInClient;
-
-    boolean loginStatus = false;
 
     FirebaseAuth mAuth;
 
@@ -54,7 +50,7 @@ public class Login extends AppCompatActivity {
         Button lgnBtn = findViewById(R.id.login_email_button);
 
 
-        // Iniciar Firebase Auth
+        // Call Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -146,11 +142,18 @@ public class Login extends AppCompatActivity {
                         });
 
 
-                //Adição do valor do userId para a Variavel global
-                /*GlobalUserId globalUserId = (GlobalUserId) getApplicationContext();
+                //Add userId to GLOBALS
+                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
                 globalUserId.setUserIdGlobal(userId);
                 globalUserId.setUserName(displayName);
-                globalUserId.setUserPfp(pfp.toString());*/
+                globalUserId.setUserPfp(pfp.toString());
+
+                // Welcome Toast
+                String message = "Welcome " + displayName + "!";
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, message, duration);
+                toast.show();
 
 
                 firebaseAuthWithGoogle(account.getIdToken());
@@ -234,22 +237,6 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
 
     }
-
-        /*lgnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent logIntent = new Intent( getApplicationContext(), LoginCredentialsActivity.class);
-                startActivity(logIntent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
-
-
-            }
-        });
-        
-
-    }*/
 
 
 }
