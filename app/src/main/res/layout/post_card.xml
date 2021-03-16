@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:background="@drawable/corner_shade_post" />
+            android:src="@drawable/corner_shade_post" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pfp"
@@ -42,7 +42,7 @@
             android:layout_marginStart="100dp"
             android:layout_marginTop="24dp"
             android:text="@string/pfName"
-            android:textColor="@color/white"
+            android:textColor="@color/white_txt"
             android:textSize="40px" />
 
         <ImageView
@@ -60,7 +60,7 @@
             android:layout_marginStart="124dp"
             android:layout_marginTop="52dp"
             android:text="@string/Location"
-            android:textColor="@color/white"
+            android:textColor="@color/white_txt"
             android:textSize="40px" />
 
         <ImageView
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginStart="320dp"
-            android:background="@color/white" />
+            android:src="@color/white_txt" />
 
         <ImageView
             android:layout_width="360dp"
@@ -84,7 +84,7 @@
             android:layout_height="28dp"
             android:layout_marginTop="296dp"
             android:layout_marginStart="60dp"
-            android:background="@drawable/ic_like_empty" />
+            android:src="@drawable/ic_like_empty" />
 
         <TextView
             android:id="@+id/likes_val"
@@ -94,7 +94,7 @@
             android:layout_marginTop="300dp"
             android:text="@string/LikesVal"
             android:textAlignment="center"
-            android:textColor="@color/black_txt"
+            android:textColor="@color/black_txt_num"
             android:textSize="40px" />
 
         <ImageView
@@ -103,7 +103,7 @@
             android:layout_height="28dp"
             android:layout_marginTop="296dp"
             android:layout_marginStart="160dp"
-            android:background="@drawable/favorite_empty" />
+            android:src="@drawable/favorite_empty" />
 
         <TextView
             android:id="@+id/comments_val"
@@ -113,7 +113,7 @@
             android:layout_marginTop="300dp"
             android:text="@string/CommentsVal"
             android:textAlignment="center"
-            android:textColor="@color/black_txt"
+            android:textColor="@color/black_txt_num"
             android:textSize="40px" />
 
         <ImageView
@@ -122,6 +122,6 @@
             android:layout_height="32dp"
             android:layout_marginTop="296dp"
             android:layout_marginStart="260dp"
-            android:background="@drawable/ic_favorite_empty" />
+            android:src="@drawable/ic_favorite_empty" />
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

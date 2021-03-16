@@ -18,8 +18,7 @@
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/menu_navigation"
         app:labelVisibilityMode="unlabeled"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_alignParentBottom="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,15 +61,17 @@
         <EditText
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
+            android:layout_margin="16dp"
             android:background="@drawable/outlined_search_bar"
             android:textColor="@color/black"
-            android:drawablePadding="16dp"
+            android:drawablePadding="8dp"
             android:padding="12dp"
             android:textSize="16dp"
             android:hint="@string/SearchKeywords"
-            android:textColorHint="@color/black"
-            android:layout_margin="16dp" />
+            android:textColorHint="@color/light_gray_txt"
+            android:drawableStart="@drawable/ic_search"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -85,7 +86,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:layout_marginStart="60dp"
-            android:background="@drawable/search_button" />
+            android:background="@drawable/rounded_button" />
 
         <Button
             android:id="@+id/location_btn"
@@ -94,7 +95,7 @@
             android:layout_toEndOf="@+id/profile_btn"
             android:layout_marginTop="16dp"
             android:layout_marginStart="28dp"
-            android:background="@drawable/search_button" />
+            android:background="@drawable/rounded_button" />
 
         <Button
             android:id="@+id/post_btn"
@@ -103,7 +104,7 @@
             android:layout_toEndOf="@+id/location_btn"
             android:layout_marginTop="16dp"
             android:layout_marginStart="28dp"
-            android:background="@drawable/search_button" />
+            android:background="@drawable/rounded_button" />
 
         <Button
             android:id="@+id/product_btn"
@@ -112,7 +113,7 @@
             android:layout_toEndOf="@+id/post_btn"
             android:layout_marginTop="16dp"
             android:layout_marginStart="28dp"
-            android:background="@drawable/search_button" />
+            android:background="@drawable/rounded_button" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -133,15 +134,16 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextColor="@color/black"
-            app:tabIndicatorColor="@color/black"
-            app:tabSelectedTextColor="@color/black"
+            app:tabTextColor="@color/light_gray_txt"
+            app:tabIndicatorColor="@color/dark_green"
+            app:tabSelectedTextColor="@color/dark_gray_txt"
             android:background="@color/white" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tab_layout"/>
+            android:layout_below="@id/tab_layout"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
     </RelativeLayout>
 </RelativeLayout>

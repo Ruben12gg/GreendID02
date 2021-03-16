@@ -33,7 +33,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="112dp"
             android:text="@string/Hashtag"
-            android:textColor="@color/dark_green_bg"
+            android:textColor="@color/icon_green"
             android:textSize="24px"
             android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="132dp"
             android:text="@string/pfName"
-            android:textColor="@color/black_txt"
+            android:textColor="@color/dark_gray_txt"
             android:textSize="24px"
             android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
             android:layout_marginStart="68dp"
             android:layout_marginTop="132dp"
             android:text="@string/Caption"
-            android:textColor="@color/black_txt"
+            android:textColor="@color/dark_gray_txt"
             android:textSize="24px"
             />
 
@@ -75,7 +75,7 @@
             android:layout_marginTop="268dp"
             android:text="0"
             android:textAlignment="center"
-            android:textColor="@color/light_green_bg"
+            android:textColor="@color/light_green_icon"
             android:textSize="40px" />
 
         <ImageView
@@ -94,7 +94,7 @@
             android:layout_marginTop="268dp"
             android:text="@string/CommentsVal"
             android:textAlignment="center"
-            android:textColor="@color/light_green_bg"
+            android:textColor="@color/light_green_icon"
             android:textSize="40px" />
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

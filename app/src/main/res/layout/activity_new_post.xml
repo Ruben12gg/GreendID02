@@ -18,8 +18,7 @@
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/menu_navigation"
         app:labelVisibilityMode="unlabeled"
-        android:layout_alignParentBottom="true"
-        />
+        android:layout_alignParentBottom="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,20 +50,32 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/main_toolbar"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text_view"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/selected_pic_view"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="360dp"
         android:layout_marginTop="56dp">
 
-        <ImageView
-            android:layout_width="288dp"
-            android:layout_height="260dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="60dp"
-            android:background="@drawable/post_card"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="372dp"
+            android:layout_height="340dp"
+            android:layout_centerInParent="true"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/white">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 
@@ -78,33 +89,32 @@
             android:id="@+id/album_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="100dp"
-            android:background="@drawable/search_button" />
+            android:layout_marginEnd="32dp"
+            android:layout_toStartOf="@id/video_btn"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rounded_button" />
 
         <Button
             android:id="@+id/video_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_toEndOf="@+id/album_btn"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="32dp"
-            android:background="@drawable/search_button" />
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_button" />
 
         <Button
             android:id="@+id/picture_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_toEndOf="@+id/video_btn"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="32dp"
-            android:background="@drawable/search_button" />
+            android:layout_centerVertical="true"
+            android:background="@drawable/rounded_button" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/gallery_view"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="180dp"
         android:layout_below="@id/options_view">
 
     </RelativeLayout>
