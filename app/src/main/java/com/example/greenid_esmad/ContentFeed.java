@@ -1,23 +1,28 @@
 package com.example.greenid_esmad;
 
 public class ContentFeed {
-    private static String authorPfp;
-    private static String contentUrl;
+    private String authorPfp;
+    private String contentUrl;
     private String author;
     private String date;
     private String likeVal;
     private String commentVal;
+    private String location;
 
-    public ContentFeed() {
+    public String getAuthorPfp() {
+        return authorPfp;
     }
 
-    public ContentFeed(String author, String authorPfp, String date, String contentUrl, String likeVal, String commentVal) {
-        this.author = author;
+    public void setAuthorPfp(String authorPfp) {
         this.authorPfp = authorPfp;
-        this.date = date;
+    }
+
+    public String getContentUrl() {
+        return contentUrl;
+    }
+
+    public void setContentUrl(String contentUrl) {
         this.contentUrl = contentUrl;
-        this.likeVal = likeVal;
-        this.commentVal = commentVal;
     }
 
     public String getAuthor() {
@@ -28,28 +33,12 @@ public class ContentFeed {
         this.author = author;
     }
 
-    public static String getAuthorPfp() {
-        return authorPfp;
-    }
-
-    public void setAuthorPfp(String authorPfp) {
-        this.authorPfp = authorPfp;
-    }
-
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public static String getContentUrl() {
-        return contentUrl;
-    }
-
-    public void setContentUrl(String contentUrl) {
-        this.contentUrl = contentUrl;
     }
 
     public String getLikeVal() {
@@ -68,6 +57,22 @@ public class ContentFeed {
         this.commentVal = commentVal;
     }
 
+    public String getLocation() {
+        return location;
+    }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public ContentFeed(String authorPfp, String location, String contentUrl, String author, String date, String likeVal, String commentVal) {
+        this.authorPfp = authorPfp;
+        this.contentUrl = contentUrl;
+        this.author = author;
+        this.date = date;
+        this.likeVal = likeVal;
+        this.commentVal = commentVal;
+        this.location = location;
+    }
 }
 

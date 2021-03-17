@@ -18,7 +18,7 @@ import java.util.List;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     //criação de referencias
-    private List<ContentFeed> mData; //class dos AnimeLiked
+    private List<ContentFeed> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
@@ -43,14 +43,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         /*holder.tvdate.setText(contentFeed.getDate());*/
         holder.tvLikeVal.setText(contentFeed.getLikeVal());
         holder.tvCommentVal.setText(contentFeed.getCommentVal());
+        holder.tvLocation.setText(contentFeed.getLocation());
 
 
-        final String authorPfp = ContentFeed.getAuthorPfp();
-        final String contentUrl = ContentFeed.getContentUrl();
+        final String authorPfp = contentFeed.getAuthorPfp();
+        final String contentUrl = contentFeed.getContentUrl();
 
 
         Picasso.get().load(authorPfp).into(holder.pfp);
-        Picasso.get().load(contentUrl).into(holder.img);
+        Picasso.get().load(contentUrl).into(holder.contentPic);
 
 
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +76,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         TextView tvAuthor;
         TextView tvdate;
         TextView tvLikeVal;
+        TextView tvLocation;
         TextView tvCommentVal;
         ImageView pfp;
         ImageView contentPic;
-        ImageView img;
         RelativeLayout resultCard;
 
 
@@ -88,8 +89,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             tvAuthor = itemView.findViewById(R.id.pf_name);
             tvLikeVal = itemView.findViewById(R.id.likes_val);
             tvCommentVal = itemView.findViewById(R.id.comments_val);
+            tvLocation = itemView.findViewById(R.id.location);
             contentPic = itemView.findViewById(R.id.post_image);
-            img = itemView.findViewById(R.id.img);
             pfp = itemView.findViewById(R.id.pfp);
             resultCard = itemView.findViewById(R.id.post_card);
             itemView.setOnClickListener(this);
