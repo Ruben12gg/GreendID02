@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +29,7 @@ public class User extends AppCompatActivity {
     TextView tvfollowingVal;
     TextView tvbio;
     ImageView ivPfp;
+    ImageButton settingsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,18 @@ public class User extends AppCompatActivity {
             }
 
         });
+
+        settingsBtn = findViewById(R.id.settingsBtn);
+
+        //navegação para settings
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getApplicationContext(), Settings.class));
+            }
+        });
+
 
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
