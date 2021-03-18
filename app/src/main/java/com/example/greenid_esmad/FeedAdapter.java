@@ -39,10 +39,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
 
         ContentFeed contentFeed = mData.get(position);
-        holder.tvAuthor.setText(contentFeed.getAuthor());
-        /*holder.tvdate.setText(contentFeed.getDate());*/
+        /*holder.tvAuthor.setText(contentFeed.getAuthor());
+        *//*holder.tvdate.setText(contentFeed.getDate());*//*
         holder.tvLikeVal.setText(contentFeed.getLikeVal());
-        holder.tvCommentVal.setText(contentFeed.getCommentVal());
+        holder.tvCommentVal.setText(contentFeed.getCommentVal());*/
         holder.tvLocation.setText(contentFeed.getLocation());
 
 
@@ -86,9 +86,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ViewHolder(View itemView) {
             super(itemView);
 
-            tvAuthor = itemView.findViewById(R.id.pf_name);
+            /*tvAuthor = itemView.findViewById(R.id.pf_name);
             tvLikeVal = itemView.findViewById(R.id.likes_val);
-            tvCommentVal = itemView.findViewById(R.id.comments_val);
+            tvCommentVal = itemView.findViewById(R.id.comments_val);*/
             tvLocation = itemView.findViewById(R.id.location);
             contentPic = itemView.findViewById(R.id.post_image);
             pfp = itemView.findViewById(R.id.pfp);
