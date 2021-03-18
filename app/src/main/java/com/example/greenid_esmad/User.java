@@ -30,6 +30,7 @@ public class User extends AppCompatActivity {
     TextView tvbio;
     ImageView ivPfp;
     ImageButton settingsBtn;
+    ImageButton favoritesBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,17 @@ public class User extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity(new Intent(getApplicationContext(), Settings.class));
+            }
+        });
+
+        favoritesBtn = findViewById(R.id.favoritesBtn);
+
+        //navegação para os favoritos
+        favoritesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getApplicationContext(), Favorites.class));
             }
         });
 

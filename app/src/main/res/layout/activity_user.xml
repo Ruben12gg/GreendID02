@@ -52,10 +52,21 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_toRightOf="@+id/userNameTop"
-            android:layout_marginStart="68dp"
+            android:layout_marginStart="64dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="13dp"
             android:background="@drawable/ic_baseline_settings_24"
+            />
+
+        <ImageButton
+            android:id="@+id/favoritesBtn"
+            android:layout_width="20dp"
+            android:layout_height="24dp"
+            android:layout_toRightOf="@+id/settingsBtn"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/favorites"
             />
 
 

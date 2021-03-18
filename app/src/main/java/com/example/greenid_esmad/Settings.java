@@ -3,6 +3,9 @@ package com.example.greenid_esmad;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,6 +13,8 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Settings extends AppCompatActivity {
+
+    ImageButton backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,16 @@ public class Settings extends AppCompatActivity {
 
         });
 
+        backBtn = findViewById(R.id.backBtn);
+
+        //navegação para o user
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getApplicationContext(), User.class));
+            }
+        });
 
     }
 }

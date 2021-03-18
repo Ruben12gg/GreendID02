@@ -36,9 +36,10 @@
             app:titleTextColor="#fff" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
+            android:id="@+id/favoritesText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="12.5dp"
             android:text="@string/favorites"
             android:textAlignment="center"
@@ -46,12 +47,29 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_toLeftOf="@+id/favoritesText"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="112dp"
+            android:layout_marginTop="12.5dp"
+            android:background="@drawable/arrow_back"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:id="@+id/btnrl">
 
         <Button
             android:id="@+id/postbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/main_toolbar"
             android:background="@drawable/btnfav"
             android:text="@string/post"
             android:textColor="@color/green_main"
@@ -69,7 +87,6 @@
             android:id="@+id/eventbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/main_toolbar"
             android:background="@drawable/btnfav"
             android:layout_toRightOf="@+id/postbtn"
             android:text="@string/event"
@@ -88,7 +105,6 @@
             android:id="@+id/productbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/main_toolbar"
             android:background="@drawable/btnfav"
             android:layout_toRightOf="@+id/eventbtn"
             android:text="@string/product"
@@ -102,51 +118,33 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             />
-
-        <TextView
-            android:id="@+id/weektxt"
-            android:layout_marginTop="35dp"
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/postbtn"
-            android:text="@string/week"
-            android:textColor="@color/green_main"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            />
-
-        <TextView
-            android:id="@+id/monthtxt"
-            android:layout_marginTop="45dp"
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/postbtn"
-            android:layout_toRightOf="@id/weektxt"
-            android:text="@string/month"
-            android:textColor="@color/dark_grey"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            />
-
-        <TextView
-            android:id="@+id/earliertxt"
-            android:layout_marginTop="45dp"
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/postbtn"
-            android:layout_toRightOf="@id/monthtxt"
-            android:text="@string/earlier"
-            android:textColor="@color/dark_grey"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            />
+    </RelativeLayout>
 
 
+        <RelativeLayout
+            android:id="@+id/tabs_view"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:layout_marginTop="32dp"
+            android:layout_below="@+id/btnrl">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabTextColor="@color/light_gray_txt"
+                app:tabIndicatorColor="@color/dark_green"
+                app:tabSelectedTextColor="@color/dark_gray_txt"
+                android:background="@color/white" />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tab_layout"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        </RelativeLayout>
 
 
     </RelativeLayout>
 
-</RelativeLayout>
