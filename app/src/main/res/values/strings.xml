@@ -62,6 +62,8 @@
     <string name="month" >This Month</string>
     <string name="earlier" >Earlier</string>
 
-
+    //Publish
+    <string name="description">Description</string>
+    <string name="location">Location</string>
 
 </resources>

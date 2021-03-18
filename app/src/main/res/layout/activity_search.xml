@@ -78,42 +78,38 @@
         android:id="@+id/options_view"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_below="@id/sb_view">
+        android:layout_below="@id/sb_view"
+        android:gravity="center">
 
         <Button
             android:id="@+id/profile_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="60dp"
-            android:background="@drawable/rounded_button" />
+            android:background="@drawable/profile_btn" />
 
         <Button
             android:id="@+id/location_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_toEndOf="@+id/profile_btn"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="28dp"
-            android:background="@drawable/rounded_button" />
+            android:background="@drawable/location_btn" />
 
         <Button
             android:id="@+id/post_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_toEndOf="@+id/location_btn"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="28dp"
-            android:background="@drawable/rounded_button" />
+            android:background="@drawable/post_btn" />
 
         <Button
             android:id="@+id/product_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_toEndOf="@+id/post_btn"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="28dp"
-            android:background="@drawable/rounded_button" />
+            android:background="@drawable/product_btn" />
     </RelativeLayout>
 
     <RelativeLayout

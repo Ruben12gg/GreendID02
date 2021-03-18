@@ -25,7 +25,7 @@
     <color name="black_txt">#373737</color>
     <color name="light_txt">#B7B7B7</color>
 
-    //Search
+    //IDK
     <color name="light_gray_txt">#BBBDBF</color>
     <color name="dark_gray_txt">#585858</color>
     <color name="sb_dark_gray">#707070</color>
@@ -33,7 +33,6 @@
     <color name="dark_green">#009444</color>
     <color name="num_green">#A8EAC1</color>
 
-    //Home
     <color name="white_txt">#EFEFEF</color>
     <color name="icon_green">#36BA68</color>
     <color name="black_txt_num">#2E2E2E</color>

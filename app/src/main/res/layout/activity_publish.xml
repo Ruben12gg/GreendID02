@@ -76,58 +76,64 @@
                 android:scaleType="centerCrop" />
 
         </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/post_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selected_pic_view"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/description_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/description"
+            android:textColor="@color/light_txt"
+            android:textSize="40px"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/description_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/description_tv"
+            android:backgroundTint="@color/light_txt"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/location_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_below="@+id/description_et"
+            android:text="@string/location"
+            android:textColor="@color/light_txt"
+            android:textSize="40px"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/location_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/location_tv"
+            android:backgroundTint="@color/light_txt"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/options_view"
+        android:id="@+id/post_type"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_below="@id/selected_pic_view">
-
-        <Button
-            android:id="@+id/album_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="32dp"
-            android:layout_toStartOf="@id/video_btn"
-            android:layout_centerVertical="true"
-            android:background="@drawable/rounded_button"
-            android:drawableStart="@drawable/ic_baseline_photo_24"
-            android:gravity="center"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp" />
-
-        <Button
-            android:id="@+id/video_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/rounded_button"
-            android:drawableStart="@drawable/ic_baseline_photo_24"
-            android:gravity="center"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp" />
-
-        <Button
-            android:id="@+id/picture_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_toEndOf="@+id/video_btn"
-            android:layout_marginStart="32dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/rounded_button"
-            android:drawableStart="@drawable/ic_baseline_photo_24"
-            android:gravity="center"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/gallery_view"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_below="@id/options_view">
+        android:layout_below="@id/post_info">
 
     </RelativeLayout>
 </RelativeLayout>
