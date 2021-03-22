@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="156dp"
+    android:layout_height="90dp">
+
+    <ImageView
+        android:layout_margin="2dp"
+        android:id="@+id/imgGV"
+        android:layout_width="156dp"
+        android:layout_height="90dp"
+        android:scaleType="centerCrop"/>
+
+
+</RelativeLayout>

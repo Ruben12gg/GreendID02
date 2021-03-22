@@ -6,9 +6,6 @@
     android:layout_height="301dp">
 
 
-
-
-
         <ImageView
             android:id="@+id/post_image"
             android:scaleType="fitXY"

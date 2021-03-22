@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +22,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User extends AppCompatActivity {
 
@@ -31,6 +40,10 @@ public class User extends AppCompatActivity {
     ImageView ivPfp;
     ImageButton settingsBtn;
     ImageButton favoritesBtn;
+
+    GridView gridView;
+    int[] imagePosts = {R.drawable.pic01, R.drawable.pic02, R.drawable.pic03, R.drawable.pic04, R.drawable.pic05, R.drawable.pic06, R.drawable.pic07, R.drawable.pic08, R.drawable.pic09, R.drawable.pic10};
+    ArrayList<String> image_Posts = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +93,11 @@ public class User extends AppCompatActivity {
 
         });
 
+        gridView = findViewById(R.id.imgGrid);
+
+        CustomAdapter customAdapter = new CustomAdapter();
+        gridView.setAdapter(customAdapter);
+
         settingsBtn = findViewById(R.id.settingsBtn);
 
         //navegação para settings
@@ -111,8 +129,7 @@ public class User extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Get profile Data
-        DocumentReference docRef = db.collection("users").document(userId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -152,5 +169,71 @@ public class User extends AppCompatActivity {
         });
 
 
+        db.collection("users").document(userId).collection("posts")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                String imagePostUrl = document.getString("picUrl");
+
+
+                                /*final Map<String, Object> pfPosts = new HashMap<>();
+                                pfPosts.put("picUrl", imagePostUrl);*/
+
+                                Log.d("PF POSTS", imagePostUrl);
+
+                                image_Posts.add(imagePostUrl);
+                                String imagePostsTxt = image_Posts.toString();
+
+                                Log.d("IMAGE ARRAY", imagePostsTxt);
+
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                    }
+                });
+
+
     }
+
+    private class CustomAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return imagePosts.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View view1 = getLayoutInflater().inflate(R.layout.row_data, null);
+            //getting view in row_data
+            ImageView images = view1.findViewById(R.id.imgGV);
+
+            images.setImageResource(imagePosts[i]);
+
+
+            return view1;
+
+
+        }
+
+    }
+
 }
