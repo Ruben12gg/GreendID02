@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Notifications">
+    tools:context=".Notifications"
+    android:background="@color/white">
 
 
     <!-- Navbar -->
@@ -55,7 +56,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+            android:layout_marginBottom="56dp"
         android:id="@+id/notificationrv"
         android:layout_below="@+id/main_toolbar"/>
 

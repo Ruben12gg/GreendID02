@@ -109,6 +109,8 @@ public class Notifications extends AppCompatActivity {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
 
+                        RecyclerCall();
+
                     }
                 });
     }

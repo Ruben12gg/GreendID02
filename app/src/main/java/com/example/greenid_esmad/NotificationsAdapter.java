@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder>{
+public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
     //criação de referencias
     private List<ContentNotifications> mData;
     private LayoutInflater mInflater;
@@ -28,7 +28,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     }
 
     @Override
-    public  NotificationsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NotificationsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.notification_card, parent, false);
         return new NotificationsAdapter.ViewHolder(view);
 
@@ -36,7 +36,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
 
 
         ContentNotifications contentNotifications = mData.get(position);
@@ -81,11 +80,11 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         ViewHolder(View itemView) {
             super(itemView);
 
-            tvAuthor = itemView.findViewById(R.id.pf_name);
-            tvCommentVal = itemView.findViewById(R.id.comments_val);
-            contentPic = itemView.findViewById(R.id.post_image);
+            tvAuthor = itemView.findViewById(R.id.username);
+            tvCommentVal = itemView.findViewById(R.id.comment);
+            contentPic = itemView.findViewById(R.id.contentPic);
             profile_image = itemView.findViewById(R.id.profile_image);
-            resultCard = itemView.findViewById(R.id.post_card);
+            resultCard = itemView.findViewById(R.id.notifications_card);
             itemView.setOnClickListener(this);
         }
 
@@ -98,4 +97,5 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     public interface ItemClickListener {
         void onItemClick(View view, int position);
-    }}
+    }
+}
