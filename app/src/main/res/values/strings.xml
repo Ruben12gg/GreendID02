@@ -65,5 +65,9 @@
     //Publish
     <string name="description">Description</string>
     <string name="location">Location</string>
+    <string name="Post">Post</string>
+    <string name="Event">Event</string>
+    <string name="Product">Product</string>
+    <string name="Publish">Publish</string>
 
 </resources>
