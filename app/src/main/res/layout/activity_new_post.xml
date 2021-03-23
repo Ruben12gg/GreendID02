@@ -51,10 +51,14 @@
             app:layout_constraintStart_toStartOf="@+id/main_toolbar"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_view"/>
+        <Button
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="356dp"
+            android:background="@drawable/next_btn"
+            android:drawableStart="@drawable/ic_baseline_navigate_next_40"
+            android:padding="2dp" />
     </RelativeLayout>
 
     <RelativeLayout
