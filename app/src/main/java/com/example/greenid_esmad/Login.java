@@ -176,20 +176,8 @@ public class Login extends AppCompatActivity {
                             data02.put("name", "Tokyo");
                             data02.put("country", "Japan");
 
-                            db.collection("users")
-                                    .add(data02)
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            Log.d("DOCUMENT", "DocumentSnapshot written with ID: " + documentReference.getId());
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w("DOCUMENT", "Error adding document", e);
-                                        }
-                                    });
+                            db.collection("users").document(userId).set(data02);
+                                       
 
                             //Add userId to GLOBALS
                             GLOBALS globalUserId = (GLOBALS) getApplicationContext();
