@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -119,41 +120,76 @@ public class Login extends AppCompatActivity {
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                Map<String, Object> user = new HashMap<>();
-                user.put("name", displayName);
-                Log.d("NAME", displayName);
-                user.put("id", userId);
-                user.put("pfp", pfp.toString());
+                if (userId.isEmpty()){
+
+                    //Create document test code
+                    Map<String, Object> data02 = new HashMap<>();
+                    data02.put("name", "Tokyo");
+                    data02.put("country", "Japan");
+
+                    db.collection("users")
+                            .add(data02)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d("DOCUMENT", "DocumentSnapshot written with ID: " + documentReference.getId());
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("DOCUMENT", "Error adding document", e);
+                                }
+                            });
+
+                    //Add userId to GLOBALS
+                    GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                    globalUserId.setUserIdGlobal(userId);
+                    globalUserId.setUserName(displayName);
+                    globalUserId.setUserPfp(pfp.toString());
+
+                } else {
+
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("name", displayName);
+                    Log.d("NAME", displayName);
+                    user.put("id", userId);
+                    user.put("pfp", pfp.toString());
 
 
-                db.collection("users").document(userId)
-                        .update(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("TAG", "DocumentSnapshot successfully written!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("TAG", "Error writing document", e);
-                            }
-                        });
+                    db.collection("users").document(userId)
+                            .update(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("TAG", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("TAG", "Error writing document", e);
+                                }
+                            });
 
 
-                //Add userId to GLOBALS
-                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                globalUserId.setUserIdGlobal(userId);
-                globalUserId.setUserName(displayName);
-                globalUserId.setUserPfp(pfp.toString());
+                    //Add userId to GLOBALS
+                    GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                    globalUserId.setUserIdGlobal(userId);
+                    globalUserId.setUserName(displayName);
+                    globalUserId.setUserPfp(pfp.toString());
 
-                // Welcome Toast
-                String message = "Welcome " + displayName + "!";
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, message, duration);
-                toast.show();
+                    // Welcome Toast
+                    String message = "Welcome " + displayName + "!";
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, message, duration);
+                    toast.show();
+
+
+
+                }
+
 
 
                 firebaseAuthWithGoogle(account.getIdToken());
