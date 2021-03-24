@@ -171,26 +171,36 @@ public class Login extends AppCompatActivity {
                                 Log.d("NO USER DATA", "No such document");
                                 Log.d("NEW USER", "Creating and sending new user data");
 
-                            //Create document test code
-                            Map<String, Object> data02 = new HashMap<>();
-                            data02.put("name", "Tokyo");
-                            data02.put("country", "Japan");
+                                //If it's a new user, create a db document for it
+                                Map<String, Object> newUserData = new HashMap<>();
+                                newUserData.put("name", displayName);
+                                newUserData.put("id", userId);
+                                newUserData.put("followersVal", "0");
+                                newUserData.put("followingVal", "0");
+                                newUserData.put("bio", "This user hasn't added a bio yet");
+                                newUserData.put("pfp", pfp.toString());
 
-                            db.collection("users").document(userId).set(data02);
-                                       
+                                db.collection("users").document(userId).set(newUserData);
 
-                            //Add userId to GLOBALS
-                            GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                            globalUserId.setUserIdGlobal(userId);
-                            globalUserId.setUserName(displayName);
-                            globalUserId.setUserPfp(pfp.toString());
+                                // Welcome Toast
+                                String message = "Welcome " + displayName + "!";
+                                Context context = getApplicationContext();
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, message, duration);
+                                toast.show();
+
+
+                                //Add userId to GLOBALS
+                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                globalUserId.setUserIdGlobal(userId);
+                                globalUserId.setUserName(displayName);
+                                globalUserId.setUserPfp(pfp.toString());
                             }
                         } else {
                             Log.d("TAG", "get failed with ", task.getException());
                         }
                     }
                 });
-
 
 
                 firebaseAuthWithGoogle(account.getIdToken());
