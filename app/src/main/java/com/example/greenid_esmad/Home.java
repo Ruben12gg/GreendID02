@@ -12,13 +12,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -27,16 +31,24 @@ public class Home extends AppCompatActivity {
     FeedAdapter feedAdapter;
     RecyclerView recyclerView;
     ArrayList<ContentFeed> feedContent = new ArrayList<>();
+    TextView followerTxt;
+    ImageView followerImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        followerTxt = findViewById(R.id.textView2);
+        followerImg = findViewById(R.id.imageView);
+
+        followerTxt.setVisibility(View.VISIBLE);
+        followerImg.setVisibility(View.VISIBLE);
+
+
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-        //Obtenção dos dados que geram o feed
+        //Get data to show on Feed
         db.collection("posts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -67,6 +79,45 @@ public class Home extends AppCompatActivity {
                         RecyclerCall();
                     }
                 });
+
+        //Get data from profile to make the logic to show/hide follow message
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+        Log.d("USERID", userId);
+
+
+        //Get profile Data
+        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        String followingValTxt = document.getString("followingVal");
+
+                        int followingValNum = Integer.parseInt(followingValTxt);
+
+                        Log.d("FOLLOWING VAL", String.valueOf(followingValNum));
+
+                        if (followingValTxt.equals("0")) {
+
+                            Log.d("FOLLOWING", "EQUALS 0");
+
+                            followerTxt.setVisibility(View.INVISIBLE);
+                            followerImg.setVisibility(View.INVISIBLE);
+
+                        }
+
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

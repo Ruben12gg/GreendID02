@@ -27,7 +27,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.HashMap;
@@ -119,41 +122,85 @@ public class Login extends AppCompatActivity {
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                Map<String, Object> user = new HashMap<>();
-                user.put("name", displayName);
-                Log.d("NAME", displayName);
-                user.put("id", userId);
-                user.put("pfp", pfp.toString());
+                //try to get profile Data
+                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("name", displayName);
+                                Log.d("NAME", displayName);
+                                user.put("id", userId);
+                                user.put("pfp", pfp.toString());
 
 
-                db.collection("users").document(userId)
-                        .update(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("TAG", "DocumentSnapshot successfully written!");
+                                db.collection("users").document(userId)
+                                        .update(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("TAG", "DocumentSnapshot successfully written!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("TAG", "Error writing document", e);
+                                            }
+                                        });
+
+                                //Add userId to GLOBALS
+                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                globalUserId.setUserIdGlobal(userId);
+                                globalUserId.setUserName(displayName);
+                                globalUserId.setUserPfp(pfp.toString());
+
+                                // Welcome Toast
+                                String message = "Welcome " + displayName + "!";
+                                Context context = getApplicationContext();
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, message, duration);
+                                toast.show();
+
+
+                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d("NO USER DATA", "No such document");
+                                Log.d("NEW USER", "Creating and sending new user data");
+
+                                //If it's a new user, create a db document for it
+                                Map<String, Object> newUserData = new HashMap<>();
+                                newUserData.put("name", displayName);
+                                newUserData.put("id", userId);
+                                newUserData.put("followersVal", "0");
+                                newUserData.put("followingVal", "0");
+                                newUserData.put("bio", "This user hasn't added a bio yet");
+                                newUserData.put("pfp", pfp.toString());
+
+                                db.collection("users").document(userId).set(newUserData);
+
+                                // Welcome Toast
+                                String message = "Welcome " + displayName + "!";
+                                Context context = getApplicationContext();
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, message, duration);
+                                toast.show();
+
+
+                                //Add userId to GLOBALS
+                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                globalUserId.setUserIdGlobal(userId);
+                                globalUserId.setUserName(displayName);
+                                globalUserId.setUserPfp(pfp.toString());
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("TAG", "Error writing document", e);
-                            }
-                        });
-
-
-                //Add userId to GLOBALS
-                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                globalUserId.setUserIdGlobal(userId);
-                globalUserId.setUserName(displayName);
-                globalUserId.setUserPfp(pfp.toString());
-
-                // Welcome Toast
-                String message = "Welcome " + displayName + "!";
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, message, duration);
-                toast.show();
+                        } else {
+                            Log.d("TAG", "get failed with ", task.getException());
+                        }
+                    }
+                });
 
 
                 firebaseAuthWithGoogle(account.getIdToken());

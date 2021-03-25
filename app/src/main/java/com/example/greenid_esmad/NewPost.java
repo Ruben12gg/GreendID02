@@ -19,7 +19,7 @@ public class NewPost extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set Home Selected
+        // Set Post Selected
         bottomNavigationView.setSelectedItemId(R.id.new_post);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
