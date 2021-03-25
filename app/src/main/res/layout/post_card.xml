@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/post_card"
     android:layout_width="match_parent"
-    android:layout_height="301dp">
-
+    android:layout_height="wrap_content"
+    android:padding="12dp">
 
         <ImageView
             android:id="@+id/post_image"
-            android:scaleType="fitXY"
             android:layout_width="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_height="310dp" />
+            android:layout_height="312dp"
+            android:scaleType="fitXY"/>
 
         <ImageView
             android:id="@+id/corner_shade"
             android:layout_width="match_parent"
-            android:layout_height="310dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/post_image"
+            android:layout_alignStart="@+id/post_image"
+            android:layout_alignEnd="@id/post_image"
+            android:layout_alignBottom="@+id/post_image"
             android:src="@drawable/corner_shade_post" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pfp"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_alignTop="@+id/post_image"
+            android:layout_margin="20dp"
             app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/pf_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/pfp"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignTop="@+id/post_image"
+            android:layout_toEndOf="@+id/pfp"
             android:text="@string/pfName"
             android:textColor="@color/white_txt"
             android:textSize="40px" />
@@ -43,59 +46,49 @@
             android:id="@+id/location_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/pfp"
-            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:layout_alignTop="@+id/post_image"
+            android:layout_toEndOf="@+id/pfp"
             android:layout_below="@+id/pf_name"
-            android:layout_marginTop="8dp"
             android:background="@drawable/ic_baseline_location_on_24" />
 
         <TextView
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/location_icon"
+            android:layout_marginTop="48dp"
+            android:layout_alignTop="@+id/post_image"
+            android:layout_toEndOf="@+id/location_icon"
             android:layout_below="@+id/pf_name"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="4dp"
             android:text="@string/Location"
             android:textColor="@color/white_txt"
             android:textSize="40px" />
 
         <ImageView
-            android:id="@+id/edit_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="320dp"
-            android:src="@color/white_txt" />
-
-
-        <ImageView
             android:id="@+id/utilityBar"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_below="@+id/post_image"
-            android:layout_marginTop="-64dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_alignBottom="@id/post_image"
             android:background="@drawable/post_card" />
 
         <ImageView
             android:id="@+id/favorites_icon"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_below="@+id/utilityBar"
-            android:layout_marginTop="-44dp"
-            android:layout_marginStart="64dp"
+            android:layout_alignTop="@+id/utilityBar"
+            android:layout_alignBottom="@+id/utilityBar"
+            android:layout_marginStart="56dp"
             android:src="@drawable/ic_like_empty" />
 
         <TextView
             android:id="@+id/likes_val"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/favorites_icon"
-            android:layout_below="@id/utilityBar"
-            android:layout_marginTop="-40dp"
-            android:layout_marginStart="8dp"
+            android:layout_alignTop="@+id/utilityBar"
+            android:layout_alignBottom="@id/utilityBar"
+            android:layout_toEndOf="@+id/favorites_icon"
+            android:layout_marginTop="20dp"
             android:text="@string/LikesVal"
             android:textAlignment="center"
             android:textColor="@color/black_txt_num"
@@ -105,20 +98,20 @@
             android:id="@+id/comments_icon"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_marginTop="-44dp"
-            android:layout_toRightOf="@+id/likes_val"
-            android:layout_below="@+id/utilityBar"
-            android:layout_marginStart="60dp"
+            android:layout_alignTop="@+id/utilityBar"
+            android:layout_alignBottom="@+id/utilityBar"
+            android:layout_toEndOf="@+id/likes_val"
+            android:layout_marginStart="44dp"
             android:src="@drawable/favorite_empty" />
 
         <TextView
             android:id="@+id/comments_val"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/utilityBar"
-            android:layout_toRightOf="@+id/comments_icon"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="-40dp"
+            android:layout_alignTop="@+id/utilityBar"
+            android:layout_alignBottom="@+id/utilityBar"
+            android:layout_toEndOf="@+id/comments_icon"
+            android:layout_marginTop="20dp"
             android:text="@string/CommentsVal"
             android:textAlignment="center"
             android:textColor="@color/black_txt_num"
@@ -128,10 +121,10 @@
             android:id="@+id/saved_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_below="@+id/utilityBar"
-            android:layout_toRightOf="@+id/comments_val"
-            android:layout_marginTop="-44dp"
-            android:layout_marginStart="48dp"
+            android:layout_alignTop="@+id/utilityBar"
+            android:layout_alignBottom="@+id/utilityBar"
+            android:layout_toEndOf="@+id/comments_val"
+            android:layout_marginStart="44dp"
             android:src="@drawable/ic_favorite_empty" />
 
 </RelativeLayout>
