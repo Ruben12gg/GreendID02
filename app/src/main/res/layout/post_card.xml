@@ -102,7 +102,7 @@
             android:layout_alignBottom="@+id/utilityBar"
             android:layout_toEndOf="@+id/likes_val"
             android:layout_marginStart="44dp"
-            android:src="@drawable/favorite_empty" />
+            android:src="@drawable/comment" />
 
         <TextView
             android:id="@+id/comments_val"
@@ -125,6 +125,6 @@
             android:layout_alignBottom="@+id/utilityBar"
             android:layout_toEndOf="@+id/comments_val"
             android:layout_marginStart="44dp"
-            android:src="@drawable/ic_favorite_empty" />
+            android:src="@drawable/favorites_green" />
 
 </RelativeLayout>

@@ -64,59 +64,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
+        android:gravity="center"
         android:id="@+id/btnrl">
 
-        <Button
+
+        <ImageButton
             android:id="@+id/postbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btnfav"
-            android:text="@string/post"
-            android:textColor="@color/green_main"
-            android:textSize="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:drawableLeft="@drawable/post"
-            android:drawableTint="@color/green_main"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="12dp"
+            android:layout_width="104dp"
+            android:layout_height="40dp"
+            android:background="@drawable/postbtn"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="16dp"
             />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/eventbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btnfav"
+            android:layout_width="104dp"
+            android:layout_height="40dp"
+            android:background="@drawable/eventbtn"
             android:layout_toRightOf="@+id/postbtn"
-            android:text="@string/event"
-            android:textColor="@color/green_main"
-            android:textSize="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:drawableLeft="@drawable/event"
-            android:drawableTint="@color/green_main"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginTop="20dp"
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/productbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btnfav"
+            android:layout_width="104dp"
+            android:layout_height="40dp"
+            android:background="@drawable/productbtn"
             android:layout_toRightOf="@+id/eventbtn"
-            android:text="@string/product"
-            android:textColor="@color/green_main"
-            android:textSize="15dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:drawableLeft="@drawable/product"
-            android:drawableTint="@color/green_main"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             />
     </RelativeLayout>
 
