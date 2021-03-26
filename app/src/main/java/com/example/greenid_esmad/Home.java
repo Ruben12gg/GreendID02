@@ -42,11 +42,50 @@ public class Home extends AppCompatActivity {
         followerTxt = findViewById(R.id.textView2);
         followerImg = findViewById(R.id.imageView);
 
-        followerTxt.setVisibility(View.VISIBLE);
-        followerImg.setVisibility(View.VISIBLE);
+        followerTxt.setVisibility(View.INVISIBLE);
+        followerImg.setVisibility(View.INVISIBLE);
 
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Get data from profile to make the logic to show/hide follow message
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+
+
+        //Get profile Data
+        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        String followingValTxt = document.getString("followingVal");
+
+                        int followingValNum = Integer.parseInt(followingValTxt);
+
+                        Log.d("FOLLOWING VAL", String.valueOf(followingValNum));
+
+                        if (followingValTxt.equals("0")) {
+
+                            Log.d("FOLLOWING", "EQUALS 0");
+
+                            followerTxt.setVisibility(View.VISIBLE);
+                            followerImg.setVisibility(View.VISIBLE);
+
+                        }
+
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
 
         //Get data to show on Feed
         db.collection("posts")
@@ -80,44 +119,7 @@ public class Home extends AppCompatActivity {
                     }
                 });
 
-        //Get data from profile to make the logic to show/hide follow message
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
-        Log.d("USERID", userId);
 
-
-        //Get profile Data
-        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-
-                        String followingValTxt = document.getString("followingVal");
-
-                        int followingValNum = Integer.parseInt(followingValTxt);
-
-                        Log.d("FOLLOWING VAL", String.valueOf(followingValNum));
-
-                        if (followingValTxt.equals("0")) {
-
-                            Log.d("FOLLOWING", "EQUALS 0");
-
-                            followerTxt.setVisibility(View.INVISIBLE);
-                            followerImg.setVisibility(View.INVISIBLE);
-
-                        }
-
-                    } else {
-                        Log.d("TAG", "No such document");
-                    }
-                } else {
-                    Log.d("TAG", "get failed with ", task.getException());
-                }
-            }
-        });
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".EditProfile">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/top_menu_bg"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:titleTextColor="#fff" />
+
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12.5dp"
+        android:layout_marginEnd="112dp"
+        android:layout_toLeftOf="@+id/settingText"
+        android:background="@drawable/arrow_back" />
+
+    <TextView
+        android:id="@+id/settingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12.5dp"
+        android:text="@string/editPfp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/pfp"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:layout_below="@id/main_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        app:civ_border_width="2dp" />
+
+    <EditText
+        android:id="@+id/usernameSettings"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/pfp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/input_box"
+        android:text="USERNAME"
+        android:textAlignment="center"
+        android:textColor="@color/black_txt"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/bioSettings"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_below="@+id/usernameSettings"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/input_box"
+        android:text="BIO"
+        android:textAlignment="center"
+        android:textColor="@color/black_txt"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/bioSettings"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="128dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/save"
+        android:textSize="20sp" />
+
+
+</RelativeLayout>

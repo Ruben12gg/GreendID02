@@ -124,7 +124,7 @@ public class User extends AppCompatActivity {
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
-        Log.d("USERID", userId);
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

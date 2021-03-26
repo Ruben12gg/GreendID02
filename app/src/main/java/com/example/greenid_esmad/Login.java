@@ -131,10 +131,8 @@ public class Login extends AppCompatActivity {
                             if (document.exists()) {
 
                                 Map<String, Object> user = new HashMap<>();
-                                user.put("name", displayName);
-                                Log.d("NAME", displayName);
+
                                 user.put("id", userId);
-                                user.put("pfp", pfp.toString());
 
 
                                 db.collection("users").document(userId)
