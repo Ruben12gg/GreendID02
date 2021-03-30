@@ -73,4 +73,9 @@
     //Edit Profile
     <string name="save">Save</string>
 
+
+    //New Post
+    <string name="descriptionInput">Type a description for your post here.</string>
+    <string name="locationTxt">Type the location of your post here (optional).</string>
+
 </resources>

@@ -64,7 +64,7 @@
             android:layout_height="52dp"
             android:layout_margin="16dp"
             android:background="@drawable/outlined_search_bar"
-            android:textColor="@color/black"
+            android:textColor="@color/black_txt"
             android:drawablePadding="8dp"
             android:padding="12dp"
             android:textSize="16dp"

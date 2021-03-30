@@ -54,7 +54,6 @@ public class Home extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
 
 
-
         //Get profile Data
         db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -118,8 +117,6 @@ public class Home extends AppCompatActivity {
                         RecyclerCall();
                     }
                 });
-
-
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

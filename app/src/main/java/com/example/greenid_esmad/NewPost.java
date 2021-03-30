@@ -2,23 +2,30 @@ package com.example.greenid_esmad;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -26,6 +33,12 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class NewPost extends AppCompatActivity {
@@ -35,6 +48,9 @@ public class NewPost extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
     ImageView contentPic2;
+    EditText description;
+    EditText location;
+    Button postBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +67,14 @@ public class NewPost extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 choosePicture();
+            }
+        });
+
+        postBtn = findViewById(R.id.postBtn);
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadPicture();
             }
         });
 
@@ -119,7 +143,6 @@ public class NewPost extends AppCompatActivity {
 
             contentPic.setImageURI(imageUri);
 
-            uploadPicture();
         }
     }
 
@@ -149,10 +172,68 @@ public class NewPost extends AppCompatActivity {
 
                                 contentPic2 = findViewById(R.id.imageContent2);
 
-                                String downloadUrl3 = uri.toString();
-                                Log.d("IMAGE POST LINK", downloadUrl3);
+                                //Access user Id from GLOBALS
+                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                String userId = globalUserId.getUserIdGlobal();
 
-                                Picasso.get().load(downloadUrl3).into(contentPic2);
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @RequiresApi(api = Build.VERSION_CODES.O)
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String name = document.getString("name");
+                                                String pfpUrl = document.getString("pfp");
+
+                                                location = findViewById(R.id.locationTxt);
+                                                description = findViewById(R.id.descriptionTxt);
+
+                                                String locationTxt = location.getText().toString();
+                                                String descriptionTxt = description.getText().toString();
+                                                String likeVal = "0";
+                                                String commentVal = "0";
+
+                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                Date date = new Date();
+                                                String dateTxt = formatter.format(date).toString();
+
+
+                                                String postDate = new Date().toString();
+
+                                                String downloadUrl3 = uri.toString();
+                                                Log.d("IMAGE POST LINK", downloadUrl3);
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("author", name);
+                                                data.put("authorPfp", pfpUrl);
+                                                data.put("location", locationTxt);
+                                                data.put("description", descriptionTxt);
+                                                data.put("contentUrl", downloadUrl3);
+                                                data.put("likeVal", likeVal);
+                                                data.put("commentVal", commentVal);
+                                                data.put("date", dateTxt);
+
+
+                                                db.collection("posts").add(data);
+
+                                                Picasso.get().load(downloadUrl3).into(contentPic2);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+
 
                             }
                         });
