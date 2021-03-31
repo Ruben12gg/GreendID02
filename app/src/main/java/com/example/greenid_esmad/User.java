@@ -169,7 +169,7 @@ public class User extends AppCompatActivity {
         });
 
 
-        db.collection("users").document(userId).collection("posts")
+        /*db.collection("users").document(userId).collection("posts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -181,8 +181,8 @@ public class User extends AppCompatActivity {
                                 String imagePostUrl = document.getString("picUrl");
 
 
-                                /*final Map<String, Object> pfPosts = new HashMap<>();
-                                pfPosts.put("picUrl", imagePostUrl);*/
+                                *//*final Map<String, Object> pfPosts = new HashMap<>();
+                                pfPosts.put("picUrl", imagePostUrl);*//*
 
                                 Log.d("PF POSTS", imagePostUrl);
 
@@ -198,7 +198,7 @@ public class User extends AppCompatActivity {
                         }
 
                     }
-                });
+                });*/
 
 
     }
