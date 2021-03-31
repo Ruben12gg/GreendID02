@@ -34,6 +34,37 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        TextView tvAuthor;
+        TextView tvdate;
+        TextView tvLikeVal;
+        TextView tvLocation;
+        TextView tvCommentVal;
+        ImageView pfp;
+        ImageView contentPic;
+        RelativeLayout resultCard;
+
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            tvAuthor = itemView.findViewById(R.id.pf_name);
+            tvLikeVal = itemView.findViewById(R.id.likes_val);
+            tvCommentVal = itemView.findViewById(R.id.comments_val);
+            tvLocation = itemView.findViewById(R.id.location);
+            contentPic = itemView.findViewById(R.id.post_image);
+            pfp = itemView.findViewById(R.id.pfp);
+            resultCard = itemView.findViewById(R.id.post_card);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+    }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
@@ -69,37 +100,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mData.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        TextView tvAuthor;
-        TextView tvdate;
-        TextView tvLikeVal;
-        TextView tvLocation;
-        TextView tvCommentVal;
-        ImageView pfp;
-        ImageView contentPic;
-        RelativeLayout resultCard;
-
-
-        ViewHolder(View itemView) {
-            super(itemView);
-
-            tvAuthor = itemView.findViewById(R.id.pf_name);
-            tvLikeVal = itemView.findViewById(R.id.likes_val);
-            tvCommentVal = itemView.findViewById(R.id.comments_val);
-            tvLocation = itemView.findViewById(R.id.location);
-            contentPic = itemView.findViewById(R.id.post_image);
-            pfp = itemView.findViewById(R.id.pfp);
-            resultCard = itemView.findViewById(R.id.post_card);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
-        }
     }
 
 
