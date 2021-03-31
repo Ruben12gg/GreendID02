@@ -6,22 +6,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Favorites extends AppCompatActivity {
+    RecyclerView recyclerView;
+    FavoritesAdapter favoritesAdapter;
+    ArrayList<ContentFavorites> contentFavorites = new ArrayList<>();
 
     ImageButton btnBack;
 
@@ -62,7 +73,7 @@ public class Favorites extends AppCompatActivity {
 
                     case R.id.user:
                         startActivity(new Intent(getApplicationContext(), User.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.notifications:
@@ -77,6 +88,38 @@ public class Favorites extends AppCompatActivity {
             }
 
         });
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+        Log.d("USERID", userId);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(userId).collection("favorites")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                String authorPfp = document.getString("pfpUrl");
+                                String contentUrl = document.getString("contentUrl");
+                                String commentVal = document.getString("commentVal");
+                                String author = document.getString("username");
+
+                                contentFavorites.add(new ContentFavorites (authorPfp, contentUrl, commentVal, author));
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
+                    }
+                });
 
         btnBack = findViewById(R.id.btnBack);
 
@@ -114,7 +157,7 @@ public class Favorites extends AppCompatActivity {
         // Initialize main fragment
         FavoritesFragment fragment = new FavoritesFragment();
         // Use for loop
-        for (int i=0; i<arrayList.size(); i++) {
+        for (int i = 0; i < arrayList.size(); i++) {
             // Initialize bundle
             Bundle bundle = new Bundle();
             // Put string
@@ -166,5 +209,16 @@ public class Favorites extends AppCompatActivity {
             // Return array list position
             return arrayList.get(position);
         }
+
+    }
+
+    private void RecyclerCall() {
+
+        recyclerView = findViewById(R.id.rvFavorites);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        favoritesAdapter = new FavoritesAdapter(this, contentFavorites);
+        recyclerView.setAdapter(favoritesAdapter);
+
     }
 }

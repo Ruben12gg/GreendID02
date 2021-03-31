@@ -25,7 +25,8 @@
     <!-- Toolbar -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/rltool">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_toolbar"
@@ -54,12 +55,13 @@
             app:layout_constraintStart_toStartOf="@+id/main_toolbar"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="56dp"
-        android:id="@+id/notificationrv"
-        android:layout_below="@+id/main_toolbar"/>
+            android:id="@+id/notificationrv"
+            android:layout_below="@id/main_toolbar"/>
 
     </RelativeLayout>
 

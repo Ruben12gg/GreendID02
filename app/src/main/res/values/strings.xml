@@ -72,7 +72,8 @@
 
     //Edit Profile
     <string name="save">Save</string>
-
+    <string name="username">Username</string>
+    <string name="bio">Bio</string>
 
     //New Post
     <string name="descriptionInput">Type a description for your post here.</string>
