@@ -219,6 +219,7 @@ public class NewPost extends AppCompatActivity {
 
 
                                                 db.collection("posts").add(data);
+                                                db.collection("users").document(userId).collection("posts").add(data);
 
                                                 Picasso.get().load(downloadUrl3).into(contentPic2);
 
