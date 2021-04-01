@@ -8,6 +8,15 @@ public class ContentFeed {
     private String likeVal;
     private String commentVal;
     private String location;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getAuthorPfp() {
         return authorPfp;
@@ -65,7 +74,7 @@ public class ContentFeed {
         this.location = location;
     }
 
-    public ContentFeed(String authorPfp, String location, String contentUrl, String author, String date, String likeVal, String commentVal) {
+    public ContentFeed(String authorPfp, String location, String contentUrl, String author, String date, String likeVal, String commentVal, String description) {
         this.authorPfp = authorPfp;
         this.contentUrl = contentUrl;
         this.author = author;
@@ -73,6 +82,7 @@ public class ContentFeed {
         this.likeVal = likeVal;
         this.commentVal = commentVal;
         this.location = location;
+        this.description = description;
     }
 }
 

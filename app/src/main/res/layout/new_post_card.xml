@@ -2,9 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/post_card"
+    android:id="@+id/post_card_02"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:padding="12dp">
 
     <LinearLayout
@@ -78,6 +79,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/descriptionText"
                 android:layout_width="320dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="28dp"

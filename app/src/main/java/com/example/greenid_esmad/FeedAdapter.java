@@ -29,7 +29,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.post_card, parent, false);
+        View view = mInflater.inflate(R.layout.new_post_card, parent, false);
         return new ViewHolder(view);
 
     }
@@ -41,6 +41,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         TextView tvLikeVal;
         TextView tvLocation;
         TextView tvCommentVal;
+        TextView tvDescription;
         ImageView pfp;
         ImageView contentPic;
         RelativeLayout resultCard;
@@ -49,13 +50,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ViewHolder(View itemView) {
             super(itemView);
 
-            tvAuthor = itemView.findViewById(R.id.pf_name);
-            tvLikeVal = itemView.findViewById(R.id.likes_val);
-            tvCommentVal = itemView.findViewById(R.id.comments_val);
-            tvLocation = itemView.findViewById(R.id.location);
+            tvAuthor = itemView.findViewById(R.id.likes_val);
+            tvLikeVal = itemView.findViewById(R.id.comments_val);
+            tvCommentVal = itemView.findViewById(R.id.location);
+            tvLocation = itemView.findViewById(R.id.pf_name);
             contentPic = itemView.findViewById(R.id.post_image);
             pfp = itemView.findViewById(R.id.pfp);
-            resultCard = itemView.findViewById(R.id.post_card);
+            tvDescription = itemView.findViewById(R.id.descriptionText);
+            resultCard = itemView.findViewById(R.id.post_card_02);
             itemView.setOnClickListener(this);
         }
 
@@ -75,6 +77,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.tvLikeVal.setText(contentFeed.getLikeVal());
         holder.tvCommentVal.setText(contentFeed.getCommentVal());
         holder.tvLocation.setText(contentFeed.getLocation());
+        holder.tvDescription.setText(contentFeed.getDescription());
 
 
         final String authorPfp = contentFeed.getAuthorPfp();
