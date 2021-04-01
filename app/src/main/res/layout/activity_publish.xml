@@ -151,7 +151,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/rounded_button"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="12dp"
             android:textStyle="bold" />
 
         <Button
@@ -162,7 +162,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_button"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="12dp"
             android:textStyle="bold" />
 
         <Button
@@ -175,7 +175,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/rounded_button"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="12dp"
             android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>
