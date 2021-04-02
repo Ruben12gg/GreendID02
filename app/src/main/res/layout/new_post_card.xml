@@ -79,6 +79,17 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/dateText"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginBottom="64dp"
+                android:text="@string/date"
+                android:textColor="@color/white_txt"
+                android:layout_gravity="bottom"
+                android:textSize="40px" />
+
+            <TextView
                 android:id="@+id/descriptionText"
                 android:layout_width="320dp"
                 android:layout_height="40dp"

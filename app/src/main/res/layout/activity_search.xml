@@ -85,7 +85,7 @@
             android:id="@+id/profile_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/profile_btn" />
+            android:background="@drawable/button" />
 
         <Button
             android:id="@+id/location_btn"
@@ -93,7 +93,7 @@
             android:layout_height="48dp"
             android:layout_toEndOf="@+id/profile_btn"
             android:layout_marginStart="28dp"
-            android:background="@drawable/location_btn" />
+            android:background="@drawable/button" />
 
         <Button
             android:id="@+id/post_btn"
@@ -101,7 +101,7 @@
             android:layout_height="48dp"
             android:layout_toEndOf="@+id/location_btn"
             android:layout_marginStart="28dp"
-            android:background="@drawable/post_btn" />
+            android:background="@drawable/button" />
 
         <Button
             android:id="@+id/product_btn"
@@ -109,7 +109,7 @@
             android:layout_height="48dp"
             android:layout_toEndOf="@+id/post_btn"
             android:layout_marginStart="28dp"
-            android:background="@drawable/product_btn" />
+            android:background="@drawable/button" />
     </RelativeLayout>
 
     <RelativeLayout

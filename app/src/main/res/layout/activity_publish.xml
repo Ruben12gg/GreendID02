@@ -150,6 +150,7 @@
             android:text="@string/post"
             android:layout_centerVertical="true"
             android:background="@drawable/rounded_button"
+            android:drawableStart="@drawable/post_icon"
             android:gravity="center"
             android:padding="12dp"
             android:textStyle="bold" />
@@ -161,6 +162,7 @@
             android:text="@string/event"
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_button"
+            android:drawableStart="@drawable/event_icon"
             android:gravity="center"
             android:padding="12dp"
             android:textStyle="bold" />
@@ -174,6 +176,7 @@
             android:text="@string/product"
             android:layout_centerVertical="true"
             android:background="@drawable/rounded_button"
+            android:drawableStart="@drawable/product_icon"
             android:gravity="center"
             android:padding="12dp"
             android:textStyle="bold" />
