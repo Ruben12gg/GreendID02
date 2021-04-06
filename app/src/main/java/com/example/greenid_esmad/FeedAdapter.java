@@ -37,7 +37,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvAuthor;
-        TextView tvdate;
+        TextView tvDate;
         TextView tvLikeVal;
         TextView tvLocation;
         TextView tvCommentVal;
@@ -57,6 +57,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             contentPic = itemView.findViewById(R.id.post_image);
             pfp = itemView.findViewById(R.id.pfp);
             tvDescription = itemView.findViewById(R.id.descriptionText);
+            tvDate = itemView.findViewById(R.id.dateText);
             resultCard = itemView.findViewById(R.id.post_card_02);
             itemView.setOnClickListener(this);
         }
@@ -73,7 +74,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         ContentFeed contentFeed = mData.get(position);
         holder.tvAuthor.setText(contentFeed.getAuthor());
-        /*holder.tvdate.setText(contentFeed.getDate());*/
+        holder.tvDate.setText(contentFeed.getDate());
         holder.tvLikeVal.setText(contentFeed.getLikeVal());
         holder.tvCommentVal.setText(contentFeed.getCommentVal());
         holder.tvLocation.setText(contentFeed.getLocation());
