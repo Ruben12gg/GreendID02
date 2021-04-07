@@ -51,10 +51,8 @@
             android:id="@+id/settingsBtn"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_toRightOf="@+id/userNameTop"
-
-            android:layout_marginStart="64dp"
-            android:layout_marginEnd="8dp"
+            android:layout_toLeftOf="@+id/favoritesBtn"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/settings"
             />
@@ -64,10 +62,12 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/favorites_white"
-            android:layout_toRightOf="@+id/settingsBtn"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+
             />
 
 

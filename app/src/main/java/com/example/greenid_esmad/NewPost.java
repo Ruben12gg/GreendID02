@@ -47,7 +47,6 @@ public class NewPost extends AppCompatActivity {
     Uri imageUri;
     FirebaseStorage storage;
     StorageReference storageReference;
-    ImageView contentPic2;
     EditText description;
     EditText location;
     Button postBtn;
@@ -170,7 +169,6 @@ public class NewPost extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
 
-                                contentPic2 = findViewById(R.id.imageContent2);
 
                                 //Access user Id from GLOBALS
                                 GLOBALS globalUserId = (GLOBALS) getApplicationContext();
@@ -221,7 +219,6 @@ public class NewPost extends AppCompatActivity {
                                                 db.collection("posts").add(data);
                                                 db.collection("users").document(userId).collection("posts").add(data);
 
-                                                Picasso.get().load(downloadUrl3).into(contentPic2);
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());

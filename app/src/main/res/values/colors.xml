@@ -37,4 +37,6 @@
     <color name="icon_green">#36BA68</color>
     <color name="black_txt_num">#2E2E2E</color>
 
+    <color name="light">#F1F1F1</color>
+
 </resources>

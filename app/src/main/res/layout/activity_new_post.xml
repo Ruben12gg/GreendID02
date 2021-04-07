@@ -67,10 +67,9 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="372dp"
-            android:layout_height="340dp"
+            android:layout_height="360dp"
             android:layout_centerInParent="true"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="20dp">
+            app:cardBackgroundColor="@color/white">
 
             <ImageView
                 android:id="@+id/imageContent"
@@ -82,10 +81,12 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+   <!-- <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:id="@+id/options_view"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="56dp"
         android:layout_below="@id/selected_pic_view">
 
         <Button
@@ -124,55 +125,90 @@
             android:gravity="center"
             android:paddingLeft="12dp"
             android:paddingRight="12dp" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/gallery_view"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_below="@id/options_view">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@+id/selected_pic_view">
 
-        <EditText
-            android:id="@+id/descriptionTxt"
+        <RelativeLayout
+            android:id="@+id/infoPost"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/input_box"
-            android:hint="@string/descriptionInput"
-            android:textAlignment="center"
-            android:textColor="@color/black_txt"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/locationTxt"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_below="@+id/descriptionTxt"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/input_box"
-            android:hint="@string/locationTxt"
-            android:textAlignment="center"
-            android:textColor="@color/black_txt"
-            android:textSize="18sp" />
-
-
-        <ImageView
-            android:id="@+id/imageContent2"
-            android:layout_width="90dp"
-            android:layout_height="80dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="16dp" />
-
-        <Button
-            android:id="@+id/postBtn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/locationTxt"
-            android:layout_centerHorizontal="true"
-            android:text="@string/Publish" />
+            android:fillViewport="true"
+            android:layout_below="@id/selected_pic_view">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/descriptiontv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/description"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/descriptionTxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/descriptiontv"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/input_box"
+                android:hint="@string/descri"
+                android:textAlignment="center"
+                android:textColor="@color/black_txt"
+                android:textColorHint="@color/light_txt"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/localisationtv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/descriptionTxt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/location"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/locationTxt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/localisationtv"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/input_box"
+                android:hint="@string/loca"
+                android:textAlignment="center"
+                android:textColor="@color/black_txt"
+                android:textColorHint="@color/light_txt"
+                android:textSize="16sp" />
+
+
+            <Button
+                android:id="@+id/postBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@+id/locationTxt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/btnbox"
+                android:text="@string/Publish"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
 </RelativeLayout>

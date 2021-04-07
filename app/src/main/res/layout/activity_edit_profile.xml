@@ -50,10 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pfp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
         android:text="@string/username"
-        android:textColor="@color/sb_dark_gray"
+        android:textColor="@color/light_txt"
         android:textSize="16dp"/>
 
 
@@ -62,39 +62,39 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/userTv"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/input_box"
         android:text="USERNAME"
         android:textAlignment="center"
         android:textColor="@color/black_txt"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/bioTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameSettings"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="32dp"
         android:text="@string/bio"
-        android:textColor="@color/sb_dark_gray"
+        android:textColor="@color/light_txt"
         android:textSize="16dp"/>
 
     <EditText
         android:id="@+id/bioSettings"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="56dp"
         android:layout_below="@+id/bioTv"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/input_box"
         android:text="BIO"
         android:textAlignment="center"
         android:textColor="@color/black_txt"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/save"
@@ -102,12 +102,12 @@
         android:layout_height="40dp"
         android:layout_below="@+id/bioSettings"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="128dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="96dp"
         android:background="@drawable/btnbox"
         android:text="@string/save"
-        android:textSize="20sp" />
+        android:textSize="16sp" />
 
 
 </RelativeLayout>
