@@ -51,20 +51,17 @@
             android:id="@+id/btnBack"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_toLeftOf="@+id/favoritesText"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="12.5dp"
-            android:background="@drawable/arrow_back"
-            />
+            android:background="@drawable/arrow_back" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:id="@+id/btnrl">
 
 
@@ -74,7 +71,8 @@
             android:layout_height="40dp"
             android:background="@drawable/postbtn"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="32dp"
+            android:layout_toLeftOf="@+id/eventbtn"
+            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             />
 
@@ -84,8 +82,8 @@
             android:layout_width="104dp"
             android:layout_height="40dp"
             android:background="@drawable/eventbtn"
-            android:layout_toRightOf="@+id/postbtn"
             android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
             />
 
         <ImageButton
