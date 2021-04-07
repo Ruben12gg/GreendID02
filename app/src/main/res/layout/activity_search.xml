@@ -119,7 +119,7 @@
         android:layout_below="@+id/options_view">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvEExplore"
+            android:id="@+id/rvSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

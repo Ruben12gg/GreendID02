@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search extends AppCompatActivity {
+    RecyclerView recyclerView;
+    SearchAdapter searchAdapter;
+    ArrayList<ContentFavorites> contentSearch = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,5 +71,14 @@ public class Search extends AppCompatActivity {
                 return false;
             }
         });
+    }
+    private void RecyclerCall() {
+
+        recyclerView = findViewById(R.id.rvSearch);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        searchAdapter = new SearchAdapter(this, contentSearch);
+        recyclerView.setAdapter(searchAdapter);
+
     }
 }
