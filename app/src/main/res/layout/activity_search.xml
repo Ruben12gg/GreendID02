@@ -91,55 +91,37 @@
             android:id="@+id/location_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_toEndOf="@+id/profile_btn"
             android:layout_marginStart="28dp"
+            android:layout_toEndOf="@+id/profile_btn"
             android:background="@drawable/button" />
 
         <Button
             android:id="@+id/post_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_toEndOf="@+id/location_btn"
             android:layout_marginStart="28dp"
+            android:layout_toEndOf="@+id/location_btn"
             android:background="@drawable/button" />
 
         <Button
             android:id="@+id/product_btn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_toEndOf="@+id/post_btn"
             android:layout_marginStart="28dp"
+            android:layout_toEndOf="@+id/post_btn"
             android:background="@drawable/button" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/users_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="452dp"
         android:layout_below="@+id/options_view">
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabs_view"
-        android:layout_width="match_parent"
-        android:layout_height="360dp"
-        android:layout_below="@+id/users_view">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvEExplore"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabTextColor="@color/light_gray_txt"
-            app:tabIndicatorColor="@color/dark_green"
-            app:tabSelectedTextColor="@color/dark_gray_txt"
-            android:background="@color/white" />
+            android:layout_height="wrap_content" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tab_layout"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
     </RelativeLayout>
 </RelativeLayout>
