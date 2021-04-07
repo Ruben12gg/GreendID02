@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,16 +8,16 @@
     tools:context=".Search">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_navigation"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/menu_main"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         app:itemIconTint="@drawable/selector"
-        app:menu="@menu/menu_navigation"
         app:labelVisibilityMode="unlabeled"
-        android:layout_alignParentBottom="true" />
+        app:menu="@menu/menu_navigation" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,16 +61,25 @@
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="52dp"
+            android:layout_centerInParent="true"
             android:layout_margin="16dp"
             android:background="@drawable/outlined_search_bar"
-            android:textColor="@color/black_txt"
-            android:drawablePadding="8dp"
-            android:padding="12dp"
-            android:textSize="16dp"
-            android:hint="@string/SearchKeywords"
-            android:textColorHint="@color/light_gray_txt"
             android:drawableStart="@drawable/ic_search"
-            android:layout_centerInParent="true" />
+            android:drawablePadding="8dp"
+            android:hint="@string/SearchKeywords"
+            android:padding="12dp"
+            android:textColor="@color/black_txt"
+            android:textColorHint="@color/light_gray_txt"
+            android:textSize="16dp" />
+
+        <ImageButton
+            android:id="@+id/btnSearch"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_search" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -121,7 +129,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 </RelativeLayout>

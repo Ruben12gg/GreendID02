@@ -2,44 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:id="@+id/pf_card_view">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/pf_card_view"
-        android:layout_width="100dp"
-        android:layout_height="128dp"
-        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_height="96dp"
+        android:layout_margin="4dp"
         app:cardCornerRadius="20dp"
         app:cardPreventCornerOverlap="false"
         app:cardBackgroundColor="@color/white">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pfp"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="20dp"
             app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/pf_user_name"
+            android:id="@+id/profileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="80dp"
-            android:textAlignment="center"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="38dp"
+            android:textAlignment="textStart"
             android:text="@string/pfName"
             android:textColor="@color/dark_gray_txt"
-            android:textSize="32px" />
+            android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/pf_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="96dp"
-            android:text="@string/pfName"
-            android:textColor="@color/dark_gray_txt"
-            android:textSize="28px" />
+
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
