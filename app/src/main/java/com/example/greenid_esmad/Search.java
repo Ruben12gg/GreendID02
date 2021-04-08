@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +37,7 @@ public class Search extends AppCompatActivity {
     SearchAdapter searchAdapter;
     ArrayList<ContentSearch> contentSearch = new ArrayList<>();
     ImageButton btnSearch;
+    EditText query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,11 @@ public class Search extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
 
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(), Home.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.search:
@@ -66,17 +68,17 @@ public class Search extends AppCompatActivity {
 
                     case R.id.new_post:
                         startActivity(new Intent(getApplicationContext(), NewPost.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.user:
                         startActivity(new Intent(getApplicationContext(), User.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.notifications:
                         startActivity(new Intent(getApplicationContext(), Notifications.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
 
@@ -85,11 +87,12 @@ public class Search extends AppCompatActivity {
                 return false;
             }
         });
-        
+
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 getUsers();
             }
         });
@@ -101,8 +104,15 @@ public class Search extends AppCompatActivity {
         //create firebase reference
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        query = findViewById(R.id.search_bar);
+
+        String queryTxt = query.getText().toString();
+
+        Log.d("QUERY", queryTxt);
+
         //Get data from all users
         db.collection("users")
+                .whereEqualTo("name", queryTxt)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
