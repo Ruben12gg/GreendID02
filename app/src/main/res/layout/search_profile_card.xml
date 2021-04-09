@@ -15,7 +15,7 @@
         app:cardBackgroundColor="@color/white">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/pfp"
+            android:id="@+id/pfpSearch"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginStart="24dp"

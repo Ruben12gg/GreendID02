@@ -101,6 +101,10 @@ public class Search extends AppCompatActivity {
     }
 
     private void getUsers() {
+
+        //clear user list before showing another search result
+        contentSearch.clear();
+
         //create firebase reference
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -124,17 +128,16 @@ public class Search extends AppCompatActivity {
 
                                 String profileName = document.getString("name");
                                 String pfp = document.getString("pfp");
-                                String date = document.getString("date");
-                                String contentUrl = document.getString("contentUrl");
-                                String likeVal = document.getString("likeVal");
-                                String commentVal = document.getString("commentVal");
-                                String location = document.getString("location");
-                                String description = document.getString("description");
+                                String id = document.getString("id");
+                                String bio = document.getString("bio");
+                                String followers = document.getString("followersVal");
+                                String following = document.getString("followingVal");
+
 
                                 Log.d("PROFILE + PFP", profileName + " " + pfp);
 
 
-                                contentSearch.add(new ContentSearch(profileName, pfp));
+                                contentSearch.add(new ContentSearch(profileName, pfp, id, bio, followers, following));
 
 
                             }

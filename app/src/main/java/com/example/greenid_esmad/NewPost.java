@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,11 +52,16 @@ public class NewPost extends AppCompatActivity {
     EditText description;
     EditText location;
     Button postBtn;
+    ImageView addIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
+
+        addIcon = findViewById(R.id.addIcon);
+        addIcon.setVisibility(View.VISIBLE);
+
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -141,6 +148,7 @@ public class NewPost extends AppCompatActivity {
             imageUri = data.getData();
 
             contentPic.setImageURI(imageUri);
+            addIcon.setVisibility(View.INVISIBLE);
 
         }
     }
@@ -238,6 +246,7 @@ public class NewPost extends AppCompatActivity {
 
                         progDiag.dismiss();
                         Snackbar.make(findViewById(android.R.id.content), "Image Uploaded!", Snackbar.LENGTH_LONG).show();
+                        callHome();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -256,6 +265,19 @@ public class NewPost extends AppCompatActivity {
                 progDiag.setMessage("Loading " + (int) progressPercentage + "%");
             }
         });
+
+    }
+
+    private void callHome() {
+        final Handler handler = new Handler(Looper.getMainLooper());
+        //call home activity after 500ms
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(getApplicationContext(), Home.class));
+                finish();
+            }
+        }, 500);
 
     }
 }

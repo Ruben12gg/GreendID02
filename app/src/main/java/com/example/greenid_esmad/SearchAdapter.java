@@ -1,6 +1,7 @@
 package com.example.greenid_esmad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             super(itemView);
 
             tvProfileName = itemView.findViewById(R.id.profileName);
-            pfp = itemView.findViewById(R.id.pfp);
+            pfp = itemView.findViewById(R.id.pfpSearch);
             resultCard = itemView.findViewById(R.id.pf_card_view);
             itemView.setOnClickListener(this);
         }
@@ -67,11 +68,27 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         final String pfpPic = contentSearch.getPfp();
         Picasso.get().load(pfpPic).into(holder.pfp);
 
+        final String pfName = contentSearch.getProfileName();
+        final String bio = contentSearch.getBio();
+        final String followers = contentSearch.getFollowers();
+        final String following = contentSearch.getFollowing();
+        final String id = contentSearch.getId();
+
+
 
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("TAG", "XPTO");
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("pfName", pfName);
+                i.putExtra("pfp", pfpPic);
+                i.putExtra("bio", bio);
+                i.putExtra("followers", followers);
+                i.putExtra("following", following);
+                i.putExtra("id", id);
+                v.getContext().startActivity(i);
 
 
             }
