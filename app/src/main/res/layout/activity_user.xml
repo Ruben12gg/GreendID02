@@ -51,25 +51,21 @@
             android:id="@+id/settingsBtn"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_toLeftOf="@+id/favoritesBtn"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/settings"
-            />
+            android:layout_marginEnd="16dp"
+            android:layout_toLeftOf="@+id/favoritesBtn"
+            android:background="@drawable/settings" />
 
         <ImageButton
             android:id="@+id/favoritesBtn"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/favorites_white"
-            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-
-            />
-
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/favorites_white" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -138,23 +134,6 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/btnView"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:layout_below="@id/pfStats"
-            android:layout_marginTop="12dp"
-            android:layout_toRightOf="@+id/pfp">
-
-            <Button
-                android:id="@+id/btnFollow"
-                android:layout_width="128dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/btnbox"
-                android:text="@string/Follow"
-                android:textSize="40px" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/bioView"
