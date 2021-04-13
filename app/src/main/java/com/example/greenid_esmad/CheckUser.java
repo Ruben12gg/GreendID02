@@ -130,6 +130,64 @@ public class CheckUser extends AppCompatActivity {
                                 String newFollowersTxt = String.valueOf(newFollowers);
                                 followers.setText(newFollowersTxt);
 
+                                //Change OWN user following value
+                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String userFollowing = document.getString("followingVal");
+
+                                                Integer newUserFollowing = Integer.parseInt(userFollowing) - 1;
+                                                String newUserFollowingTxt = String.valueOf(newUserFollowing);
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("followingVal", newUserFollowingTxt);
+
+                                                db.collection("users").document(userId).update(data);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                //Change OTHER user followers value
+                                db.collection("users").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String followers = document.getString("followersVal");
+
+                                                Integer newFollowersVal = Integer.parseInt(followers) - 1;
+                                                String newUserFollowingTxt = String.valueOf(newFollowersVal);
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("followersVal", newUserFollowingTxt);
+
+                                                db.collection("users").document(bioTxt).update(data);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
                                 Log.d("UNFOLLOW", "User was already followed: UNFOLLOWING!");
 
 
@@ -149,6 +207,100 @@ public class CheckUser extends AppCompatActivity {
                                 Integer newFollowers = Integer.parseInt(followersVar) + 1;
                                 String newFollowersTxt = String.valueOf(newFollowers);
                                 followers.setText(newFollowersTxt);
+
+                                //Change OWN user following value
+                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String userFollowing = document.getString("followingVal");
+
+                                                Integer newUserFollowing = Integer.parseInt(userFollowing) + 1;
+                                                String newUserFollowingTxt = String.valueOf(newUserFollowing);
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("followingVal", newUserFollowingTxt);
+
+                                                db.collection("users").document(userId).update(data);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                //Change OTHER user followers value
+                                db.collection("users").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String followers = document.getString("followersVal");
+
+                                                Integer newFollowersVal = Integer.parseInt(followers) + 1;
+                                                String newUserFollowingTxt = String.valueOf(newFollowersVal);
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("followersVal", newUserFollowingTxt);
+
+                                                db.collection("users").document(bioTxt).update(data);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                //Send notification to followed user
+                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String name = document.getString("name");
+                                                String pfpUrl = document.getString("pfp");
+                                                String contentTxt = name + " has followed you!";
+                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                Date date = new Date();
+                                                String dateTxt = formatter.format(date).toString();
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("username", name);
+                                                data.put("pfpUrl", pfpUrl);
+                                                data.put("contentUrl", "");
+                                                data.put("commentVal", contentTxt);
+                                                data.put("date", dateTxt);
+
+                                                db.collection("users").document(bioTxt).collection("notifications").add(data);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
                             }
                         } else {
                             Log.d("TAG", "get failed with ", task.getException());
@@ -173,8 +325,4 @@ public class CheckUser extends AppCompatActivity {
 
     }
 
-    private void follow() {
-
-
-    }
 }
