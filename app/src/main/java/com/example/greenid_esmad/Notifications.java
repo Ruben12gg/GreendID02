@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class Notifications extends AppCompatActivity {
     RecyclerView recyclerView;
     NotificationsAdapter notificationsAdapter;
     ArrayList<ContentNotifications> contentNotifications = new ArrayList<>();
+    ImageButton delBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class Notifications extends AppCompatActivity {
                 return false;
             }
         });
+
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
@@ -113,7 +116,31 @@ public class Notifications extends AppCompatActivity {
 
                     }
                 });
+        
+        delBtn = findViewById(R.id.delBtn);
+        delBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DELETE", "Click on delete");
+                /*DelNotifs();*/
+            }
+        });
+        
     }
+
+    private void DelNotifs() {
+
+        contentNotifications.clear();
+
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).collection("notifications");
+
+
+    }
+
     private void RecyclerCall() {
 
         recyclerView = findViewById(R.id.notificationrv);
