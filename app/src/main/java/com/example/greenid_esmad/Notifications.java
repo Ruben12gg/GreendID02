@@ -2,6 +2,7 @@ package com.example.greenid_esmad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -52,26 +54,26 @@ public class Notifications extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
 
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(), Home.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.search:
                         startActivity(new Intent(getApplicationContext(), Search.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.new_post:
                         startActivity(new Intent(getApplicationContext(), NewPost.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.user:
                         startActivity(new Intent(getApplicationContext(), User.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.notifications:
@@ -92,6 +94,7 @@ public class Notifications extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users").document(userId).collection("notifications")
+                /*.orderBy("date", Query.Direction.ASCENDING)*/ //to use later on!
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -104,8 +107,13 @@ public class Notifications extends AppCompatActivity {
                                 String contentUrl = document.getString("contentUrl");
                                 String commentVal = document.getString("commentVal");
                                 String author = document.getString("username");
+                                String notifId = document.getString("notifId");
 
-                                contentNotifications.add(new ContentNotifications (authorPfp, contentUrl, commentVal, author));
+                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                String userId = globalUserId.getUserIdGlobal();
+
+
+                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId));
 
                             }
                         } else {
@@ -115,17 +123,24 @@ public class Notifications extends AppCompatActivity {
                         RecyclerCall();
 
                     }
+
                 });
-        
-        delBtn = findViewById(R.id.delBtn);
-        delBtn.setOnClickListener(new View.OnClickListener() {
+
+        ItemTouchHelper.SimpleCallback itemTouchHelperSimpleCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
-            public void onClick(View view) {
-                Log.d("DELETE", "Click on delete");
-                /*DelNotifs();*/
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
             }
-        });
-        
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                contentNotifications.remove(viewHolder.getAdapterPosition());
+                notificationsAdapter.notifyDataSetChanged();
+            }
+        };
+
+
     }
 
     private void DelNotifs() {
@@ -136,7 +151,7 @@ public class Notifications extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(userId).collection("notifications");
+        db.collection("users").document(userId).collection("notifications").document();
 
 
     }
@@ -147,7 +162,24 @@ public class Notifications extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         notificationsAdapter = new NotificationsAdapter(this, contentNotifications);
+        new ItemTouchHelper(itemTouchHelperSimpleCallBack).attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(notificationsAdapter);
 
     }
+
+    ItemTouchHelper.SimpleCallback itemTouchHelperSimpleCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            contentNotifications.remove(viewHolder.getAdapterPosition());
+            notificationsAdapter.notifyDataSetChanged();
+        }
+    };
+
+
 }

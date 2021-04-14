@@ -42,7 +42,6 @@
             android:text="@string/CommentValue"
             android:textColor="@color/black"/>
 
-
     </RelativeLayout>
 
     <ImageView
