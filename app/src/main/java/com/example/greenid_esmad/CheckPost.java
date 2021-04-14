@@ -24,6 +24,7 @@ public class CheckPost extends AppCompatActivity {
     ImageButton btnBack;
     TextView topName;
     ImageView contentPic;
+    ImageView zoomedImg;
     TextView likes;
     TextView comments;
     TextView author;
@@ -98,8 +99,6 @@ public class CheckPost extends AppCompatActivity {
         });
 
 
-
-
         // Set Home Selected
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -142,7 +141,6 @@ public class CheckPost extends AppCompatActivity {
         });
 
 
-
         btnBack = findViewById(R.id.backBtn);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -155,4 +153,6 @@ public class CheckPost extends AppCompatActivity {
         });
 
     }
+
+
 }

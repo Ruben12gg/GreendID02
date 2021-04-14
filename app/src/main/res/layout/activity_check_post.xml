@@ -51,12 +51,13 @@
         android:layout_marginTop="12.5dp"
         android:background="@drawable/arrow_back" />
 
-    <ImageView
+    <com.zolad.zoominimageview.ZoomInImageView
         android:id="@+id/imgPost"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:layout_below="@+id/main_toolbar"
         android:scaleType="centerCrop" />
+
 
     <ImageButton
         android:id="@+id/likeBtn"
@@ -160,5 +161,6 @@
             android:layout_height="match_parent" />
 
     </RelativeLayout>
+
 
 </RelativeLayout>
