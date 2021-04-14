@@ -51,7 +51,6 @@
         android:scaleType="centerCrop"
         android:id="@+id/contentPic"
         android:layout_alignParentEnd="true"
-        android:background="@color/light_txt"
         android:layout_margin="5dp"/>
 
 

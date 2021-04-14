@@ -46,9 +46,14 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         final String authorPfp = contentNotifications.getAuthorPfp();
         final String contentUrl = contentNotifications.getContentUrl();
 
-
         Picasso.get().load(authorPfp).into(holder.profile_image);
-        Picasso.get().load(contentUrl).into(holder.contentPic);
+
+        //Check if there's an image to show on the notification to prevent crashing from trying to load null img src into imgView
+        if (contentUrl.isEmpty()) {
+            return;
+        } else {
+            Picasso.get().load(contentUrl).into(holder.contentPic);
+        }
 
 
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
