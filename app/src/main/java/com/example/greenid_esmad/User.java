@@ -2,6 +2,9 @@ package com.example.greenid_esmad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,9 +44,10 @@ public class User extends AppCompatActivity {
     ImageButton settingsBtn;
     ImageButton favoritesBtn;
 
-    GridView gridView;
-    int[] imagePosts = {R.drawable.pic01, R.drawable.pic02, R.drawable.pic03, R.drawable.pic04, R.drawable.pic05, R.drawable.pic06, R.drawable.pic07, R.drawable.pic08, R.drawable.pic09, R.drawable.pic10};
-    ArrayList<String> image_Posts = new ArrayList<String>();
+    UserAdapter userAdapter;
+    RecyclerView recyclerView;
+    ArrayList<ContentUser> contentUser = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +97,7 @@ public class User extends AppCompatActivity {
 
         });
 
-        gridView = findViewById(R.id.imgGrid);
 
-        CustomAdapter customAdapter = new CustomAdapter();
-        gridView.setAdapter(customAdapter);
 
         settingsBtn = findViewById(R.id.settingsBtn);
 
@@ -169,7 +170,8 @@ public class User extends AppCompatActivity {
         });
 
 
-        /*db.collection("users").document(userId).collection("posts")
+        //Get user Post images
+        db.collection("users").document(userId).collection("posts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -178,18 +180,19 @@ public class User extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("USER POSTS", document.getId() + " => " + document.getData());
 
-                                String imagePostUrl = document.getString("picUrl");
+                                String authorPfp = document.getString("authorPfp");
+                                String contentUrl = document.getString("contentUrl");
+                                String author = document.getString("author");
+                                String date = document.getString("date");
+                                String likeVal = document.getString("likeVal");
+                                String commentVal = document.getString("commentVal");
+                                String location = document.getString("location");
+                                String description = document.getString("description");
+                                String postId = document.getId();
 
+                                Log.d("IMAGES", contentUrl);
 
-                                *//*final Map<String, Object> pfPosts = new HashMap<>();
-                                pfPosts.put("picUrl", imagePostUrl);*//*
-
-                                Log.d("PF POSTS", imagePostUrl);
-
-                                image_Posts.add(imagePostUrl);
-                                String imagePostsTxt = image_Posts.toString();
-
-                                Log.d("IMAGE ARRAY", imagePostsTxt);
+                                contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId));
 
 
                             }
@@ -197,42 +200,21 @@ public class User extends AppCompatActivity {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
 
+                        RecyclerCall();
+
                     }
-                });*/
+                });
 
 
     }
 
-    private class CustomAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return imagePosts.length;
-        }
+    private void RecyclerCall() {
 
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View view1 = getLayoutInflater().inflate(R.layout.row_data, null);
-            //getting view in row_data
-            ImageView images = view1.findViewById(R.id.imgGV);
-
-            images.setImageResource(imagePosts[i]);
-
-
-            return view1;
-
-
-        }
+        recyclerView = findViewById(R.id.imgGridRv);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        userAdapter = new UserAdapter(this, contentUser);
+        recyclerView.setAdapter(userAdapter);
 
     }
 

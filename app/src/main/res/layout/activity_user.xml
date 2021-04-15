@@ -195,8 +195,8 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/badgeView">
 
-            <GridView
-                android:id="@+id/imgGrid"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imgGridRv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
@@ -204,7 +204,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="56dp"
                 android:background="@color/light_txt"
-                android:numColumns="3" />
+
+                />
 
         </RelativeLayout>
 
