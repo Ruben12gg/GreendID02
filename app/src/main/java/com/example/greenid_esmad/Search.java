@@ -116,7 +116,7 @@ public class Search extends AppCompatActivity {
 
         //Get data from all users
         db.collection("users")
-                .whereEqualTo("name", queryTxt)
+                .whereGreaterThanOrEqualTo("name", queryTxt)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
