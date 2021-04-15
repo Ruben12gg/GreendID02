@@ -1,6 +1,7 @@
 package com.example.greenid_esmad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -101,8 +103,19 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("users").document(userId).collection("notifications").document(notifId).delete();
 
+                Intent i = new Intent(v.getContext(), Notifications.class);
+                v.getContext().startActivity(i);
 
+            }
+        });
 
+        holder.resultCard.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                Log.d("LONG CLICK", "Long click on the notification: ");
+
+                return false;
             }
         });
 
@@ -126,4 +139,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     }
 
 
+
 }
+

@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -91,6 +94,8 @@ public class Notifications extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
         Log.d("USERID", userId);
 
+        contentNotifications.clear();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users").document(userId).collection("notifications")
@@ -126,19 +131,23 @@ public class Notifications extends AppCompatActivity {
 
                 });
 
-        ItemTouchHelper.SimpleCallback itemTouchHelperSimpleCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
-                contentNotifications.remove(viewHolder.getAdapterPosition());
-                notificationsAdapter.notifyDataSetChanged();
-            }
-        };
+                delBtn = findViewById(R.id.delBtn);
+                delBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("ONRESUME", "Activity resumed");
 
 
     }
@@ -151,7 +160,7 @@ public class Notifications extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(userId).collection("notifications").document();
+        db.collection("users").document(userId).collection("notifications");
 
 
     }
@@ -180,6 +189,7 @@ public class Notifications extends AppCompatActivity {
             notificationsAdapter.notifyDataSetChanged();
         }
     };
+
 
 
 }
