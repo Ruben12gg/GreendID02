@@ -63,7 +63,7 @@
             android:layout_height="52dp"
             android:layout_centerInParent="true"
             android:layout_margin="16dp"
-            android:background="@drawable/outlined_search_bar"
+            android:background="@drawable/outline"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="8dp"
             android:hint="@string/SearchKeywords"
