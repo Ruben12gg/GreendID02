@@ -108,9 +108,10 @@ public class Home extends AppCompatActivity {
                                 String commentVal = document.getString("commentVal");
                                 String location = document.getString("location");
                                 String description = document.getString("description");
+                                String postId = document.getId().toString();
 
 
-                                feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description));
+                                feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId));
 
 
                             }

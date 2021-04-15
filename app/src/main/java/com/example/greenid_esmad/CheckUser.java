@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class CheckUser extends AppCompatActivity {
 
@@ -280,6 +281,7 @@ public class CheckUser extends AppCompatActivity {
                                                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
                                                 Date date = new Date();
                                                 String dateTxt = formatter.format(date).toString();
+                                                String notifId = UUID.randomUUID().toString();
 
                                                 Map<String, Object> data = new HashMap<>();
                                                 data.put("username", name);
@@ -287,8 +289,9 @@ public class CheckUser extends AppCompatActivity {
                                                 data.put("contentUrl", "");
                                                 data.put("commentVal", contentTxt);
                                                 data.put("date", dateTxt);
+                                                data.put("notifId", notifId);
 
-                                                db.collection("users").document(bioTxt).collection("notifications").add(data);
+                                                db.collection("users").document(bioTxt).collection("notifications").document(notifId).set(data);
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());

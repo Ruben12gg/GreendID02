@@ -205,6 +205,14 @@ public class Login extends AppCompatActivity {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("TAG", "Google sign in failed", e);
+
+                // Error Toast
+                String message = "Error logging in. Please check your internet connection, restart the app and make sure you're using a valid Google account.";
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(context, message, duration);
+                toast.show();
+
                 // [START_EXCLUDE]
                 updateUI(null);
                 // [END_EXCLUDE]

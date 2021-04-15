@@ -1,6 +1,7 @@
 package com.example.greenid_esmad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,11 +89,30 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Picasso.get().load(authorPfp).into(holder.pfp);
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
+        String author = contentFeed.getAuthor();
+        String location = contentFeed.getLocation();
+        String likesVal = contentFeed.getLikeVal();
+        String commentVal = contentFeed.getCommentVal();
+        String date = contentFeed.getDate();
+        String description = contentFeed.getDescription();
+        String postId = contentFeed.getPostId();
+
 
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", "XPTO");
+                Log.d("POSTCARD", "Clicked on Post Card");
+
+                Intent i = new Intent(v.getContext(), CheckPost.class);
+                i.putExtra("author", author);
+                i.putExtra("location", location);
+                i.putExtra("likeVal", likesVal);
+                i.putExtra("commentVal", commentVal);
+                i.putExtra("date", date);
+                i.putExtra("description", description);
+                i.putExtra("contentUrl", contentUrl);
+                i.putExtra("postId", postId);
+                v.getContext().startActivity(i);
 
 
             }
