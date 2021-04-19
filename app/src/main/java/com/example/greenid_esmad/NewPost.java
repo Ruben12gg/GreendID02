@@ -193,6 +193,7 @@ public class NewPost extends AppCompatActivity {
                                             if (document.exists()) {
 
                                                 String name = document.getString("name");
+                                                String authorId = document.getString("id");
                                                 String pfpUrl = document.getString("pfp");
 
                                                 location = findViewById(R.id.locationTxt);
@@ -215,6 +216,7 @@ public class NewPost extends AppCompatActivity {
 
                                                 Map<String, Object> data = new HashMap<>();
                                                 data.put("author", name);
+                                                data.put("authorId", authorId);
                                                 data.put("authorPfp", pfpUrl);
                                                 data.put("location", locationTxt);
                                                 data.put("description", descriptionTxt);

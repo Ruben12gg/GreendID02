@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/post_card_02"
     android:layout_width="match_parent"
@@ -16,23 +15,23 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="312dp"
-            app:cardUseCompatPadding="true"
-            app:cardPreventCornerOverlap="false"
+            app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="40dp"
-            app:cardBackgroundColor="@android:color/white">
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true">
 
             <ImageView
                 android:id="@+id/post_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:id="@+id/corner_shade"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignTop="@+id/post_image"
                 android:layout_alignStart="@+id/post_image"
+                android:layout_alignTop="@+id/post_image"
                 android:layout_alignEnd="@id/post_image"
                 android:layout_alignBottom="@+id/post_image"
                 android:src="@drawable/corner_shade_post" />
@@ -62,8 +61,8 @@
                     android:id="@+id/location_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/ic_baseline_location_on_24" />
 
                 <TextView
@@ -82,22 +81,22 @@
                 android:id="@+id/dateText"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_marginStart="28dp"
                 android:layout_marginBottom="64dp"
                 android:text="@string/date"
                 android:textColor="@color/white_txt"
-                android:layout_gravity="bottom"
                 android:textSize="40px" />
 
             <TextView
                 android:id="@+id/descriptionText"
                 android:layout_width="320dp"
                 android:layout_height="40dp"
+                android:layout_gravity="bottom"
                 android:layout_marginStart="28dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/description"
                 android:textColor="@color/white_txt"
-                android:layout_gravity="bottom"
                 android:textSize="40px" />
 
         </androidx.cardview.widget.CardView>
@@ -112,14 +111,17 @@
                 android:layout_height="64dp"
                 android:background="@drawable/post_card" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/favorites_icon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_alignTop="@+id/utilityBar"
-                android:layout_alignBottom="@+id/utilityBar"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="56dp"
-                android:src="@drawable/ic_like_empty" />
+                android:background="@drawable/leaf"
+                android:scaleType="fitXY"
+                android:src="@drawable/leaf"
+                />
+
 
             <TextView
                 android:id="@+id/likes_val"
@@ -127,8 +129,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/utilityBar"
                 android:layout_alignBottom="@id/utilityBar"
-                android:layout_toEndOf="@+id/favorites_icon"
                 android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/favorites_icon"
                 android:text="@string/LikesVal"
                 android:textAlignment="center"
                 android:textColor="@color/black_txt_num"
@@ -140,8 +142,8 @@
                 android:layout_height="28dp"
                 android:layout_alignTop="@+id/utilityBar"
                 android:layout_alignBottom="@+id/utilityBar"
-                android:layout_toEndOf="@+id/likes_val"
                 android:layout_marginStart="44dp"
+                android:layout_toEndOf="@+id/likes_val"
                 android:src="@drawable/comment" />
 
             <TextView
@@ -150,8 +152,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/utilityBar"
                 android:layout_alignBottom="@+id/utilityBar"
-                android:layout_toEndOf="@+id/comments_icon"
                 android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/comments_icon"
                 android:text="@string/CommentsVal"
                 android:textAlignment="center"
                 android:textColor="@color/black_txt_num"
@@ -163,8 +165,8 @@
                 android:layout_height="32dp"
                 android:layout_alignTop="@+id/utilityBar"
                 android:layout_alignBottom="@+id/utilityBar"
-                android:layout_toEndOf="@+id/comments_val"
                 android:layout_marginStart="44dp"
+                android:layout_toEndOf="@+id/comments_val"
                 android:src="@drawable/favorites_green" />
 
         </RelativeLayout>

@@ -10,6 +10,8 @@ public class ContentFeed {
     private String location;
     private String description;
     private String postId;
+    private  String userId;
+    private String authorId;
 
     public String getDescription() {
         return description;
@@ -83,7 +85,23 @@ public class ContentFeed {
         this.postId = postId;
     }
 
-    public ContentFeed(String authorPfp, String location, String contentUrl, String author, String date, String likeVal, String commentVal, String description, String postId) {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public ContentFeed(String authorPfp, String location, String contentUrl, String author, String date, String likeVal, String commentVal, String description, String postId, String userId, String authorId) {
         this.authorPfp = authorPfp;
         this.contentUrl = contentUrl;
         this.author = author;
@@ -93,6 +111,8 @@ public class ContentFeed {
         this.location = location;
         this.description = description;
         this.postId = postId;
+        this.userId = userId;
+        this.authorId = authorId;
     }
 }
 

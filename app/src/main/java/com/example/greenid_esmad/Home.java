@@ -100,6 +100,7 @@ public class Home extends AppCompatActivity {
                                 Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
 
                                 String author = document.getString("author");
+                                String authorId = document.getString("authorId");
                                 Log.d("AUTHOR", author);
                                 String authorPfp = document.getString("authorPfp");
                                 String date = document.getString("date");
@@ -111,7 +112,8 @@ public class Home extends AppCompatActivity {
                                 String postId = document.getId().toString();
 
 
-                                feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId));
+
+                                feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
 
 
                             }
