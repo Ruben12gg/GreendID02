@@ -119,7 +119,7 @@
                 android:layout_alignTop="@+id/utilityBar"
                 android:layout_alignBottom="@+id/utilityBar"
                 android:layout_marginStart="56dp"
-                android:src="@drawable/ic_like_empty" />
+                android:src="@drawable/leaf" />
 
             <TextView
                 android:id="@+id/likes_val"
