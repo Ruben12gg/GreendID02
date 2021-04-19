@@ -134,86 +134,84 @@
      </RelativeLayout>-->
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView"
+        android:layout_below="@id/selected_pic_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/selected_pic_view"
-        android:fillViewport="true">
+        android:fillViewport="true" >
 
         <RelativeLayout
             android:id="@+id/infoPost"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/selected_pic_view"
-            android:fillViewport="true">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/descriptiontv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/description"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/descriptiontv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/description"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/descriptionTxt"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/descriptiontv"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/input_box"
-                android:hint="@string/descri"
-                android:textAlignment="center"
-                android:textColor="@color/black_txt"
-                android:textColorHint="@color/light_txt"
-                android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/descriptionTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/descriptiontv"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/input_box"
+                    android:hint="@string/descri"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_txt"
+                    android:textColorHint="@color/light_txt"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/localisationtv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/descriptionTxt"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/location"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/localisationtv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/descriptionTxt"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/location"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/locationTxt"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/localisationtv"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/input_box"
-                android:hint="@string/loca"
-                android:textAlignment="center"
-                android:textColor="@color/black_txt"
-                android:textColorHint="@color/light_txt"
-                android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/locationTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/localisationtv"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/input_box"
+                    android:hint="@string/loca"
+                    android:textAlignment="center"
+                    android:textColor="@color/black_txt"
+                    android:textColorHint="@color/light_txt"
+                    android:textSize="16sp" />
 
 
-            <Button
-                android:id="@+id/postBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_below="@+id/locationTxt"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="48dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/btnbox"
-                android:text="@string/Publish"
-                android:textSize="16sp" />
+                <Button
+                    android:id="@+id/postBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/locationTxt"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="48dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/btnbox"
+                    android:text="@string/Publish"
+                    android:textSize="16sp" />
+
         </RelativeLayout>
-
-    </ScrollView>
-
+</ScrollView>
 
 </RelativeLayout>

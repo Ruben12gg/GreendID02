@@ -28,11 +28,9 @@
 
     //Search
     <string name="SearchKeywords">Search Keywords...</string>
-    <string name="ThisWeek">This Week</string>
-    <string name="ThisMonth">This Month</string>
-    <string name="Earlier">Earlier</string>
     <string name="Caption">Caption</string>
     <string name="Hashtag">Hashtag</string>
+    <string name="calendar"> Event Calendar</string>
 
     //Settings
     <string name="settings">Settings</string>

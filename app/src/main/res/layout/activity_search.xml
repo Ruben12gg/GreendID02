@@ -55,7 +55,8 @@
         android:id="@+id/sb_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp">
+        android:layout_marginTop="72dp"
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/search_bar"
@@ -64,10 +65,9 @@
             android:layout_centerInParent="true"
             android:layout_margin="16dp"
             android:background="@drawable/outline"
-            android:drawableStart="@drawable/ic_search"
             android:drawablePadding="8dp"
             android:hint="@string/SearchKeywords"
-            android:padding="12dp"
+            android:padding="16dp"
             android:textColor="@color/black_txt"
             android:textColorHint="@color/light_gray_txt"
             android:textSize="16dp" />
@@ -78,53 +78,44 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="22dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/ic_search" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/options_view"
+        android:id="@+id/calendar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_below="@id/sb_view"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sb_view">
 
-        <Button
-            android:id="@+id/profile_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/button" />
+        <TextView
+            android:id="@+id/calendarTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calendar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            ></TextView>
 
-        <Button
-            android:id="@+id/location_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="28dp"
-            android:layout_toEndOf="@+id/profile_btn"
-            android:background="@drawable/button" />
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_marginTop="32dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/calendarTv"
+            android:layout_margin="24dp"
+            android:background="@drawable/calendarbckg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/post_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="28dp"
-            android:layout_toEndOf="@+id/location_btn"
-            android:background="@drawable/button" />
-
-        <Button
-            android:id="@+id/product_btn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="28dp"
-            android:layout_toEndOf="@+id/post_btn"
-            android:background="@drawable/button" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/users_view"
         android:layout_width="match_parent"
         android:layout_height="452dp"
-        android:layout_below="@+id/options_view">
+        android:layout_below="@+id/calendar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearch"
