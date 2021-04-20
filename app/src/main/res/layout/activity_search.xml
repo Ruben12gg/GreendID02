@@ -82,6 +82,13 @@
             android:background="@drawable/ic_search" />
     </RelativeLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </ScrollView>
+
     <RelativeLayout
         android:id="@+id/calendar"
         android:layout_width="match_parent"
@@ -94,7 +101,7 @@
             android:layout_height="wrap_content"
             android:text="@string/calendar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:textSize="24sp"
             android:textColor="@color/black"
             ></TextView>
@@ -120,7 +127,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="59dp"/>
 
     </RelativeLayout>
 </RelativeLayout>

@@ -89,7 +89,7 @@ public class Home extends AppCompatActivity {
 
         //Get data to show on Feed
         db.collection("posts")
-                .orderBy("date", Query.Direction.ASCENDING)
+                .orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
