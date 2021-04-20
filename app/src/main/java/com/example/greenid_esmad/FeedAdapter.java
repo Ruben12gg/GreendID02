@@ -181,6 +181,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 Log.d("POSTID", postId);
                 Log.d("LIKEVAL", author);
 
+                //Add/remove like from post, depending on the case
                 db.collection("users").document(userId).collection("likes").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -188,11 +189,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
+                                //update value on the text View
                                 holder.btnLike.setImageResource(R.drawable.leaf);
                                 Integer newDislikeVal = Integer.parseInt(holder.tvAuthor.getText().toString()) - 1;
                                 String newDislikeValTxt = String.valueOf(newDislikeVal);
                                 holder.tvAuthor.setText(newDislikeValTxt);
 
+                                //update like value on the database
                                 db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -222,16 +225,19 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                     }
                                 });
 
+                                //Remove post from the the user's liked collection
                                 db.collection("users").document(userId).collection("likes").document(postId).delete();
 
 
                             } else {
 
+                                //Update like value on the text View
                                 holder.btnLike.setImageResource(R.drawable.leaf_green);
                                 Integer newLikesVal = Integer.parseInt(holder.tvAuthor.getText().toString()) + 1;
                                 String newLikesValTxt = String.valueOf(newLikesVal);
                                 holder.tvAuthor.setText(newLikesValTxt);
 
+                                //update like and add to database
                                 db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -262,6 +268,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                 });
 
 
+                                //generate notification 
                                 db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {

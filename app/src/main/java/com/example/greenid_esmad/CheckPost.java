@@ -146,6 +146,7 @@ public class CheckPost extends AppCompatActivity {
                 Log.d("POSTID", postId);
                 Log.d("LIKEVAL", likeVal);
 
+                //Give/Remove like depending on the case
                 db.collection("users").document(userId).collection("likes").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -153,11 +154,13 @@ public class CheckPost extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
+                                //changing the like val on the txt view
                                 likeBtn.setImageResource(R.drawable.leaf);
                                 Integer dislikeVal = Integer.parseInt(likes.getText().toString()) - 1;
                                 String newDislikeVal = String.valueOf(dislikeVal);
                                 likes.setText(newDislikeVal);
 
+                                //removing like from post
                                 db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -187,17 +190,20 @@ public class CheckPost extends AppCompatActivity {
                                     }
                                 });
 
+                                //deleting post from the user's liked collection
                                 db.collection("users").document(userId).collection("likes").document(postId).delete();
 
 
                             } else {
 
+                                //pretty much do the opposite to like a post
+                                //Change the like value on the txt View
                                 likeBtn.setImageResource(R.drawable.leaf_green);
                                 Integer newLikesVal = Integer.parseInt(likes.getText().toString()) + 1;
                                 String newLikesValTxt = String.valueOf(newLikesVal);
                                 likes.setText(newLikesValTxt);
 
-
+                                //update the like value on the database
                                 db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -227,6 +233,7 @@ public class CheckPost extends AppCompatActivity {
                                     }
                                 });
 
+                                //add the post to the user's liked collection
                                 db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -257,6 +264,7 @@ public class CheckPost extends AppCompatActivity {
                                                 String notifId = UUID.randomUUID().toString();
 
 
+                                                //Generate and send notification data
                                                 Map<String, Object> dataNotif = new HashMap<>();
                                                 dataNotif.put("username", name);
                                                 dataNotif.put("pfpUrl", pfpUrl);
