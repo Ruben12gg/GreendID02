@@ -107,6 +107,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
         String author = contentFeed.getAuthor();
+        String authorId = contentFeed.getAuthorId();
         String location = contentFeed.getLocation();
         String likesVal = contentFeed.getLikeVal();
         String commentVal = contentFeed.getCommentVal();
@@ -115,7 +116,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         String postId = contentFeed.getPostId();
         String userId = contentFeed.getUserId();
 
-        Log.d("POSTID", postId);
+        Log.d("AUTHOR", author);
+        Log.d("AUTHORID", authorId);
+        Log.d("LOCATION", location);
+        Log.d("LIKESVAL", likesVal);
+        Log.d("COMMENTSVAL", commentVal);
+        Log.d("DATE", date);
+        Log.d("DESCRIPTION", description);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -149,6 +156,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                 Intent i = new Intent(v.getContext(), CheckPost.class);
                 i.putExtra("author", author);
+                i.putExtra("authorPfp", authorPfp);
+                i.putExtra("authorId", authorId);
                 i.putExtra("location", location);
                 i.putExtra("likeVal", likesVal);
                 i.putExtra("commentVal", commentVal);
@@ -167,10 +176,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             public void onClick(View view) {
                 Log.d("BTNLIKE", "Click on like Btnnn");
 
-                String newLikesVal = author + 1;
-                holder.tvLikeVal.setText(newLikesVal);
-
-
 
                 Log.d("USERID", userId);
                 Log.d("POSTID", postId);
@@ -184,12 +189,78 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                             if (document.exists()) {
 
                                 holder.btnLike.setImageResource(R.drawable.leaf);
+                                Integer newDislikeVal = Integer.parseInt(holder.tvAuthor.getText().toString()) - 1;
+                                String newDislikeValTxt = String.valueOf(newDislikeVal);
+                                holder.tvAuthor.setText(newDislikeValTxt);
+
+                                db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String likeVal = document.getString("likeVal");
+                                                Integer newLikeVal = Integer.parseInt(likeVal) - 1;
+                                                String newLikeValTxt = String.valueOf(newLikeVal);
+
+                                                Map<String, Object> likeData = new HashMap<>();
+                                                likeData.put("likeVal", newLikeValTxt);
+
+                                                db.collection("posts").document(postId).update(likeData);
+                                                db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
+
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
                                 db.collection("users").document(userId).collection("likes").document(postId).delete();
 
 
                             } else {
 
                                 holder.btnLike.setImageResource(R.drawable.leaf_green);
+                                Integer newLikesVal = Integer.parseInt(holder.tvAuthor.getText().toString()) + 1;
+                                String newLikesValTxt = String.valueOf(newLikesVal);
+                                holder.tvAuthor.setText(newLikesValTxt);
+
+                                db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String likeVal = document.getString("likeVal");
+                                                Integer newLikeVal = Integer.parseInt(likeVal) + 1;
+                                                String newLikeValTxt = String.valueOf(newLikeVal);
+
+                                                Map<String, Object> likeData = new HashMap<>();
+                                                likeData.put("likeVal", newLikeValTxt);
+
+                                                db.collection("posts").document(postId).update(likeData);
+                                                db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
+
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
 
                                 db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override

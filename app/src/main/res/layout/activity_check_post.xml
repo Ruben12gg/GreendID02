@@ -66,7 +66,9 @@
         android:layout_below="@+id/imgPost"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/leaf" />
+        android:background="@drawable/leaf"
+        android:scaleType="centerCrop"
+        android:src="@drawable/leaf" />
 
     <TextView
         android:id="@+id/likes_val"

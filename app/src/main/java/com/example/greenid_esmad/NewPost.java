@@ -156,6 +156,10 @@ public class NewPost extends AppCompatActivity {
     //Upload the previously selected pic to database
     private void uploadPicture() {
 
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
         //create and show a progress upload bar
         final ProgressDialog progDiag = new ProgressDialog(this);
         progDiag.setTitle("Uploading Image...");
@@ -163,7 +167,7 @@ public class NewPost extends AppCompatActivity {
 
         //Generate a random name for the file
         final String randomKey = UUID.randomUUID().toString();
-        StorageReference imageRef = storageReference.child("images/" + randomKey);
+        StorageReference imageRef = storageReference.child("images/" + userId + "/" + randomKey);
 
         //upload the file to the database and generate an usable url to display the picture
         imageRef.putFile(imageUri)
@@ -214,6 +218,8 @@ public class NewPost extends AppCompatActivity {
                                                 String downloadUrl3 = uri.toString();
                                                 Log.d("IMAGE POST LINK", downloadUrl3);
 
+                                                String postId = UUID.randomUUID().toString();
+
                                                 Map<String, Object> data = new HashMap<>();
                                                 data.put("author", name);
                                                 data.put("authorId", authorId);
@@ -224,10 +230,11 @@ public class NewPost extends AppCompatActivity {
                                                 data.put("likeVal", likeVal);
                                                 data.put("commentVal", commentVal);
                                                 data.put("date", dateTxt);
+                                                data.put("postId", postId);
 
 
-                                                db.collection("posts").add(data);
-                                                db.collection("users").document(userId).collection("posts").add(data);
+                                                db.collection("posts").document(postId).set(data);
+                                                db.collection("users").document(userId).collection("posts").document(postId).set(data);
 
 
 
