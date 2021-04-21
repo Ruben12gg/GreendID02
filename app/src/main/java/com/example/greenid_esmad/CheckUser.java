@@ -3,6 +3,8 @@ package com.example.greenid_esmad;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -20,9 +22,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +43,10 @@ public class CheckUser extends AppCompatActivity {
     TextView following;
     ImageButton btnBack;
     Button btnFollow;
+
+    CheckUserAdapter checkUserAdapter;
+    RecyclerView recyclerView;
+    ArrayList<ContentCheckUser> contentCheckUser = new ArrayList<>();
 
 
     @Override
@@ -314,6 +323,41 @@ public class CheckUser extends AppCompatActivity {
             }
         });
 
+        //Get user's Post images
+        db.collection("users").document(bioTxt).collection("posts")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                /*String authorPfp = document.getString("authorPfp");*/
+                                String contentUrl = document.getString("contentUrl");
+                                /*String author = document.getString("author");
+                                String date = document.getString("date");
+                                String likeVal = document.getString("likeVal");
+                                String commentVal = document.getString("commentVal");
+                                String location = document.getString("location");
+                                String description = document.getString("description");
+                                String postId = document.getId();
+*/
+                                Log.d("IMAGES", contentUrl);
+
+                                contentCheckUser.add(new ContentCheckUser(contentUrl));
+
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
+                    }
+                });
+
 
         btnBack = findViewById(R.id.backBtn);
 
@@ -325,6 +369,16 @@ public class CheckUser extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void RecyclerCall() {
+
+        recyclerView = findViewById(R.id.imgGridRv);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        checkUserAdapter = new CheckUserAdapter(this, contentCheckUser);
+        recyclerView.setAdapter(checkUserAdapter);
 
     }
 
