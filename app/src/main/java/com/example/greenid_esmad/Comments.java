@@ -11,6 +11,9 @@ import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,9 +23,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Comments extends AppCompatActivity {
+
+    RecyclerView recyclerView;
+    CommentsAdapter commentsAdapter;
+    ArrayList<ContentComments> contentComments = new ArrayList<>();
 
     EditText add_comment;
     ImageView pfp;
@@ -98,4 +106,14 @@ public class Comments extends AppCompatActivity {
             }
         });
     } */
+
+    private void RecyclerCall() {
+
+        recyclerView = findViewById(R.id.rvComments);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        commentsAdapter = new CommentsAdapter(this, contentComments);
+        recyclerView.setAdapter(commentsAdapter);
+
+    }
 }
