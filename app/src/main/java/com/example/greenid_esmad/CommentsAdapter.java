@@ -35,11 +35,6 @@ public class CommentsAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-    }
-
-    @Override
     public int getItemCount() {
         return 0;
     }
@@ -69,6 +64,13 @@ public class CommentsAdapter extends RecyclerView.Adapter {
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ContentComments contentComments = mData.get(position);
+        // holder.tvAuthor.setText(contentComments.getAuthor());
+
     }
 
 

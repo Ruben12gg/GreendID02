@@ -81,4 +81,5 @@
     <string name="loca"> Type the location here (optional).</string>
     <string name="add_a_comment">Add a comment...</string>
     <string name="Comment">Comment</string>
+    <string name="comments">Comments</string>
 </resources>

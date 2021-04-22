@@ -352,6 +352,20 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
+        commentBtn = findViewById(R.id.commentBtn);
+
+        commentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Comments.class);
+                intent.putExtra("postId", postId);
+                intent.putExtra("postAuthor", authorTxt);
+                intent.putExtra("postAuthorPfp", authorPfp);
+                intent.putExtra("description", descriptionTxt);
+                getApplicationContext().startActivity(intent);
+            }
+        });
+
     }
 
 

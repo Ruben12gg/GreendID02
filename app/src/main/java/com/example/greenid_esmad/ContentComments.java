@@ -1,39 +1,17 @@
 package com.example.greenid_esmad;
 
 public class ContentComments {
-    private String authorPfp;
-    private String contentUrl;
-    private String commentVal;
     private String author;
+    private String auhtorPfp;
+    private String authorId;
+    private String commentId;
+    private String commentVal;
 
-    public ContentComments(String authorPfp, String contentUrl, String commentVal, String author) {
-        this.authorPfp = authorPfp;
-        this.contentUrl = contentUrl;
-        this.commentVal = commentVal;
+    public ContentComments(String author, String auhtorPfp, String authorId, String commentId, String commentVal) {
         this.author = author;
-    }
-
-    public String getAuthorPfp() {
-        return authorPfp;
-    }
-
-    public void setAuthorPfp(String authorPfp) {
-        this.authorPfp = authorPfp;
-    }
-
-    public String getContentUrl() {
-        return contentUrl;
-    }
-
-    public void setContentUrl(String contentUrl) {
-        this.contentUrl = contentUrl;
-    }
-
-    public String getCommentVal() {
-        return commentVal;
-    }
-
-    public void setCommentVal(String commentVal) {
+        this.auhtorPfp = auhtorPfp;
+        this.authorId = authorId;
+        this.commentId = commentId;
         this.commentVal = commentVal;
     }
 
@@ -43,5 +21,37 @@ public class ContentComments {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getAuhtorPfp() {
+        return auhtorPfp;
+    }
+
+    public void setAuhtorPfp(String auhtorPfp) {
+        this.auhtorPfp = auhtorPfp;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
+
+    public String getCommentVal() {
+        return commentVal;
+    }
+
+    public void setCommentVal(String commentVal) {
+        this.commentVal = commentVal;
     }
 }
