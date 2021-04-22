@@ -362,7 +362,7 @@ public class CheckPost extends AppCompatActivity {
                 intent.putExtra("postAuthor", authorTxt);
                 intent.putExtra("postAuthorPfp", authorPfp);
                 intent.putExtra("description", descriptionTxt);
-                getApplicationContext().startActivity(intent);
+                startActivity(intent);
             }
         });
 
