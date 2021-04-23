@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,12 +41,6 @@
             android:layout_marginTop="12.5dp"
             android:background="@drawable/arrow_back" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvComments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp" />
 
     </RelativeLayout>
 
@@ -68,38 +61,49 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_margin="10dp"
             android:layout_toEndOf="@+id/profile_image"
-            android:layout_margin="10dp">
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/username"
-                android:textStyle="bold"
+                android:text="@string/pfName"
                 android:textColor="@color/black"
-                android:text="@string/pfName"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/username"
                 android:layout_marginTop="8dp"
-                android:id="@+id/description"
                 android:maxLines="5"
                 android:text="@string/Caption"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
+
+
         </RelativeLayout>
 
+
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvComments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/publisher_caption"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="72dp" />
 
     <RelativeLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:padding="4dp"
-        android:layout_alignParentBottom="true">
+        android:padding="4dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pfp"
@@ -112,12 +116,12 @@
             android:id="@+id/add_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_toEndOf="@id/pfp"
-            android:layout_toStartOf="@id/post"
             android:layout_centerVertical="true"
-            android:hint="@string/add_a_comment"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/post"
+            android:layout_toEndOf="@id/pfp"
             android:background="@drawable/outline"
+            android:hint="@string/add_a_comment"
             android:padding="12dp"
             android:textColor="@color/black_txt"
             android:textColorHint="@color/light_gray_txt"
@@ -127,9 +131,9 @@
             android:id="@+id/post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
             android:text="POST"
             android:textColor="@color/black_txt"
             android:textSize="14dp" />

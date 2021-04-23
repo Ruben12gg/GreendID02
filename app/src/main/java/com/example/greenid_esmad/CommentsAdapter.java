@@ -68,7 +68,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
         ContentComments contentComments = mData.get(position);
 
-        final String pfp = contentComments.getAuhtorPfp();
+        final String pfp = contentComments.getAuthorPfp();
         final String author = contentComments.getAuthor();
         final String comment = contentComments.getCommentVal();
 

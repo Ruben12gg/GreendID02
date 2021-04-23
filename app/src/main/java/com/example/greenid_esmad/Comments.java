@@ -1,16 +1,21 @@
 package com.example.greenid_esmad;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +28,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,6 +50,7 @@ public class Comments extends AppCompatActivity {
     TextView post_author;
     ImageView post_author_pfp;
     TextView description_view;
+    ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,30 +78,33 @@ public class Comments extends AppCompatActivity {
         String postId = getIntent().getStringExtra("postId");
 
         //Get comment data
-        db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+        db.collection("posts").document(postId).collection("comments")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("COMMENTS", document.getId() + " => " + document.getData());
 
-                        String author = document.getString("author");
-                        String authorPfp = document.getString("authorPfp");
-                        String authorId = document.getString("authorId");
-                        String commentId = document.getString("commentId");
-                        String commentVal = document.getString("commentVal");
+                                String author = document.getString("author");
+                                String authorPfp = document.getString("authorPfp");
+                                String authorId = document.getString("authorId");
+                                String commentId = document.getString("commentId");
+                                String commentVal = document.getString("commentVal");
 
-                        contentComments.add(new ContentComments(author, authorPfp, authorId, commentId, commentVal));
+                                contentComments.add(new ContentComments(author, authorPfp, authorId, commentId, commentVal));
 
-                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d("TAG", "No such document");
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
                     }
-                } else {
-                    Log.d("TAG", "get failed with ", task.getException());
-                }
-            }
-        });
+                });
+
 
         //Get profile Data
         db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -105,7 +117,7 @@ public class Comments extends AppCompatActivity {
                         pfp = findViewById(R.id.pfp);
                         Picasso.get().load(author_pfp).into(pfp);
 
-                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+
                     } else {
                         Log.d("TAG", "No such document");
                     }
@@ -122,7 +134,7 @@ public class Comments extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (add_comment.getText().toString().equals("")){
+                if (add_comment.getText().toString().equals("")) {
                     Toast.makeText(Comments.this, "The comment cannot be empty", Toast.LENGTH_SHORT).show();
                 } else {
                     add_comment();
@@ -130,10 +142,21 @@ public class Comments extends AppCompatActivity {
             }
         });
 
-        // getImage();
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
-    private void add_comment(){
+    private void add_comment() {
+
+
+        Toast.makeText(Comments.this, "Comment added!", Toast.LENGTH_SHORT).show();
+
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
@@ -141,7 +164,7 @@ public class Comments extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        //Get profile Data
+        //Get profile Data to use in comment data
         db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -164,7 +187,43 @@ public class Comments extends AppCompatActivity {
 
                         String postId = getIntent().getStringExtra("postId");
 
+                        //post the comment to db
                         db.collection("posts").document(postId).collection("comments").document(comment_id).set(commentData);
+
+                        //clear input box after post
+                        add_comment.getText().clear();
+
+                        Log.d("POSTID", postId);
+                        //Update the commentVal from that post
+                        db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+
+                                        Log.d("COMMENT VAL DATA", document.getId() + " => " + document.getData());
+
+                                        String commentVal = document.getString("commentVal");
+                                        Integer newCommentVal = Integer.parseInt(commentVal) + 1;
+                                        String newCommentValTxt = String.valueOf(newCommentVal);
+
+                                        Log.d("COMMENTVAL", newCommentValTxt);
+
+                                        Map<String, Object> commentValData = new HashMap<>();
+                                        commentValData.put("commentVal", newCommentValTxt);
+
+                                        db.collection("posts").document(postId).update(commentValData);
+
+                                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                    } else {
+                                        Log.d("TAG", "No such document");
+                                    }
+                                } else {
+                                    Log.d("TAG", "get failed with ", task.getException());
+                                }
+                            }
+                        });
 
                         Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                     } else {
@@ -175,24 +234,57 @@ public class Comments extends AppCompatActivity {
                 }
             }
         });
+
+
+        //refresh comment section after posting comment
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RefreshComments();
+            }
+        }, 100);
+
     }
 
-    /* private void getImage(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+    private void RefreshComments() {
 
-        reference.addChildEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                Glide.with(getApplicationContext()).load(user.getImageurl).into(pfp);
-            }
+        Log.d("REFRESH", "RefreshComments");
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        contentComments.clear();
 
-            }
-        });
-    } */
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        String postId = getIntent().getStringExtra("postId");
+        //Get comment data
+        db.collection("posts").document(postId).collection("comments")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("COMMENTS", document.getId() + " => " + document.getData());
+
+                                String author = document.getString("author");
+                                String authorPfp = document.getString("authorPfp");
+                                String authorId = document.getString("authorId");
+                                String commentId = document.getString("commentId");
+                                String commentVal = document.getString("commentVal");
+
+                                contentComments.add(new ContentComments(author, authorPfp, authorId, commentId, commentVal));
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
+                    }
+                });
+    }
+
 
     private void RecyclerCall() {
 

@@ -2,14 +2,14 @@ package com.example.greenid_esmad;
 
 public class ContentComments {
     private String author;
-    private String auhtorPfp;
+    private String authorPfp;
     private String authorId;
     private String commentId;
     private String commentVal;
 
-    public ContentComments(String author, String auhtorPfp, String authorId, String commentId, String commentVal) {
+    public ContentComments(String author, String authorPfp, String authorId, String commentId, String commentVal) {
         this.author = author;
-        this.auhtorPfp = auhtorPfp;
+        this.authorPfp = authorPfp;
         this.authorId = authorId;
         this.commentId = commentId;
         this.commentVal = commentVal;
@@ -23,12 +23,12 @@ public class ContentComments {
         this.author = author;
     }
 
-    public String getAuhtorPfp() {
-        return auhtorPfp;
+    public String getAuthorPfp() {
+        return authorPfp;
     }
 
-    public void setAuhtorPfp(String auhtorPfp) {
-        this.auhtorPfp = auhtorPfp;
+    public void setAuthorPfp(String authorPfp) {
+        this.authorPfp = authorPfp;
     }
 
     public String getAuthorId() {

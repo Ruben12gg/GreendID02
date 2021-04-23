@@ -137,6 +137,9 @@ public class Home extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
 
                     case R.id.home:
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), Home.class));
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.search:
