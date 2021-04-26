@@ -47,6 +47,14 @@ public class ModalDelete extends DialogFragment {
                         Toast toast = Toast.makeText(context, message, duration);
                         toast.show();
 
+                        //Logout user from his google account to prevent login cycle into the deleted account on next sign in
+                        GoogleSignInClient mGoogleSignInClient;
+                        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestIdToken(getString(R.string.default_web_client_id))
+                                .requestEmail()
+                                .build();
+                        mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
+                        mGoogleSignInClient.signOut();
 
                         //Go back to login screen
                         startActivity(new Intent(getContext().getApplicationContext(), Login.class));
