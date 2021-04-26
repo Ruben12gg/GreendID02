@@ -10,11 +10,6 @@ import android.view.View;
 
 import androidx.fragment.app.DialogFragment;
 
- class ModelClearData {
-
-     Context context;
-
-}
 
 public class ModalClearData extends DialogFragment {
 
