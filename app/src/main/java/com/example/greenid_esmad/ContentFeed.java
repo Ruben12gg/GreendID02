@@ -6,11 +6,12 @@ public class ContentFeed {
     private String author;
     private String date;
     private String likeVal;
+    private String commentId;
     private String commentVal;
     private String location;
     private String description;
     private String postId;
-    private  String userId;
+    private String userId;
     private String authorId;
 
     public String getDescription() {
@@ -61,6 +62,14 @@ public class ContentFeed {
         this.likeVal = likeVal;
     }
 
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
+
     public String getCommentVal() {
         return commentVal;
     }
@@ -107,6 +116,7 @@ public class ContentFeed {
         this.author = author;
         this.date = date;
         this.likeVal = likeVal;
+        this.commentId = commentId;
         this.commentVal = commentVal;
         this.location = location;
         this.description = description;

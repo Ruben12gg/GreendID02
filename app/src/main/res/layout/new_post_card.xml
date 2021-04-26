@@ -136,14 +136,15 @@
                 android:textColor="@color/black_txt_num"
                 android:textSize="40px" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/comments_icon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                android:layout_alignTop="@+id/utilityBar"
-                android:layout_alignBottom="@+id/utilityBar"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="44dp"
+                android:background="@drawable/comment"
                 android:layout_toEndOf="@+id/likes_val"
+                android:scaleType="fitXY"
                 android:src="@drawable/comment" />
 
             <TextView

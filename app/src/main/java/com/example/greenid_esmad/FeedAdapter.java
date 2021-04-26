@@ -59,6 +59,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageView pfp;
         ImageView contentPic;
         ImageButton btnLike;
+        ImageButton btnComment;
         RelativeLayout resultCard;
 
 
@@ -76,6 +77,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             tvDescription = itemView.findViewById(R.id.descriptionText);
             tvDate = itemView.findViewById(R.id.dateText);
             btnLike = itemView.findViewById(R.id.favorites_icon);
+            btnComment = itemView.findViewById(R.id.comments_icon);
             resultCard = itemView.findViewById(R.id.post_card_02);
             itemView.setOnClickListener(this);
         }
@@ -114,6 +116,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         String date = contentFeed.getDate();
         String description = contentFeed.getDescription();
         String postId = contentFeed.getPostId();
+        String commentId = contentFeed.getCommentId();
         String userId = contentFeed.getUserId();
 
         Log.d("AUTHOR", author);
@@ -160,6 +163,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 i.putExtra("authorId", authorId);
                 i.putExtra("location", location);
                 i.putExtra("likeVal", likesVal);
+                i.putExtra("commentId", commentId);
                 i.putExtra("commentVal", commentVal);
                 i.putExtra("date", date);
                 i.putExtra("description", description);
@@ -168,6 +172,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 v.getContext().startActivity(i);
 
 
+            }
+        });
+
+        holder.btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("BTNCOMMENT", "Click on comment Btn");
+
+                Intent i = new Intent(v.getContext(), Comments.class);
+                i.putExtra("author", author);
+                i.putExtra("authorPfp", authorPfp);
+                i.putExtra("authorId", authorId);
+                i.putExtra("commentId", commentId);
+                i.putExtra("commentVal", commentVal);
+                i.putExtra("postId", postId);
+                v.getContext().startActivity(i);
             }
         });
 
