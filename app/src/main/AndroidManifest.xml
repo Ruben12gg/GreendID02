@@ -15,18 +15,18 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity android:name=".CheckPost"></activity>
         <activity android:name=".CheckUser" />
-        <activity android:name=".EditProfile" />
+        <activity android:name=".EditProfile" android:noHistory="true"/>
         <activity android:name=".LoginCredentialsActivity" />
-        <activity android:name=".NewPost" />
-        <activity android:name=".User" />
-        <activity android:name=".Notifications" />
+        <activity android:name=".NewPost" android:noHistory="true"/>
+        <activity android:name=".User" android:noHistory="true"/>
+        <activity android:name=".Notifications" android:noHistory="true"/>
         <activity android:name=".Search" />
         <activity android:name=".Home" />
-        <activity android:name=".Login" />
+        <activity android:name=".Login" android:noHistory="true"/>
         <activity android:name=".Settings" />
-        <activity android:name=".Favorites" />
+        <activity android:name=".Favorites" android:noHistory="true"/>
         <activity android:name=".Comments" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

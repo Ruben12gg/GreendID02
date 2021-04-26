@@ -1,5 +1,6 @@
 package com.example.greenid_esmad;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -58,6 +59,7 @@ public class ModalDelete extends DialogFragment {
 
                         //Go back to login screen
                         startActivity(new Intent(getContext().getApplicationContext(), Login.class));
+                        ((Activity)getContext()).finish();
 
                     }
                 })

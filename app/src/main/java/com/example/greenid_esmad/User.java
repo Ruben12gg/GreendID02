@@ -106,6 +106,7 @@ public class User extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                finish();
                 startActivity(new Intent(getApplicationContext(), Settings.class));
             }
         });
