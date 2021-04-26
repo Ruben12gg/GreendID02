@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -58,8 +60,8 @@ public class ModalDelete extends DialogFragment {
                         mGoogleSignInClient.signOut();
 
                         //Go back to login screen
+                        ((Activity) getContext()).finish();
                         startActivity(new Intent(getContext().getApplicationContext(), Login.class));
-                        ((Activity)getContext()).finish();
 
                     }
                 })

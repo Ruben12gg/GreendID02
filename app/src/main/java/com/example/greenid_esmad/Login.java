@@ -76,6 +76,12 @@ public class Login extends AppCompatActivity {
 
     }
 
+    //prevent user from going back to app after logs out
+    @Override
+    public void onBackPressed() {
+      finishAffinity();
+    }
+
 
     /*@Override
     public void onClick(View v) {
