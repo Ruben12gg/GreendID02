@@ -181,11 +181,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 Log.d("BTNCOMMENT", "Click on comment Btn");
 
                 Intent i = new Intent(v.getContext(), Comments.class);
-                i.putExtra("author", author);
-                i.putExtra("authorPfp", authorPfp);
+                i.putExtra("postAuthor", location);
+                i.putExtra("postAuthorPfp", authorPfp);
                 i.putExtra("authorId", authorId);
                 i.putExtra("commentId", commentId);
-                i.putExtra("commentVal", commentVal);
+                i.putExtra("date", date);
+                i.putExtra("description", description);
                 i.putExtra("postId", postId);
                 v.getContext().startActivity(i);
             }
