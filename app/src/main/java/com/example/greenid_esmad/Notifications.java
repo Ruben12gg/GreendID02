@@ -28,12 +28,14 @@ import com.example.greenid_esmad.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Notifications extends AppCompatActivity {
 
@@ -41,13 +43,19 @@ public class Notifications extends AppCompatActivity {
     NotificationsAdapter notificationsAdapter;
     ArrayList<ContentNotifications> contentNotifications = new ArrayList<>();
     ImageButton delBtn;
+    ImageView emptyImg;
+    TextView emptyTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
 
-        //setSupportActionBar(findViewById(R.id.main_toolbar));
+        emptyImg = findViewById(R.id.emptyImg);
+        emptyTxt = findViewById(R.id.emptyTxt);
+
+        emptyImg.setVisibility(View.VISIBLE);
+        emptyTxt.setVisibility(View.VISIBLE);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -89,6 +97,7 @@ public class Notifications extends AppCompatActivity {
                 return false;
             }
         });
+
 
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
@@ -170,10 +179,43 @@ public class Notifications extends AppCompatActivity {
                         Log.d("CLEAR", "Cleared Notifs");
                         RefreshNotifs();
                     }
-                }, 100);
+                }, 150);
 
             }
         });
+
+
+        List<String> NotifArray = new ArrayList<String>();
+        db.collection("users").document(userId).collection("notifications")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("NOTIFS", document.getId() + " => " + document.getData());
+
+                                String id = document.getString("notifId");
+                                NotifArray.add(id);
+
+                                Integer arraySize = NotifArray.size();
+                                if (arraySize.equals(0)){
+                                    emptyImg.setVisibility(View.VISIBLE);
+                                    emptyTxt.setVisibility(View.VISIBLE);
+                                } else {
+                                    emptyImg.setVisibility(View.INVISIBLE);
+                                    emptyTxt.setVisibility(View.INVISIBLE);
+                                }
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
+                    }
+                });
 
 
     }
@@ -220,6 +262,8 @@ public class Notifications extends AppCompatActivity {
                     }
 
                 });
+        emptyImg.setVisibility(View.VISIBLE);
+        emptyTxt.setVisibility(View.VISIBLE);
     }
 
     @Override

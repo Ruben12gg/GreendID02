@@ -87,41 +87,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-       /* //Get data to show on Feed
-        db.collection("posts")
-                .orderBy("date", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
 
-                                String author = document.getString("author");
-                                String authorId = document.getString("authorId");
-                                Log.d("AUTHOR", author);
-                                String authorPfp = document.getString("authorPfp");
-                                String date = document.getString("date");
-                                String contentUrl = document.getString("contentUrl");
-                                String likeVal = document.getString("likeVal");
-                                String commentVal = document.getString("commentVal");
-                                String location = document.getString("location");
-                                String description = document.getString("description");
-                                String postId = document.getId().toString();
-
-
-                                feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
-
-
-                            }
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-                        RecyclerCall();
-                    }
-                });*/
 
 
         db.collection("users").document(userId).collection("following")
