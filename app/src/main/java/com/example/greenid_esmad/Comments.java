@@ -58,6 +58,7 @@ public class Comments extends AppCompatActivity {
         setContentView(R.layout.activity_comments);
 
         String postAuthor = getIntent().getStringExtra("postAuthor");
+        String authorId = getIntent().getStringExtra("authorId");
         String postAuthorPfp = getIntent().getStringExtra("postAuthorPfp");
         String description = getIntent().getStringExtra("description");
 
@@ -78,7 +79,7 @@ public class Comments extends AppCompatActivity {
         String postId = getIntent().getStringExtra("postId");
 
         //Get comment data
-        db.collection("posts").document(postId).collection("comments")
+        db.collection("users").document(authorId).collection("posts").document(postId).collection("comments")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -155,6 +156,7 @@ public class Comments extends AppCompatActivity {
     private void add_comment() {
 
 
+
         Toast.makeText(Comments.this, "Comment added!", Toast.LENGTH_SHORT).show();
 
         //Access user Id from GLOBALS
@@ -162,6 +164,7 @@ public class Comments extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
 
 
+        String authorId = getIntent().getStringExtra("authorId");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Get profile Data to use in comment data
@@ -188,14 +191,14 @@ public class Comments extends AppCompatActivity {
                         String postId = getIntent().getStringExtra("postId");
 
                         //post the comment to db
-                        db.collection("posts").document(postId).collection("comments").document(comment_id).set(commentData);
+                        db.collection("users").document(authorId).collection("posts").document(postId).collection("comments").document(comment_id).set(commentData);
 
                         //clear input box after post
                         add_comment.getText().clear();
 
                         Log.d("POSTID", postId);
                         //Update the commentVal from that post
-                        db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
@@ -213,7 +216,7 @@ public class Comments extends AppCompatActivity {
                                         Map<String, Object> commentValData = new HashMap<>();
                                         commentValData.put("commentVal", newCommentValTxt);
 
-                                        db.collection("posts").document(postId).update(commentValData);
+                                        db.collection("users").document(authorId).collection("posts").document(postId).update(commentValData);
 
                                         Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                                     } else {
@@ -256,8 +259,10 @@ public class Comments extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         String postId = getIntent().getStringExtra("postId");
+        String authorId = getIntent().getStringExtra("authorId");
+
         //Get comment data
-        db.collection("posts").document(postId).collection("comments")
+        db.collection("users").document(authorId).collection("posts").document(postId).collection("comments")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

@@ -83,7 +83,7 @@ public class CheckPost extends AppCompatActivity {
 
         //Get post Data (likes/comments) in real time
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -161,7 +161,7 @@ public class CheckPost extends AppCompatActivity {
                                 likes.setText(newDislikeVal);
 
                                 //removing like from post
-                                db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if (task.isSuccessful()) {
@@ -175,7 +175,7 @@ public class CheckPost extends AppCompatActivity {
                                                 Map<String, Object> likeData = new HashMap<>();
                                                 likeData.put("likeVal", newLikeValTxt);
 
-                                                db.collection("posts").document(postId).update(likeData);
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
                                                 db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
 
 
@@ -204,7 +204,7 @@ public class CheckPost extends AppCompatActivity {
                                 likes.setText(newLikesValTxt);
 
                                 //update the like value on the database
-                                db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if (task.isSuccessful()) {
@@ -218,7 +218,7 @@ public class CheckPost extends AppCompatActivity {
                                                 Map<String, Object> likeData = new HashMap<>();
                                                 likeData.put("likeVal", newLikeValTxt);
 
-                                                db.collection("posts").document(postId).update(likeData);
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
                                                 db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
 
 
@@ -359,6 +359,7 @@ public class CheckPost extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Comments.class);
                 intent.putExtra("postId", postId);
+                intent.putExtra("authorId", authorId);
                 intent.putExtra("postAuthor", authorTxt);
                 intent.putExtra("postAuthorPfp", authorPfp);
                 intent.putExtra("description", descriptionTxt);

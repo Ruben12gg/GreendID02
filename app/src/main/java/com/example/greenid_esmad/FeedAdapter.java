@@ -217,7 +217,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                 holder.tvAuthor.setText(newDislikeValTxt);
 
                                 //update like value on the database
-                                db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if (task.isSuccessful()) {
@@ -231,7 +231,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 Map<String, Object> likeData = new HashMap<>();
                                                 likeData.put("likeVal", newLikeValTxt);
 
-                                                db.collection("posts").document(postId).update(likeData);
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
                                                 db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
 
 
@@ -259,7 +259,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                 holder.tvAuthor.setText(newLikesValTxt);
 
                                 //update like and add to database
-                                db.collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if (task.isSuccessful()) {
@@ -273,7 +273,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 Map<String, Object> likeData = new HashMap<>();
                                                 likeData.put("likeVal", newLikeValTxt);
 
-                                                db.collection("posts").document(postId).update(likeData);
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
                                                 db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
 
 
