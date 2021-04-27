@@ -87,7 +87,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        //Get data to show on Feed
+       /* //Get data to show on Feed
         db.collection("posts")
                 .orderBy("date", Query.Direction.DESCENDING)
                 .get()
@@ -112,7 +112,6 @@ public class Home extends AppCompatActivity {
                                 String postId = document.getId().toString();
 
 
-
                                 feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
 
 
@@ -121,6 +120,63 @@ public class Home extends AppCompatActivity {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                         RecyclerCall();
+                    }
+                });*/
+
+
+        db.collection("users").document(userId).collection("following")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("FOLLOWING DOC", document.getId() + " => " + document.getData());
+
+                                String followingId = document.getString("userId");
+
+                                db.collection("users").document(followingId).collection("posts")
+                                        .orderBy("date", Query.Direction.DESCENDING)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @RequiresApi(api = Build.VERSION_CODES.O)
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                                        Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
+
+
+                                                        String author = document.getString("author");
+                                                        String authorId = document.getString("authorId");
+                                                        Log.d("AUTHOR", author);
+                                                        String authorPfp = document.getString("authorPfp");
+                                                        String date = document.getString("date");
+                                                        String contentUrl = document.getString("contentUrl");
+                                                        String likeVal = document.getString("likeVal");
+                                                        String commentVal = document.getString("commentVal");
+                                                        String location = document.getString("location");
+                                                        String description = document.getString("description");
+                                                        String postId = document.getId().toString();
+
+
+                                                        feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
+
+
+                                                    }
+                                                } else {
+                                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                                }
+                                                RecyclerCall();
+                                            }
+                                        });
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                       /* RecyclerCall();*/
                     }
                 });
 

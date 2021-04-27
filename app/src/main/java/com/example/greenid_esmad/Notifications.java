@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,6 +99,7 @@ public class Notifications extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        //Get notifs
         db.collection("users").document(userId).collection("notifications")
                 /*.orderBy("date", Query.Direction.ASCENDING)*/ //to use later on!
                 .get()
@@ -132,16 +134,92 @@ public class Notifications extends AppCompatActivity {
                 });
 
 
+        delBtn = findViewById(R.id.delBtn);
+        delBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                delBtn = findViewById(R.id.delBtn);
-                delBtn.setOnClickListener(new View.OnClickListener() {
+                db.collection("users").document(userId).collection("notifications")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String notifId = document.getString("notifId");
+
+                                        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                        String userId = globalUserId.getUserIdGlobal();
+
+                                        db.collection("users").document(userId).collection("notifications").document(notifId).delete();
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+                            }
+
+                        });
+                //clear notifs
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
                     @Override
-                    public void onClick(View view) {
+                    public void run() {
+                        Log.d("CLEAR", "Cleared Notifs");
+                        RefreshNotifs();
+                    }
+                }, 100);
+
+            }
+        });
+
+
+    }
+
+    private void RefreshNotifs() {
+        contentNotifications.clear();
+
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+        Log.d("USERID", userId);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(userId).collection("notifications")
+                /*.orderBy("date", Query.Direction.ASCENDING)*/ //to use later on!
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                String authorPfp = document.getString("pfpUrl");
+                                String contentUrl = document.getString("contentUrl");
+                                String commentVal = document.getString("commentVal");
+                                String author = document.getString("username");
+                                String notifId = document.getString("notifId");
+
+                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                String userId = globalUserId.getUserIdGlobal();
+
+
+                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId));
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
 
                     }
+
                 });
-
-
     }
 
     @Override
@@ -189,7 +267,6 @@ public class Notifications extends AppCompatActivity {
             notificationsAdapter.notifyDataSetChanged();
         }
     };
-
 
 
 }
