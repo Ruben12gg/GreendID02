@@ -2,6 +2,8 @@ package com.example.greenid_esmad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,12 +22,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class CheckPost extends AppCompatActivity {
+    RecyclerView recyclerView;
+    CommentsAdapter checkPostAdapter;
+    ArrayList<ContentComments> contentCheckPost = new ArrayList<>();
 
     ImageButton btnBack;
     TextView topName;
@@ -368,6 +374,13 @@ public class CheckPost extends AppCompatActivity {
         });
 
     }
+    private void RecyclerCall() {
 
+        recyclerView = findViewById(R.id.rvComments);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        checkPostAdapter = new CommentsAdapter(this, contentCheckPost);
+        recyclerView.setAdapter(checkPostAdapter);
 
+    }
 }
