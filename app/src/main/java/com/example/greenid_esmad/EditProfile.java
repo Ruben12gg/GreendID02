@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -271,7 +273,19 @@ public class EditProfile extends AppCompatActivity {
 
         }
 
-        finish();
+        //finish activity with delay to prevent app crash!
+        progDiag.dismiss();
+        final Handler handler = new Handler(Looper.getMainLooper());
+        //return after delay
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                finish();
+            }
+        }, 300);
 
     }
+
+
 }
