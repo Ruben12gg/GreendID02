@@ -15,11 +15,15 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -37,7 +41,10 @@ public class Search extends AppCompatActivity {
     SearchAdapter searchAdapter;
     ArrayList<ContentSearch> contentSearch = new ArrayList<>();
     ImageButton btnSearch;
+    ImageButton btnClear;
     EditText query;
+    TextView calendarTv;
+    CalendarView calendarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +52,16 @@ public class Search extends AppCompatActivity {
 
         setContentView(R.layout.activity_search);
 
+        query = findViewById(R.id.search_bar);
         btnSearch = findViewById(R.id.btnSearch);
+        btnClear = findViewById(R.id.btnClear);
+
+        calendarTv = findViewById(R.id.calendarTv);
+        calendarView = findViewById(R.id.calendarView);
+
+        calendarTv.setVisibility(View.VISIBLE);
+        calendarView.setVisibility(View.VISIBLE);
+        btnClear.setVisibility(View.INVISIBLE);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -97,10 +113,34 @@ public class Search extends AppCompatActivity {
             }
         });
 
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                query.setText("");
+                btnClear.setVisibility(View.INVISIBLE);
+                calendarTv.setVisibility(View.VISIBLE);
+                calendarView.setVisibility(View.VISIBLE);
+
+
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                     contentSearch.clear();
+                     RecyclerCall();
+                    }
+                }, 100);
+            }
+        });
 
     }
 
     private void getUsers() {
+
+        calendarTv.setVisibility(View.INVISIBLE);
+        calendarView.setVisibility(View.INVISIBLE);
+        btnClear.setVisibility(View.VISIBLE);
 
         //clear user list before showing another search result
         contentSearch.clear();
@@ -108,7 +148,6 @@ public class Search extends AppCompatActivity {
         //create firebase reference
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        query = findViewById(R.id.search_bar);
 
         String queryTxt = query.getText().toString();
 

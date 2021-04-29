@@ -199,7 +199,7 @@ public class Notifications extends AppCompatActivity {
                                 NotifArray.add(id);
 
                                 Integer arraySize = NotifArray.size();
-                                if (arraySize.equals(0)){
+                                if (arraySize.equals(0)) {
                                     emptyImg.setVisibility(View.VISIBLE);
                                     emptyTxt.setVisibility(View.VISIBLE);
                                 } else {

@@ -30,11 +30,8 @@
                             android:id="@+id/corner_shade"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_alignTop="@+id/post_image"
-                            android:layout_alignStart="@+id/post_image"
-                            android:layout_alignEnd="@id/post_image"
-                            android:layout_alignBottom="@+id/post_image"
-                            android:src="@drawable/corner_shade_post" />
+                            android:src="@drawable/corner_shade_post"
+                            />
 
                         <LinearLayout
                             android:layout_width="match_parent"

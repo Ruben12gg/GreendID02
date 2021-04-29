@@ -80,6 +80,15 @@
             android:layout_marginTop="22dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/ic_search" />
+
+        <ImageButton
+            android:id="@+id/btnClear"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="76dp"
+            android:background="@drawable/clear" />
     </RelativeLayout>
 
     <ScrollView
@@ -121,8 +130,8 @@
     <RelativeLayout
         android:id="@+id/users_view"
         android:layout_width="match_parent"
-        android:layout_height="452dp"
-        android:layout_below="@+id/calendar">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sb_view">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearch"

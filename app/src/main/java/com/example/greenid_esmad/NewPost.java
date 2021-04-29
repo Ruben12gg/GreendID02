@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -169,111 +170,127 @@ public class NewPost extends AppCompatActivity {
         final String randomKey = UUID.randomUUID().toString();
         StorageReference imageRef = storageReference.child("images/" + userId + "/" + randomKey);
 
-        //upload the file to the database and generate an usable url to display the picture
-        imageRef.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get an URL to the uploaded content
 
-                        //Generate img link
-                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+        //prevent user from making a post without a picture
+        if (imageUri == null) {
 
+            progDiag.dismiss();
 
-                                //Access user Id from GLOBALS
-                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                                String userId = globalUserId.getUserIdGlobal();
+            String message = "You need to select a picture to post.";
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, message, duration);
+            toast.show();
 
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+            return;
 
-                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                    @RequiresApi(api = Build.VERSION_CODES.O)
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            DocumentSnapshot document = task.getResult();
-                                            if (document.exists()) {
+        } else {
 
-                                                String name = document.getString("name");
-                                                String authorId = document.getString("id");
-                                                String pfpUrl = document.getString("pfp");
+            //upload the file to the database and generate an usable url to display the picture
+            imageRef.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get an URL to the uploaded content
 
-                                                location = findViewById(R.id.locationTxt);
-                                                description = findViewById(R.id.descriptionTxt);
-
-                                                String locationTxt = location.getText().toString();
-                                                String descriptionTxt = description.getText().toString();
-                                                String likeVal = "0";
-                                                String commentVal = "0";
-
-                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
-                                                Date date = new Date();
-                                                String dateTxt = formatter.format(date).toString();
+                            //Generate img link
+                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 
 
-                                                String postDate = new Date().toString();
+                                    //Access user Id from GLOBALS
+                                    GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                    String userId = globalUserId.getUserIdGlobal();
 
-                                                String downloadUrl3 = uri.toString();
-                                                Log.d("IMAGE POST LINK", downloadUrl3);
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-                                                String postId = UUID.randomUUID().toString();
+                                    db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @RequiresApi(api = Build.VERSION_CODES.O)
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
 
-                                                Map<String, Object> data = new HashMap<>();
-                                                data.put("author", name);
-                                                data.put("authorId", authorId);
-                                                data.put("authorPfp", pfpUrl);
-                                                data.put("location", locationTxt);
-                                                data.put("description", descriptionTxt);
-                                                data.put("contentUrl", downloadUrl3);
-                                                data.put("likeVal", likeVal);
-                                                data.put("commentVal", commentVal);
-                                                data.put("date", dateTxt);
-                                                data.put("postId", postId);
+                                                    String name = document.getString("name");
+                                                    String authorId = document.getString("id");
+                                                    String pfpUrl = document.getString("pfp");
+
+                                                    location = findViewById(R.id.locationTxt);
+                                                    description = findViewById(R.id.descriptionTxt);
+
+                                                    String locationTxt = location.getText().toString();
+                                                    String descriptionTxt = description.getText().toString();
+                                                    String likeVal = "0";
+                                                    String commentVal = "0";
+
+                                                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                    Date date = new Date();
+                                                    String dateTxt = formatter.format(date).toString();
 
 
-                                                db.collection("posts").document(postId).set(data);
-                                                db.collection("users").document(userId).collection("posts").document(postId).set(data);
+                                                    String postDate = new Date().toString();
+
+                                                    String downloadUrl3 = uri.toString();
+                                                    Log.d("IMAGE POST LINK", downloadUrl3);
+
+                                                    String postId = UUID.randomUUID().toString();
+
+                                                    Map<String, Object> data = new HashMap<>();
+                                                    data.put("author", name);
+                                                    data.put("authorId", authorId);
+                                                    data.put("authorPfp", pfpUrl);
+                                                    data.put("location", locationTxt);
+                                                    data.put("description", descriptionTxt);
+                                                    data.put("contentUrl", downloadUrl3);
+                                                    data.put("likeVal", likeVal);
+                                                    data.put("commentVal", commentVal);
+                                                    data.put("date", dateTxt);
+                                                    data.put("postId", postId);
 
 
+                                                    db.collection("posts").document(postId).set(data);
+                                                    db.collection("users").document(userId).collection("posts").document(postId).set(data);
 
-                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+
+                                                    Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                } else {
+                                                    Log.d("TAG", "No such document");
+                                                }
                                             } else {
-                                                Log.d("TAG", "No such document");
+                                                Log.d("TAG", "get failed with ", task.getException());
                                             }
-                                        } else {
-                                            Log.d("TAG", "get failed with ", task.getException());
                                         }
-                                    }
-                                });
+                                    });
 
 
+                                }
+                            });
 
-                            }
-                        });
+                            progDiag.dismiss();
+                            Snackbar.make(findViewById(android.R.id.content), "Image Uploaded!", Snackbar.LENGTH_LONG).show();
+                            callHome();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            progDiag.dismiss();
+                            Toast.makeText(getApplicationContext(), "Failed to Upload File", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                //Progress bar percentage calculation
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progressPercentage = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
 
-                        progDiag.dismiss();
-                        Snackbar.make(findViewById(android.R.id.content), "Image Uploaded!", Snackbar.LENGTH_LONG).show();
-                        callHome();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        progDiag.dismiss();
-                        Toast.makeText(getApplicationContext(), "Failed to Upload File", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            //Progress bar percentage calculation
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                double progressPercentage = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                    progDiag.setMessage("Loading " + (int) progressPercentage + "%");
+                }
+            });
+        }
 
-                progDiag.setMessage("Loading " + (int) progressPercentage + "%");
-            }
-        });
 
     }
 
