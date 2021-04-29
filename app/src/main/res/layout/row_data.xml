@@ -5,10 +5,6 @@
     android:id="@+id/pfImgs">
 
     <ImageView
-        android:layout_marginTop="2dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="2dp"
         android:id="@+id/imgGV"
         android:layout_width="156dp"
         android:layout_height="90dp"

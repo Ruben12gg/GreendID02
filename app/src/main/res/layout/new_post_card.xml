@@ -30,10 +30,7 @@
                 android:id="@+id/corner_shade"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignStart="@+id/post_image"
-                android:layout_alignTop="@+id/post_image"
-                android:layout_alignEnd="@id/post_image"
-                android:layout_alignBottom="@+id/post_image"
+                android:scaleType="centerCrop"
                 android:src="@drawable/corner_shade_post" />
 
             <LinearLayout
@@ -83,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="28dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginBottom="54dp"
                 android:text="@string/date"
                 android:textColor="@color/white_txt"
                 android:textSize="40px" />
@@ -94,7 +91,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="bottom"
                 android:layout_marginStart="28dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/description"
                 android:textColor="@color/white_txt"
                 android:textSize="40px" />
