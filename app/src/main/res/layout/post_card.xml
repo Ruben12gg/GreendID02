@@ -150,7 +150,7 @@
                             android:layout_alignBottom="@+id/utilityBar"
                             android:layout_toEndOf="@+id/comments_val"
                             android:layout_marginStart="44dp"
-                            android:src="@drawable/favorites_green" />
+                            android:src="@drawable/fav" />
 
                 </RelativeLayout>
 

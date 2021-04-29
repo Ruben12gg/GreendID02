@@ -102,30 +102,12 @@
         <RelativeLayout
             android:id="@+id/tabs_view"
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="32dp"
             android:layout_below="@+id/btnrl">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabTextColor="@color/light_gray_txt"
-                app:tabIndicatorColor="@color/dark_green"
-                app:tabSelectedTextColor="@color/dark_gray_txt"
-                android:background="@color/white" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/tab_layout"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" >
-            </androidx.viewpager.widget.ViewPager>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFavorites"
-                android:layout_below="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
