@@ -112,7 +112,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/ic_favorite_empty" />
+        android:background="@drawable/fav" />
 
     <TextView
         android:id="@+id/author"
