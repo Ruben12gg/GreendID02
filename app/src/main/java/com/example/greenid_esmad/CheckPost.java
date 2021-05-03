@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -118,8 +119,9 @@ public class CheckPost extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
 
         likeBtn = findViewById(R.id.likeBtn);
+        saveBtn = findViewById(R.id.saveBtn);
 
-        //Change followBtn text accordingly if the user follows the person or not
+        //Change likeBtn accordingly if the user already liked the post or not
         db.collection("users").document(userId).collection("likes").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -133,6 +135,28 @@ public class CheckPost extends AppCompatActivity {
                     } else {
 
                         likeBtn.setImageResource(R.drawable.leaf);
+
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //Change favBtn accordingly if the user already added the post or not
+        db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        saveBtn.setImageResource(R.drawable.fav_green);
+
+
+                    } else {
+
+                        saveBtn.setImageResource(R.drawable.fav);
 
                     }
                 } else {
@@ -301,6 +325,48 @@ public class CheckPost extends AppCompatActivity {
                 });
 
 
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add the post to the favorites or remove it
+                db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                db.collection("users").document(userId).collection("favorites").document(postId).delete();
+                                saveBtn.setImageResource(R.drawable.fav);
+                                Snackbar.make(view, "Removed Post from Favorites.", Snackbar.LENGTH_SHORT).show();
+
+                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d("TAG", "No such document");
+
+                                Map<String, Object> dataFav = new HashMap<>();
+                                dataFav.put("author", authorTxt);
+                                dataFav.put("authorPfp", authorPfp);
+                                dataFav.put("location", location);
+                                dataFav.put("likeVal", likeVal);
+                                dataFav.put("commentVal", commentVal);
+                                dataFav.put("date", dateTxt);
+                                dataFav.put("description", descriptionTxt);
+                                dataFav.put("contentUrl", contentUrl);
+                                dataFav.put("postId", postId);
+
+                                db.collection("users").document(userId).collection("favorites").document(postId).set(dataFav);
+                                saveBtn.setImageResource(R.drawable.fav_green);
+                                Snackbar.make(view, "Added Post to Favorites!", Snackbar.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Log.d("TAG", "get failed with ", task.getException());
+                        }
+                    }
+                });
             }
         });
 

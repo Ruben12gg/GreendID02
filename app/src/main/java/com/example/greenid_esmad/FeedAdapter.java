@@ -220,7 +220,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.btnSaved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //add the post to the likes and generate notification
+                //add the post to the favorites or remove it
                 db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
