@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     @Override
     public FavoritesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.notification_card, parent, false);
+        View view = mInflater.inflate(R.layout.favorites_card, parent, false);
         return new FavoritesAdapter.ViewHolder(view);
 
     }
@@ -41,14 +42,25 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
         ContentFavorites contentFavorites = mData.get(position);
         holder.tvAuthor.setText(contentFavorites.getAuthor());
+        holder.tvDate.setText(contentFavorites.getDate());
+        holder.tvLikeVal.setText(contentFavorites.getLikeVal());
         holder.tvCommentVal.setText(contentFavorites.getCommentVal());
+        holder.tvLocation.setText(contentFavorites.getLocation());
+        holder.tvDescription.setText(contentFavorites.getDescription());
+
+        Log.d("AUTHOR", contentFavorites.getAuthor());
+        Log.d("DATE", contentFavorites.getDate());
+        Log.d("LIKES", contentFavorites.getLikeVal());
+        Log.d("COMMENTS", contentFavorites.getCommentVal());
+        Log.d("LOCATION", contentFavorites.getLocation());
+        Log.d("DESCRIPTION", contentFavorites.getDescription());
 
 
         final String authorPfp = contentFavorites.getAuthorPfp();
         final String contentUrl = contentFavorites.getContentUrl();
 
 
-        Picasso.get().load(authorPfp).into(holder.profile_image);
+        Picasso.get().load(authorPfp).into(holder.pfp);
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
 
@@ -72,20 +84,34 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvAuthor;
+        TextView tvDate;
+        TextView tvLikeVal;
+        TextView tvLocation;
         TextView tvCommentVal;
-        ImageView profile_image;
+        TextView tvDescription;
+        ImageView pfp;
         ImageView contentPic;
+        ImageButton btnLike;
+        ImageButton btnComment;
+        ImageButton btnSaved;
         RelativeLayout resultCard;
 
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            tvAuthor = itemView.findViewById(R.id.username);
-            tvCommentVal = itemView.findViewById(R.id.comment);
-            contentPic = itemView.findViewById(R.id.contentPic);
-            profile_image = itemView.findViewById(R.id.profile_image);
-            resultCard = itemView.findViewById(R.id.notifications_card);
+            tvAuthor = itemView.findViewById(R.id.comments_val);
+            tvLikeVal = itemView.findViewById(R.id.location);
+            tvCommentVal = itemView.findViewById(R.id.pf_name);
+            tvLocation = itemView.findViewById(R.id.likes_val);
+            contentPic = itemView.findViewById(R.id.post_image);
+            pfp = itemView.findViewById(R.id.pfp);
+            tvDescription = itemView.findViewById(R.id.descriptionText);
+            tvDate = itemView.findViewById(R.id.dateText);
+            btnLike = itemView.findViewById(R.id.favorites_icon);
+            btnComment = itemView.findViewById(R.id.comments_icon);
+            btnSaved = itemView.findViewById(R.id.btnSaved);
+            resultCard = itemView.findViewById(R.id.favorite_card);
             itemView.setOnClickListener(this);
         }
 

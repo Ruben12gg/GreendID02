@@ -98,14 +98,21 @@ public class Favorites extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+                                Log.d("USER FAVORITES", document.getId() + " => " + document.getData());
 
-                                String authorPfp = document.getString("pfpUrl");
+                                String author = document.getString("author");
+                                String authorId = document.getString("authorId");
+                                String authorPfp = document.getString("authorPfp");
+                                String date = document.getString("date");
                                 String contentUrl = document.getString("contentUrl");
+                                String likeVal = document.getString("likeVal");
                                 String commentVal = document.getString("commentVal");
-                                String author = document.getString("username");
+                                String location = document.getString("location");
+                                String description = document.getString("description");
+                                String postId = document.getId().toString();
 
-                                contentFavorites.add(new ContentFavorites (authorPfp, contentUrl, commentVal, author));
+
+                                contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
 
                             }
                         } else {
