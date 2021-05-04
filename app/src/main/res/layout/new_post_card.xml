@@ -96,6 +96,62 @@
                 android:textColor="@color/white_txt"
                 android:textSize="40px" />
 
+            <RelativeLayout
+                android:id="@+id/modalView"
+                android:layout_width="300dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="170dp"
+                    android:background="@drawable/btnwhite" />
+
+                <TextView
+                    android:id="@+id/rewardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="Select a Reward:"
+                    android:textColor="@color/light_txt" />
+
+                <ImageButton
+                    android:id="@+id/impactBtn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_below="@+id/rewardTitle"
+                    android:layout_marginStart="16dp" />
+
+                <ImageButton
+                    android:id="@+id/ideaBtn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_below="@+id/rewardTitle"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/impactBtn" />
+
+                <Button
+                    android:layout_width="64dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/btnwhite"
+                    android:text="ok"
+                    android:textColor="@color/black_txt" />
+
+                <ImageButton
+                    android:id="@+id/btnClose"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/close" />
+
+            </RelativeLayout>
+
+
         </androidx.cardview.widget.CardView>
 
         <RelativeLayout
@@ -116,8 +172,7 @@
                 android:layout_marginStart="56dp"
                 android:background="@drawable/leaf"
                 android:scaleType="fitXY"
-                android:src="@drawable/leaf"
-                />
+                android:src="@drawable/leaf" />
 
 
             <TextView
@@ -139,8 +194,8 @@
                 android:layout_height="28dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="44dp"
-                android:background="@drawable/comment"
                 android:layout_toEndOf="@+id/likes_val"
+                android:background="@drawable/comment"
                 android:scaleType="fitXY"
                 android:src="@drawable/comment" />
 
@@ -161,14 +216,26 @@
                 android:id="@+id/btnSaved"
                 android:layout_width="32dp"
                 android:layout_height="35dp"
-               android:layout_centerVertical="true"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="44dp"
                 android:layout_toEndOf="@+id/comments_val"
-                android:src="@drawable/fav"
                 android:background="@drawable/fav"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/fav" />
+
+            <ImageButton
+                android:id="@+id/btnGift"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toEndOf="@+id/btnSaved"
+                android:background="@drawable/gift" />
+
 
         </RelativeLayout>
+
 
     </LinearLayout>
 

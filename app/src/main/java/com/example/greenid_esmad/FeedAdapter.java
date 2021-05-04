@@ -37,6 +37,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private ItemClickListener mClickListener;
 
 
+
     FeedAdapter(Context context, List<ContentFeed> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -62,6 +63,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageButton btnLike;
         ImageButton btnComment;
         ImageButton btnSaved;
+        ImageButton btnReward;
+        ImageButton btnClose;
+        RelativeLayout modalView;
         RelativeLayout resultCard;
 
 
@@ -81,7 +85,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             btnLike = itemView.findViewById(R.id.favorites_icon);
             btnComment = itemView.findViewById(R.id.comments_icon);
             btnSaved = itemView.findViewById(R.id.btnSaved);
+            btnReward = itemView.findViewById(R.id.btnGift);
+            btnClose = itemView.findViewById(R.id.btnClose);
             resultCard = itemView.findViewById(R.id.post_card_02);
+            modalView = itemView.findViewById(R.id.modalView);
             itemView.setOnClickListener(this);
         }
 
@@ -94,6 +101,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+
+        holder.modalView.setVisibility(View.INVISIBLE);
 
         ContentFeed contentFeed = mData.get(position);
         holder.tvAuthor.setText(contentFeed.getAuthor());
@@ -422,6 +431,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
 
 
+            }
+        });
+
+        holder.btnReward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                holder.modalView.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        holder.btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.modalView.setVisibility(View.INVISIBLE);
             }
         });
 
