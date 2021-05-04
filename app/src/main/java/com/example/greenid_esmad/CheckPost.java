@@ -20,6 +20,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -31,8 +33,8 @@ import java.util.UUID;
 
 public class CheckPost extends AppCompatActivity {
     RecyclerView recyclerView;
-    CommentsAdapter checkPostAdapter;
-    ArrayList<ContentComments> contentCheckPost = new ArrayList<>();
+    CheckPostAdapter checkPostAdapter;
+    ArrayList<ContentCheckPost> contentCheckPost = new ArrayList<>();
 
     ImageButton btnBack;
     TextView topName;
@@ -370,6 +372,34 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
+        //Get comment data
+        db.collection("users").document(authorId).collection("posts").document(postId).collection("comments")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("COMMENTS", document.getId() + " => " + document.getData());
+
+                                String author = document.getString("author");
+                                String authorPfp = document.getString("authorPfp");
+                                String authorId = document.getString("authorId");
+                                String commentId = document.getString("commentId");
+                                String commentVal = document.getString("commentVal");
+
+                                contentCheckPost.add(new ContentCheckPost(author, authorPfp, authorId, commentId, commentVal));
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
+                    }
+                });
+
 
         // Set Home Selected
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -442,10 +472,10 @@ public class CheckPost extends AppCompatActivity {
     }
     private void RecyclerCall() {
 
-        recyclerView = findViewById(R.id.rvComments);
+        recyclerView = findViewById(R.id.rvPost);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        checkPostAdapter = new CommentsAdapter(this, contentCheckPost);
+        checkPostAdapter = new CheckPostAdapter(this, contentCheckPost);
         recyclerView.setAdapter(checkPostAdapter);
 
     }
