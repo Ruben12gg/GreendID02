@@ -17,10 +17,9 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -32,8 +31,8 @@ import java.util.UUID;
 
 public class CheckPost extends AppCompatActivity {
     RecyclerView recyclerView;
-    CheckPostAdapter checkPostAdapter;
-    ArrayList<ContentCheckPost> contentCheckPost = new ArrayList<>();
+    CommentsAdapter checkPostAdapter;
+    ArrayList<ContentComments> contentCheckPost = new ArrayList<>();
 
     ImageButton btnBack;
     TextView topName;
@@ -120,8 +119,9 @@ public class CheckPost extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
 
         likeBtn = findViewById(R.id.likeBtn);
+        saveBtn = findViewById(R.id.saveBtn);
 
-        //Change followBtn text accordingly if the user follows the person or not
+        //Change likeBtn accordingly if the user already liked the post or not
         db.collection("users").document(userId).collection("likes").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -135,6 +135,28 @@ public class CheckPost extends AppCompatActivity {
                     } else {
 
                         likeBtn.setImageResource(R.drawable.leaf);
+
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //Change favBtn accordingly if the user already added the post or not
+        db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        saveBtn.setImageResource(R.drawable.fav_green);
+
+
+                    } else {
+
+                        saveBtn.setImageResource(R.drawable.fav);
 
                     }
                 } else {
@@ -306,33 +328,48 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
-        //Get comment data
-        db.collection("users").document(authorId).collection("posts").document(postId).collection("comments")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add the post to the favorites or remove it
+                db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("COMMENTS", document.getId() + " => " + document.getData());
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
 
-                                String author = document.getString("author");
-                                String authorPfp = document.getString("authorPfp");
-                                String authorId = document.getString("authorId");
-                                String commentId = document.getString("commentId");
-                                String commentVal = document.getString("commentVal");
+                                db.collection("users").document(userId).collection("favorites").document(postId).delete();
+                                saveBtn.setImageResource(R.drawable.fav);
+                                Snackbar.make(view, "Removed Post from Favorites.", Snackbar.LENGTH_SHORT).show();
 
-                                contentCheckPost.add(new ContentCheckPost(author, authorPfp, authorId, commentId, commentVal));
+                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d("TAG", "No such document");
 
+                                Map<String, Object> dataFav = new HashMap<>();
+                                dataFav.put("author", authorTxt);
+                                dataFav.put("authorPfp", authorPfp);
+                                dataFav.put("location", location);
+                                dataFav.put("likeVal", likeVal);
+                                dataFav.put("commentVal", commentVal);
+                                dataFav.put("date", dateTxt);
+                                dataFav.put("description", descriptionTxt);
+                                dataFav.put("contentUrl", contentUrl);
+                                dataFav.put("postId", postId);
+
+                                db.collection("users").document(userId).collection("favorites").document(postId).set(dataFav);
+                                saveBtn.setImageResource(R.drawable.fav_green);
+                                Snackbar.make(view, "Added Post to Favorites!", Snackbar.LENGTH_SHORT).show();
                             }
                         } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
+                            Log.d("TAG", "get failed with ", task.getException());
                         }
-
-                        RecyclerCall();
-
                     }
                 });
+            }
+        });
+
 
         // Set Home Selected
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -375,6 +412,7 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
+
         btnBack = findViewById(R.id.backBtn);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -404,10 +442,10 @@ public class CheckPost extends AppCompatActivity {
     }
     private void RecyclerCall() {
 
-        recyclerView = findViewById(R.id.rvPost);
+        recyclerView = findViewById(R.id.rvComments);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        checkPostAdapter = new CheckPostAdapter(this, contentCheckPost);
+        checkPostAdapter = new CommentsAdapter(this, contentCheckPost);
         recyclerView.setAdapter(checkPostAdapter);
 
     }

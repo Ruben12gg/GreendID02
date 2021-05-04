@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -60,6 +61,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageView contentPic;
         ImageButton btnLike;
         ImageButton btnComment;
+        ImageButton btnSaved;
         RelativeLayout resultCard;
 
 
@@ -78,6 +80,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             tvDate = itemView.findViewById(R.id.dateText);
             btnLike = itemView.findViewById(R.id.favorites_icon);
             btnComment = itemView.findViewById(R.id.comments_icon);
+            btnSaved = itemView.findViewById(R.id.btnSaved);
             resultCard = itemView.findViewById(R.id.post_card_02);
             itemView.setOnClickListener(this);
         }
@@ -129,7 +132,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        //Change followBtn text accordingly if the user follows the person or not
+        //Change like icon depending if the user has already liked the post or not
         db.collection("users").document(userId).collection("likes").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -143,6 +146,28 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                     } else {
 
                         holder.btnLike.setImageResource(R.drawable.leaf);
+
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //Change favorites icon depending if the user has already added the post or not
+        db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        holder.btnSaved.setImageResource(R.drawable.fav_green);
+
+
+                    } else {
+
+                        holder.btnSaved.setImageResource(R.drawable.fav);
 
                     }
                 } else {
@@ -189,6 +214,48 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 i.putExtra("description", description);
                 i.putExtra("postId", postId);
                 v.getContext().startActivity(i);
+            }
+        });
+
+        holder.btnSaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add the post to the favorites or remove it
+                db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                db.collection("users").document(userId).collection("favorites").document(postId).delete();
+                                holder.btnSaved.setImageResource(R.drawable.fav);
+                                Snackbar.make(view, "Removed Post from Favorites.", Snackbar.LENGTH_SHORT).show();
+
+                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d("TAG", "No such document");
+
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("author", author);
+                                data.put("authorPfp", authorPfp);
+                                data.put("location", location);
+                                data.put("likeVal", likesVal);
+                                data.put("commentVal", commentVal);
+                                data.put("date", date);
+                                data.put("description", description);
+                                data.put("contentUrl", contentUrl);
+                                data.put("postId", postId);
+
+                                db.collection("users").document(userId).collection("favorites").document(postId).set(data);
+                                holder.btnSaved.setImageResource(R.drawable.fav_green);
+                                Snackbar.make(view, "Added Post to Favorites!", Snackbar.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Log.d("TAG", "get failed with ", task.getException());
+                        }
+                    }
+                });
             }
         });
 
@@ -289,7 +356,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                 });
 
 
-                                //generate notification
+                                //add the post to the likes and generate notification
                                 db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {

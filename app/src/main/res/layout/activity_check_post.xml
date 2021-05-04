@@ -112,7 +112,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/ic_favorite_empty" />
+        android:background="@drawable/fav"
+        android:src="@drawable/fav"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/author"

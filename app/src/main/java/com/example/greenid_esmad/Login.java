@@ -159,8 +159,7 @@ public class Login extends AppCompatActivity {
                                 //Add userId to GLOBALS
                                 GLOBALS globalUserId = (GLOBALS) getApplicationContext();
                                 globalUserId.setUserIdGlobal(userId);
-                                globalUserId.setUserName(displayName);
-                                globalUserId.setUserPfp(pfp.toString());
+
 
                                 // Welcome Toast
                                 String message = "Welcome " + displayName + "!";
@@ -197,8 +196,7 @@ public class Login extends AppCompatActivity {
                                 //Add userId to GLOBALS
                                 GLOBALS globalUserId = (GLOBALS) getApplicationContext();
                                 globalUserId.setUserIdGlobal(userId);
-                                globalUserId.setUserName(displayName);
-                                globalUserId.setUserPfp(pfp.toString());
+
                             }
                         } else {
                             Log.d("TAG", "get failed with ", task.getException());
