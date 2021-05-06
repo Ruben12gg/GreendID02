@@ -40,6 +40,7 @@ public class User extends AppCompatActivity {
     TextView tvfollowersVal;
     TextView tvfollowingVal;
     TextView tvbio;
+    TextView userRank;
     ImageView ivPfp;
     ImageButton settingsBtn;
     ImageButton favoritesBtn;
@@ -98,7 +99,6 @@ public class User extends AppCompatActivity {
         });
 
 
-
         settingsBtn = findViewById(R.id.settingsBtn);
 
         //navegação para settings
@@ -155,6 +155,22 @@ public class User extends AppCompatActivity {
                         String bio = document.getString("bio");
                         tvbio = findViewById(R.id.bio);
                         tvbio.setText(bio);
+
+                        //user rank score calculations
+                        String userRankTxt = document.getString("userRank");
+                        Integer baseUserRankVal = Integer.parseInt(userRankTxt);
+
+                        String impactful = document.getString("impactful");
+                        Integer impactfulMultiplier = Integer.parseInt(impactful);
+
+                        String ecoIdea = document.getString("ecoIdea");
+                        Integer ecoIdeaMultiplier = Integer.parseInt(ecoIdea);
+
+                        Integer userRankValTotal = (15 * impactfulMultiplier) + (10 * ecoIdeaMultiplier) + baseUserRankVal;
+                        String userRankValTotalTxt = String.valueOf(userRankValTotal);
+
+                        userRank = findViewById(R.id.userRank);
+                        userRank.setText("GreenID Score: " + userRankValTotalTxt);
 
                         String pfpUrl = document.getString("pfp");
                         ivPfp = findViewById(R.id.pfp);

@@ -1,12 +1,15 @@
 package com.example.greenid_esmad;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,7 +40,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private ItemClickListener mClickListener;
 
 
-
     FeedAdapter(Context context, List<ContentFeed> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -65,10 +67,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageButton btnSaved;
         ImageButton btnReward;
         ImageButton btnClose;
+        ImageButton btnImpact;
+        ImageButton btnIdea;
+        Button btnOk;
         RelativeLayout modalView;
         RelativeLayout resultCard;
-
-
 
 
         ViewHolder(View itemView) {
@@ -87,6 +90,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             btnSaved = itemView.findViewById(R.id.btnSaved);
             btnReward = itemView.findViewById(R.id.btnGift);
             btnClose = itemView.findViewById(R.id.btnClose);
+            btnImpact = itemView.findViewById(R.id.impactBtn);
+            btnIdea = itemView.findViewById(R.id.ideaBtn);
+            btnOk = itemView.findViewById(R.id.btnOk);
             resultCard = itemView.findViewById(R.id.post_card_02);
             modalView = itemView.findViewById(R.id.modalView);
             itemView.setOnClickListener(this);
@@ -308,8 +314,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 likeData.put("likeVal", newLikeValTxt);
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
-                                                db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
-
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -350,8 +354,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 likeData.put("likeVal", newLikeValTxt);
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
-                                                db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
-
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -372,7 +374,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                         if (task.isSuccessful()) {
                                             DocumentSnapshot document = task.getResult();
                                             if (document.exists()) {
-
 
 
                                                 Map<String, Object> data = new HashMap<>();
@@ -409,7 +410,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 
 
-
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                                             } else {
                                                 Log.d("TAG", "No such document");
@@ -429,16 +429,110 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 });
 
 
-
-
             }
         });
 
+
+        //Reward selection logic (try with Switch/case later!)
         holder.btnReward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 holder.modalView.setVisibility(View.VISIBLE);
+
+                holder.btnIdea.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        holder.btnImpact.setBackgroundResource(R.drawable.close);
+                        holder.btnIdea.setBackgroundResource(R.drawable.gift);
+                        String reward = "IDEA";
+
+                        holder.btnOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d("REWARD", reward);
+
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String ideaVal = document.getString("ecoIdea");
+                                                Integer newIdeaVal = Integer.parseInt(ideaVal) + 1;
+                                                String newIdeaValTxt = String.valueOf(newIdeaVal);
+
+                                                Map<String, Object> rewardData = new HashMap<>();
+                                                rewardData.put("ecoIdea", newIdeaValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("users").document(authorId).update(rewardData);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+
+                holder.btnImpact.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        holder.btnImpact.setBackgroundResource(R.drawable.gift);
+                        holder.btnIdea.setBackgroundResource(R.drawable.close);
+                        String reward = "IMAPCTFUL";
+
+                        holder.btnOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d("REWARD", reward);
+
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String impactfulVal = document.getString("impactful");
+                                                Integer newImpactfulVal = Integer.parseInt(impactfulVal) + 1;
+                                                String newImpactfulValTxt = String.valueOf(newImpactfulVal);
+
+                                                Map<String, Object> rewardData = new HashMap<>();
+                                                rewardData.put("impactful", newImpactfulValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("users").document(authorId).update(rewardData);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+
+                            }
+
+
+                        });
+                    }
+                });
 
             }
         });
