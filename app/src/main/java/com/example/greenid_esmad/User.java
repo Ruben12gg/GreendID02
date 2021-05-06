@@ -157,16 +157,13 @@ public class User extends AppCompatActivity {
                         tvbio.setText(bio);
 
                         //user rank score calculations
-                        String userRankTxt = document.getString("userRank");
-                        Integer baseUserRankVal = Integer.parseInt(userRankTxt);
-
                         String impactful = document.getString("impactful");
                         Integer impactfulMultiplier = Integer.parseInt(impactful);
 
                         String ecoIdea = document.getString("ecoIdea");
                         Integer ecoIdeaMultiplier = Integer.parseInt(ecoIdea);
 
-                        Integer userRankValTotal = (15 * impactfulMultiplier) + (10 * ecoIdeaMultiplier) + baseUserRankVal;
+                        Integer userRankValTotal = (15 * impactfulMultiplier) + (10 * ecoIdeaMultiplier);
                         String userRankValTotalTxt = String.valueOf(userRankValTotal);
 
                         userRank = findViewById(R.id.userRank);

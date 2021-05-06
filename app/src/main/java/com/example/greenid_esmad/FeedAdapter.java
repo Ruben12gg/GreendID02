@@ -480,6 +480,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                         }
                                     }
                                 });
+
+                                holder.modalView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(view, "Award given!", Snackbar.LENGTH_SHORT).show();
+
                             }
                         });
                     }
@@ -525,6 +529,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                         }
                                     }
                                 });
+
+                                holder.modalView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(view, "Award given!", Snackbar.LENGTH_SHORT).show();
 
 
                             }
