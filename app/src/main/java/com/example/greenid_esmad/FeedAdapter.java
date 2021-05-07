@@ -69,6 +69,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageButton btnClose;
         ImageButton btnImpact;
         ImageButton btnIdea;
+        ImageView impactfulBadge;
+        ImageView ecoIdeaBadge;
+        TextView impactfulCounter;
+        TextView ecoIdeaCounter;
         Button btnOk;
         RelativeLayout modalView;
         RelativeLayout resultCard;
@@ -93,6 +97,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             btnImpact = itemView.findViewById(R.id.impactBtn);
             btnIdea = itemView.findViewById(R.id.ideaBtn);
             btnOk = itemView.findViewById(R.id.btnOk);
+            impactfulBadge = itemView.findViewById(R.id.impactfulBadge);
+            impactfulCounter = itemView.findViewById(R.id.impactfulCounter);
+            ecoIdeaBadge = itemView.findViewById(R.id.ecoIdeaBadge);
+            ecoIdeaCounter = itemView.findViewById(R.id.ecoIdeaCounter);
             resultCard = itemView.findViewById(R.id.post_card_02);
             modalView = itemView.findViewById(R.id.modalView);
             itemView.setOnClickListener(this);
@@ -185,6 +193,55 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                         holder.btnSaved.setImageResource(R.drawable.fav);
 
                     }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //display/hide badges if the post has awards for each one
+        db.collection("users").document(userId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        String impactfulVal = document.getString("impactful");
+                        String ecoIdeaVal = document.getString("ecoIdea");
+
+                        //Impactful reward display
+                        if (impactfulVal.equals("0")) {
+
+                            holder.impactfulBadge.setVisibility(View.INVISIBLE);
+                            holder.impactfulCounter.setVisibility(View.INVISIBLE);
+
+                        } else {
+
+                            holder.impactfulBadge.setVisibility(View.VISIBLE);
+                            holder.impactfulCounter.setVisibility(View.VISIBLE);
+                            holder.impactfulCounter.setText(impactfulVal);
+                        }
+
+                        //EcoIdea reward display
+                        if (ecoIdeaVal.equals("0")) {
+
+                            holder.ecoIdeaBadge.setVisibility(View.INVISIBLE);
+                            holder.ecoIdeaCounter.setVisibility(View.INVISIBLE);
+
+                        } else {
+
+                            holder.ecoIdeaBadge.setVisibility(View.VISIBLE);
+                            holder.ecoIdeaCounter.setVisibility(View.VISIBLE);
+                            holder.ecoIdeaCounter.setText(ecoIdeaVal);
+                        }
+
+
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+
+
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
                 }
@@ -470,6 +527,45 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
                                                 db.collection("users").document(authorId).update(rewardData);
 
+                                                //generate notification
+                                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+
+                                                                String name = document.getString("name");
+                                                                String pfpUrl = document.getString("pfp");
+                                                                String contentTxt = name + " rewarded your post with: Eco Idea";
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                                Date date = new Date();
+                                                                String dateTxt = formatter.format(date).toString();
+                                                                String notifId = UUID.randomUUID().toString();
+
+                                                                String authorId = contentFeed.getAuthorId();
+
+                                                                Map<String, Object> dataNotif = new HashMap<>();
+                                                                dataNotif.put("username", name);
+                                                                dataNotif.put("pfpUrl", pfpUrl);
+                                                                dataNotif.put("contentUrl", contentUrl);
+                                                                dataNotif.put("commentVal", contentTxt);
+                                                                dataNotif.put("date", dateTxt);
+                                                                dataNotif.put("notifId", notifId);
+
+                                                                db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                            } else {
+                                                                Log.d("TAG", "No such document");
+                                                            }
+                                                        } else {
+                                                            Log.d("TAG", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });
+
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                                             } else {
@@ -518,6 +614,45 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
                                                 db.collection("users").document(authorId).update(rewardData);
+
+                                                //generate notification
+                                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+
+                                                                String name = document.getString("name");
+                                                                String pfpUrl = document.getString("pfp");
+                                                                String contentTxt = name + " rewarded your post with: Impactful";
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                                Date date = new Date();
+                                                                String dateTxt = formatter.format(date).toString();
+                                                                String notifId = UUID.randomUUID().toString();
+
+                                                                String authorId = contentFeed.getAuthorId();
+
+                                                                Map<String, Object> dataNotif = new HashMap<>();
+                                                                dataNotif.put("username", name);
+                                                                dataNotif.put("pfpUrl", pfpUrl);
+                                                                dataNotif.put("contentUrl", contentUrl);
+                                                                dataNotif.put("commentVal", contentTxt);
+                                                                dataNotif.put("date", dateTxt);
+                                                                dataNotif.put("notifId", notifId);
+
+                                                                db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                            } else {
+                                                                Log.d("TAG", "No such document");
+                                                            }
+                                                        } else {
+                                                            Log.d("TAG", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());

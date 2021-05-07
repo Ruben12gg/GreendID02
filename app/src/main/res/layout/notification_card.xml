@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/notifications_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
-    android:background="@drawable/layout_bg"
-    >
+    android:background="@drawable/layout_bg">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_toEndOf="@+id/profile_image"
-        android:layout_toStartOf="@+id/post_image"
         android:layout_margin="5dp"
-        >
+        android:layout_toStartOf="@+id/post_image"
+        android:layout_toEndOf="@+id/profile_image"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/username"
-            android:textStyle="bold"
+            android:text="@string/pfName"
             android:textColor="@color/black"
-            android:text="@string/pfName"/>
+            android:textStyle="bold" />
 
 
         <TextView
-            android:layout_width="188dp"
+            android:id="@+id/comment"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/username"
             android:layout_marginTop="8dp"
-            android:id="@+id/comment"
             android:maxLines="5"
             android:text="@string/CommentValue"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/contentPic"
         android:layout_width="96dp"
         android:layout_height="64dp"
-        android:scaleType="centerCrop"
-        android:id="@+id/contentPic"
         android:layout_alignParentEnd="true"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop" />
 
 
 </RelativeLayout>

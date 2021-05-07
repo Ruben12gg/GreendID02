@@ -247,10 +247,11 @@ public class NewPost extends AppCompatActivity {
                                                     data.put("likeVal", likeVal);
                                                     data.put("commentVal", commentVal);
                                                     data.put("date", dateTxt);
+                                                    data.put("impactful", "0");
+                                                    data.put("ecoIdea", "0");
                                                     data.put("postId", postId);
 
 
-                                                    db.collection("posts").document(postId).set(data);
                                                     db.collection("users").document(userId).collection("posts").document(postId).set(data);
 
 

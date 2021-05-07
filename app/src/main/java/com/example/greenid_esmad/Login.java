@@ -180,6 +180,8 @@ public class Login extends AppCompatActivity {
                                 newUserData.put("id", userId);
                                 newUserData.put("followersVal", "0");
                                 newUserData.put("followingVal", "0");
+                                newUserData.put("impactful", "0");
+                                newUserData.put("ecoIdea", "0");
                                 newUserData.put("bio", "This user hasn't added a bio yet");
                                 newUserData.put("pfp", pfp.toString());
 
