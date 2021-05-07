@@ -502,7 +502,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                     public void onClick(View view) {
 
                         holder.btnImpact.setBackgroundResource(R.drawable.impactful_white);
-                        holder.btnIdea.setBackgroundResource(R.drawable.ecoidea_white);
+                        holder.btnIdea.setBackgroundResource(R.drawable.ecoidea_green);
                         String reward = "IDEA";
 
                         holder.btnOk.setOnClickListener(new View.OnClickListener() {
@@ -590,7 +590,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                     public void onClick(View view) {
 
                         holder.btnImpact.setBackgroundResource(R.drawable.impactful_green);
-                        holder.btnIdea.setBackgroundResource(R.drawable.ecoidea_green);
+                        holder.btnIdea.setBackgroundResource(R.drawable.ecoidea_white);
                         String reward = "IMAPCTFUL";
 
                         holder.btnOk.setOnClickListener(new View.OnClickListener() {
