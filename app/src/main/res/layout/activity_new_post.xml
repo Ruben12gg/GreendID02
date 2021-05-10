@@ -85,17 +85,19 @@
     </RelativeLayout>
 
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ScrollView"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="318dp"
         android:layout_below="@id/selected_pic_view"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="vertical">
 
         <RelativeLayout
             android:id="@+id/infoPost"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
 
             <TextView
                 android:id="@+id/descriptiontv"
@@ -128,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/descriptionTxt"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/location"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -148,19 +150,27 @@
                 android:textColorHint="@color/light_txt"
                 android:textSize="16sp" />
 
-
             <Button
                 android:id="@+id/postBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_below="@+id/locationTxt"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="48dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="48dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/btnbox"
                 android:text="@string/Publish"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/postBtn"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:text="."
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
         </RelativeLayout>

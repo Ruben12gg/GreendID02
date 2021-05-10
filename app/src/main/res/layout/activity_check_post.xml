@@ -178,8 +178,8 @@
 
     <ImageButton
         android:id="@+id/likeBtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_below="@+id/imgPost"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -201,8 +201,8 @@
 
     <ImageButton
         android:id="@+id/commentBtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_below="@+id/imgPost"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
@@ -223,8 +223,8 @@
 
     <ImageButton
         android:id="@+id/saveBtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_below="@+id/imgPost"
         android:layout_toEndOf="@+id/comments_val"
         android:layout_marginStart="24dp"
@@ -236,8 +236,8 @@
 
     <ImageButton
         android:id="@+id/btnGift"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginEnd="8dp"
         android:layout_below="@+id/imgPost"
         android:layout_marginTop="8dp"
