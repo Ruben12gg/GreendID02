@@ -1,6 +1,7 @@
 package com.example.greenid_esmad;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -73,6 +76,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageView ecoIdeaBadge;
         TextView impactfulCounter;
         TextView ecoIdeaCounter;
+        ImageButton btn;
         Button btnOk;
         RelativeLayout modalView;
         RelativeLayout resultCard;
@@ -338,7 +342,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             public void onClick(View view) {
                 Log.d("BTNLIKE", "Click on like Btnnn");
 
-
                 Log.d("USERID", userId);
                 Log.d("POSTID", postId);
                 Log.d("LIKEVAL", author);
@@ -489,6 +492,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
 
             }
+
+
         });
 
 

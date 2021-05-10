@@ -179,7 +179,7 @@ public class Notifications extends AppCompatActivity {
                         Log.d("CLEAR", "Cleared Notifs");
                         RefreshNotifs();
                     }
-                }, 150);
+                }, 180);
 
             }
         });
@@ -221,6 +221,11 @@ public class Notifications extends AppCompatActivity {
     }
 
     private void RefreshNotifs() {
+
+        recyclerView = findViewById(R.id.notificationrv);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_right);
+        recyclerView.startAnimation(animation);
+
         contentNotifications.clear();
 
         //Access user Id from GLOBALS

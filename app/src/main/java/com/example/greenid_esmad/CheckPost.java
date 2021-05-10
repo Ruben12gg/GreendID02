@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -439,12 +442,15 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
+        Context context = CheckPost.this;
 
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("BTNLIKE", "Click on like Btnnn");
 
+                Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_right);
+                likeBtn.setAnimation(animation);
 
                 Log.d("USERID", userId);
                 Log.d("POSTID", postId);
