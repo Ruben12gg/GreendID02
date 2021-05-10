@@ -119,21 +119,20 @@
                     android:id="@+id/impactBtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:scaleType="fitXY"
                     android:layout_below="@+id/rewardTitle"
                     android:layout_marginStart="16dp"
                     android:background="@drawable/impactful_white"
-                     />
+                    android:scaleType="fitXY" />
 
                 <ImageButton
                     android:id="@+id/ideaBtn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:scaleType="fitXY"
                     android:layout_below="@+id/rewardTitle"
                     android:layout_marginStart="8dp"
                     android:layout_toEndOf="@+id/impactBtn"
-                    android:background="@drawable/ecoidea_white" />
+                    android:background="@drawable/ecoidea_white"
+                    android:scaleType="fitXY" />
 
                 <Button
                     android:id="@+id/btnOk"
@@ -162,8 +161,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_gravity="bottom"
-                android:gravity="end"
-                android:layout_marginEnd="16dp">
+                android:layout_marginEnd="16dp"
+                android:gravity="end">
 
                 <ImageView
                     android:id="@+id/impactfulBadge"

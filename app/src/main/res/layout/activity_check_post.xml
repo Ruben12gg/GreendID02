@@ -58,6 +58,123 @@
         android:layout_below="@+id/main_toolbar"
         android:scaleType="centerCrop" />
 
+    <RelativeLayout
+        android:id="@+id/modalView"
+        android:layout_width="300dp"
+        android:layout_height="170dp"
+        android:layout_below="@+id/main_toolbar"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true" >
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="170dp"
+            android:background="@drawable/btnwhite" />
+
+        <TextView
+            android:id="@+id/rewardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Select a Reward:"
+            android:textColor="@color/light_txt" />
+
+        <ImageButton
+            android:id="@+id/impactBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/rewardTitle"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/impactful_white"
+            android:scaleType="fitXY" />
+
+        <ImageButton
+            android:id="@+id/ideaBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/rewardTitle"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/impactBtn"
+            android:background="@drawable/ecoidea_white"
+            android:scaleType="fitXY" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:background="@drawable/btnwhite"
+            android:text="ok"
+            android:textColor="@color/black_txt" />
+
+        <ImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/close" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rewardsView"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_below="@+id/main_toolbar"
+        android:layout_marginTop="215dp"
+        android:gravity="end"
+        android:layout_marginEnd="16dp">
+
+        <ImageView
+            android:id="@+id/impactfulBadge"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/impactful_green" />
+
+        <TextView
+            android:id="@+id/impactfulCounter"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="-16dp"
+            android:layout_marginTop="32dp"
+            android:layout_toEndOf="@+id/impactfulBadge"
+            android:background="@drawable/circle"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/dark_grey"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/ecoIdeaBadge"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/impactfulBadge"
+            android:background="@drawable/ecoidea_green" />
+
+        <TextView
+            android:id="@+id/ecoIdeaCounter"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="-16dp"
+            android:layout_marginTop="32dp"
+            android:layout_toEndOf="@+id/ecoIdeaBadge"
+            android:background="@drawable/circle"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/dark_grey"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
 
     <ImageButton
         android:id="@+id/likeBtn"
@@ -109,12 +226,23 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@+id/imgPost"
-        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/comments_val"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/fav"
         android:src="@drawable/fav"
         android:scaleType="fitXY"/>
+
+    <ImageButton
+        android:id="@+id/btnGift"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_below="@+id/imgPost"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/saveBtn"
+        android:background="@drawable/rewards" />
 
     <TextView
         android:id="@+id/author"

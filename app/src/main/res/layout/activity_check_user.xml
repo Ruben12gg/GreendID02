@@ -154,7 +154,7 @@
 
             <TextView
                 android:id="@+id/pfName_Check"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"
@@ -165,7 +165,7 @@
 
             <TextView
                 android:id="@+id/userRank"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="24dp"

@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +51,17 @@ public class CheckPost extends AppCompatActivity {
     ImageButton commentBtn;
     ImageButton saveBtn;
 
+    ImageButton btnReward;
+    ImageButton btnClose;
+    ImageButton btnImpact;
+    ImageButton btnIdea;
+    ImageView impactfulBadge;
+    ImageView ecoIdeaBadge;
+    TextView impactfulCounter;
+    TextView ecoIdeaCounter;
+    Button btnOk;
+    RelativeLayout modalView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,11 +97,24 @@ public class CheckPost extends AppCompatActivity {
         description = findViewById(R.id.descriptionTxt);
         date = findViewById(R.id.date);
 
+        btnReward = findViewById(R.id.btnGift);
+        btnClose = findViewById(R.id.btnClose);
+        btnImpact = findViewById(R.id.impactBtn);
+        btnIdea = findViewById(R.id.ideaBtn);
+        btnOk = findViewById(R.id.btnOk);
+        impactfulBadge = findViewById(R.id.impactfulBadge);
+        impactfulCounter = findViewById(R.id.impactfulCounter);
+        ecoIdeaBadge = findViewById(R.id.ecoIdeaBadge);
+        ecoIdeaCounter = findViewById(R.id.ecoIdeaCounter);
+        modalView = findViewById(R.id.modalView);
+
         topName.setText(authorTxt + "'s Post");
         author.setText(authorTxt);
         Picasso.get().load(contentUrl).into(contentPic);
         description.setText(descriptionTxt);
         date.setText(dateTxt);
+
+        modalView.setVisibility(View.INVISIBLE);
 
         //Get post Data (likes/comments) in real time
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -167,11 +193,255 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
+        //display/hide badges if the post has awards for each one
+        db.collection("users").document(userId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        String impactfulVal = document.getString("impactful");
+                        String ecoIdeaVal = document.getString("ecoIdea");
+
+                        //Impactful reward display
+                        if (impactfulVal.equals("0")) {
+
+                            impactfulBadge.setVisibility(View.INVISIBLE);
+                            impactfulCounter.setVisibility(View.INVISIBLE);
+
+                        } else {
+
+                            impactfulBadge.setVisibility(View.VISIBLE);
+                            impactfulCounter.setVisibility(View.VISIBLE);
+                            impactfulCounter.setText(impactfulVal);
+                        }
+
+                        //EcoIdea reward display
+                        if (ecoIdeaVal.equals("0")) {
+
+                            ecoIdeaBadge.setVisibility(View.INVISIBLE);
+                            ecoIdeaCounter.setVisibility(View.INVISIBLE);
+
+                        } else {
+
+                            ecoIdeaBadge.setVisibility(View.VISIBLE);
+                            ecoIdeaCounter.setVisibility(View.VISIBLE);
+                            ecoIdeaCounter.setText(ecoIdeaVal);
+                        }
+
+
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+
+
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+        //Reward selection logic (try with Switch/case later!)
+        btnReward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                modalView.setVisibility(View.VISIBLE);
+
+                btnIdea.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        btnImpact.setBackgroundResource(R.drawable.impactful_white);
+                        btnIdea.setBackgroundResource(R.drawable.ecoidea_green);
+                        String reward = "IDEA";
+
+                        btnOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d("REWARD", reward);
+
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String ideaVal = document.getString("ecoIdea");
+                                                Integer newIdeaVal = Integer.parseInt(ideaVal) + 1;
+                                                String newIdeaValTxt = String.valueOf(newIdeaVal);
+
+                                                Map<String, Object> rewardData = new HashMap<>();
+                                                rewardData.put("ecoIdea", newIdeaValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("users").document(authorId).update(rewardData);
+
+                                                //generate notification
+                                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+
+                                                                String name = document.getString("name");
+                                                                String pfpUrl = document.getString("pfp");
+                                                                String contentTxt = name + " rewarded your post with: Eco Idea";
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                                Date date = new Date();
+                                                                String dateTxt = formatter.format(date).toString();
+                                                                String notifId = UUID.randomUUID().toString();
+
+
+                                                                Map<String, Object> dataNotif = new HashMap<>();
+                                                                dataNotif.put("username", name);
+                                                                dataNotif.put("pfpUrl", pfpUrl);
+                                                                dataNotif.put("contentUrl", contentUrl);
+                                                                dataNotif.put("commentVal", contentTxt);
+                                                                dataNotif.put("date", dateTxt);
+                                                                dataNotif.put("notifId", notifId);
+
+                                                                db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                            } else {
+                                                                Log.d("TAG", "No such document");
+                                                            }
+                                                        } else {
+                                                            Log.d("TAG", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                modalView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(view, "Award given!", Snackbar.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+
+                btnImpact.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        btnImpact.setBackgroundResource(R.drawable.impactful_green);
+                        btnIdea.setBackgroundResource(R.drawable.ecoidea_white);
+                        String reward = "IMAPCTFUL";
+
+                        btnOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d("REWARD", reward);
+
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String impactfulVal = document.getString("impactful");
+                                                Integer newImpactfulVal = Integer.parseInt(impactfulVal) + 1;
+                                                String newImpactfulValTxt = String.valueOf(newImpactfulVal);
+
+                                                Map<String, Object> rewardData = new HashMap<>();
+                                                rewardData.put("impactful", newImpactfulValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("users").document(authorId).update(rewardData);
+
+                                                //generate notification
+                                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+
+                                                                String name = document.getString("name");
+                                                                String pfpUrl = document.getString("pfp");
+                                                                String contentTxt = name + " rewarded your post with: Impactful";
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                                Date date = new Date();
+                                                                String dateTxt = formatter.format(date).toString();
+                                                                String notifId = UUID.randomUUID().toString();
+
+
+                                                                Map<String, Object> dataNotif = new HashMap<>();
+                                                                dataNotif.put("username", name);
+                                                                dataNotif.put("pfpUrl", pfpUrl);
+                                                                dataNotif.put("contentUrl", contentUrl);
+                                                                dataNotif.put("commentVal", contentTxt);
+                                                                dataNotif.put("date", dateTxt);
+                                                                dataNotif.put("notifId", notifId);
+
+                                                                db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                            } else {
+                                                                Log.d("TAG", "No such document");
+                                                            }
+                                                        } else {
+                                                            Log.d("TAG", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                modalView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(view, "Award given!", Snackbar.LENGTH_SHORT).show();
+
+
+                            }
+
+
+                        });
+                    }
+                });
+
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modalView.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("BTNLIKE", "Click on like Btnnn");
-
 
 
                 Log.d("USERID", userId);
@@ -209,7 +479,6 @@ public class CheckPost extends AppCompatActivity {
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
                                                 db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
-
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -252,7 +521,6 @@ public class CheckPost extends AppCompatActivity {
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
                                                 db.collection("users").document(userId).collection("posts").document(postId).update(likeData);
-
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -470,6 +738,7 @@ public class CheckPost extends AppCompatActivity {
         });
 
     }
+
     private void RecyclerCall() {
 
         recyclerView = findViewById(R.id.rvPost);

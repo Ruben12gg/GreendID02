@@ -42,6 +42,7 @@ public class CheckUser extends AppCompatActivity {
     TextView username;
     ImageView pfp;
     TextView bio;
+    TextView userRank;
     TextView followers;
     TextView following;
     ImageButton btnBack;
@@ -113,6 +114,38 @@ public class CheckUser extends AppCompatActivity {
                         Drawable box = getResources().getDrawable(R.drawable.btnbox);
                         btnFollow.setBackground(box);
 
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+        //Calculate user's GreenID score
+        db.collection("users").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        //user rank score calculations
+                        String impactful = document.getString("impactful");
+                        Integer impactfulMultiplier = Integer.parseInt(impactful);
+
+                        String ecoIdea = document.getString("ecoIdea");
+                        Integer ecoIdeaMultiplier = Integer.parseInt(ecoIdea);
+
+                        Integer userRankValTotal = (15 * impactfulMultiplier) + (10 * ecoIdeaMultiplier);
+                        String userRankValTotalTxt = String.valueOf(userRankValTotal);
+
+                        userRank = findViewById(R.id.userRank);
+                        userRank.setText("GreenID Score: " + userRankValTotalTxt);
+
+                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("TAG", "No such document");
                     }
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
