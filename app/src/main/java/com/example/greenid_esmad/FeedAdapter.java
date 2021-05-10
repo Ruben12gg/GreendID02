@@ -117,6 +117,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
 
         holder.modalView.setVisibility(View.INVISIBLE);
+        holder.impactfulBadge.setVisibility(View.INVISIBLE);
+        holder.impactfulCounter.setVisibility(View.INVISIBLE);
 
         ContentFeed contentFeed = mData.get(position);
         holder.tvAuthor.setText(contentFeed.getAuthor());
@@ -200,7 +202,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         });
 
         //display/hide badges if the post has awards for each one
-        db.collection("users").document(userId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {

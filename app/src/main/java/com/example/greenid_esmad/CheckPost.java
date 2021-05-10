@@ -115,6 +115,8 @@ public class CheckPost extends AppCompatActivity {
         date.setText(dateTxt);
 
         modalView.setVisibility(View.INVISIBLE);
+        impactfulBadge.setVisibility(View.INVISIBLE);
+        ecoIdeaBadge.setVisibility(View.INVISIBLE);
 
         //Get post Data (likes/comments) in real time
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -194,7 +196,7 @@ public class CheckPost extends AppCompatActivity {
         });
 
         //display/hide badges if the post has awards for each one
-        db.collection("users").document(userId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
