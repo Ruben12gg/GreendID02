@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="fitStart"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/illustration_hand" />
@@ -22,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="392dp" />
+        app:layout_constraintGuide_percent="0.50063694" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
@@ -54,82 +53,35 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/login_bottom_panel" />
 
-    <Button
-        android:id="@+id/login_facebook_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/login_facebook_button"
-        android:paddingLeft="24dp"
-        android:paddingTop="18dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="18dp"
-        android:text="Login with Facebook"
-        android:textColor="@color/colorPrimary"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal" />
-
     <ImageView
-        android:id="@+id/google_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/btn_google_light_focus_hdpi"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.153"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/login_facebook_button" />
-
-
-    <Button
-        android:id="@+id/login_email_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/login_email_button"
-        android:paddingLeft="24dp"
-        android:paddingTop="18dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="18dp"
-        android:text="Login with Google"
-        android:textColor="@color/black_txt"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/login_facebook_button" />
-
-
-    <TextView
-        android:id="@+id/login_signin_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Not a member yet? Sign in."
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/login_email_button" />
-
-    <TextView
-        android:id="@+id/login_forgetpassword_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Forgot your password?"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
+        android:id="@+id/logo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:contentDescription="@string/app_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/login_signin_text" />
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal"
+        app:layout_constraintVertical_bias="0.234"
+        app:srcCompat="@drawable/greenid_login_logo" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/login_email_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@+id/guideline_horizontal"
+        app:layout_constraintVertical_bias="0.795" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

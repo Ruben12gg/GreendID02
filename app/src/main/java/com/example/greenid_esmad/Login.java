@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,7 +51,9 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button lgnBtn = findViewById(R.id.login_email_button);
+        SignInButton lgnBtn = findViewById(R.id.login_email_button);
+        lgnBtn.setSize(SignInButton.SIZE_STANDARD);
+       // Button lgnBtn = findViewById(R.id.login_email_button);
 
 
         // Call Firebase Auth
