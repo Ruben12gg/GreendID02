@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,8 +19,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,15 +41,18 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-public class NewPost extends AppCompatActivity {
+public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     ImageView contentPic;
     Uri imageUri;
@@ -52,8 +60,18 @@ public class NewPost extends AppCompatActivity {
     StorageReference storageReference;
     EditText description;
     EditText location;
+    TextView dateTv;
+    Button btnDatePick;
+    TextView timeTv;
+    Button btnTimePick;
     Button postBtn;
+    Button btnImageTag;
+    Button btnEventTag;
+    Button btnProductTag;
     ImageView addIcon;
+
+    int hour;
+    int minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +81,13 @@ public class NewPost extends AppCompatActivity {
         addIcon = findViewById(R.id.addIcon);
         addIcon.setVisibility(View.VISIBLE);
 
+        btnImageTag = findViewById(R.id.btnImageTag);
+        btnProductTag = findViewById(R.id.btnProductTag);
+
+        dateTv = findViewById(R.id.eventDateTv);
+        btnDatePick = findViewById(R.id.btnDatePick);
+        timeTv = findViewById(R.id.eventTimeTv);
+        btnTimePick = findViewById(R.id.btnTimePick);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -77,6 +102,71 @@ public class NewPost extends AppCompatActivity {
             }
         });
 
+        btnEventTag = findViewById(R.id.btnEventTag);
+        btnEventTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                btnImageTag.setBackgroundResource(R.drawable.button);
+                btnEventTag.setBackgroundResource(R.drawable.btnbox);
+                btnProductTag.setBackgroundResource(R.drawable.button);
+
+                dateTv.setVisibility(View.VISIBLE);
+                btnDatePick.setVisibility(View.VISIBLE);
+                timeTv.setVisibility(View.VISIBLE);
+                btnTimePick.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        btnImageTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnImageTag.setBackgroundResource(R.drawable.btnbox);
+                btnEventTag.setBackgroundResource(R.drawable.button);
+                btnProductTag.setBackgroundResource(R.drawable.button);
+
+
+                dateTv.setVisibility(View.GONE);
+                btnDatePick.setVisibility(View.GONE);
+                timeTv.setVisibility(View.GONE);
+                btnTimePick.setVisibility(View.GONE);
+
+            }
+        });
+
+        btnProductTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnImageTag.setBackgroundResource(R.drawable.button);
+                btnEventTag.setBackgroundResource(R.drawable.button);
+                btnProductTag.setBackgroundResource(R.drawable.btnbox);
+
+
+                dateTv.setVisibility(View.GONE);
+                btnDatePick.setVisibility(View.GONE);
+                timeTv.setVisibility(View.GONE);
+                btnTimePick.setVisibility(View.GONE);
+
+            }
+        });
+
+
+        btnDatePick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePicker();
+
+            }
+        });
+
+        btnTimePick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTimePicker(view);
+            }
+        });
+
         postBtn = findViewById(R.id.postBtn);
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +174,6 @@ public class NewPost extends AppCompatActivity {
                 uploadPicture();
             }
         });
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -307,4 +396,51 @@ public class NewPost extends AppCompatActivity {
         }, 500);
 
     }
+
+    private void showDatePicker() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+
+        Integer monthAdded = month + 1;
+        String date = day + "/" + monthAdded + "/" + year;
+        btnDatePick.setText(date);
+
+    }
+
+    public void showTimePicker(View view){
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                int hour = selectedHour;
+                int minute = selectedMinute;
+                btnTimePick.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
+
+            }
+        };
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                onTimeSetListener,
+                hour,
+                minute,
+                true
+        );
+
+        timePickerDialog.show();
+
+    }
+
 }

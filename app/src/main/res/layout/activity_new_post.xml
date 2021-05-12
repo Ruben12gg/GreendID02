@@ -84,12 +84,50 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/tagBtnsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_pic_view"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/btnImageTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Image" />
+
+        <Button
+            android:id="@+id/btnEventTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/btnImageTag"
+            android:text="Event" />
+
+
+        <Button
+            android:id="@+id/btnProductTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toRightOf="@+id/btnEventTag"
+            android:text="Product" />
+
+
+    </RelativeLayout>
+
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="318dp"
-        android:layout_below="@id/selected_pic_view"
+        android:layout_below="@id/tagBtnsView"
         android:fillViewport="true"
         android:scrollbars="vertical">
 
@@ -150,11 +188,55 @@
                 android:textColorHint="@color/light_txt"
                 android:textSize="16sp" />
 
+            <TextView
+                android:id="@+id/eventDateTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/locationTxt"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Event Date"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnDatePick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/eventDateTv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="Pick date"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/eventTimeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnDatePick"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Event Date"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnTimePick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/eventTimeTv"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:text="Pick time"
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/postBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_below="@+id/locationTxt"
+                android:layout_below="@+id/btnTimePick"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
