@@ -71,7 +71,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/addIcon"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -98,7 +98,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/postd"
+            android:background="@drawable/postd"
              />
 
         <ImageButton
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/btnImageTag"
-            android:src="@drawable/eventd" />
+            android:background="@drawable/eventd"/>
 
 
         <ImageButton
@@ -118,7 +118,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_toRightOf="@+id/btnEventTag"
-            android:src="@drawable/productd" />
+            android:background="@drawable/productd"/>
 
 
     </RelativeLayout>
@@ -203,12 +203,14 @@
 
             <Button
                 android:id="@+id/btnDatePick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="128dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/eventDateTv"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:text="Pick date"
+                android:textColor="@color/light_txt"
+                android:background="@drawable/input_box"
                 android:visibility="gone" />
 
             <TextView
@@ -218,19 +220,21 @@
                 android:layout_below="@+id/btnDatePick"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Event Date"
+                android:text="Event Time"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnTimePick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="128dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/eventTimeTv"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:text="Pick time"
+                android:background="@drawable/input_box"
+                android:textColor="@color/light_txt"
                 android:visibility="gone" />
 
             <Button

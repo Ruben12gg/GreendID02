@@ -74,6 +74,8 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     int hour;
     int minute;
 
+    String postType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,13 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
         storageReference = storage.getReference();
 
         contentPic = findViewById(R.id.imageContent);
+
+        addIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choosePicture();
+            }
+        });
 
         //Click on the imageView
         contentPic.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +126,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                 timeTv.setVisibility(View.VISIBLE);
                 btnTimePick.setVisibility(View.VISIBLE);
 
+                postType = "event";
+
+
             }
         });
 
@@ -133,6 +145,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                 timeTv.setVisibility(View.GONE);
                 btnTimePick.setVisibility(View.GONE);
 
+                postType = "image";
+
+
             }
         });
 
@@ -148,6 +163,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                 btnDatePick.setVisibility(View.GONE);
                 timeTv.setVisibility(View.GONE);
                 btnTimePick.setVisibility(View.GONE);
+
+                postType = "product";
+
 
             }
         });
@@ -266,6 +284,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
             progDiag.dismiss();
 
+            Log.d("POSTTYPE", postType);
             String message = "You need to select a picture to post.";
             Context context = getApplicationContext();
             int duration = Toast.LENGTH_SHORT;
@@ -340,6 +359,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                                                     data.put("impactful", "0");
                                                     data.put("ecoIdea", "0");
                                                     data.put("postId", postId);
+
 
 
                                                     db.collection("users").document(userId).collection("posts").document(postId).set(data);
