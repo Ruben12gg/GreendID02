@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -65,9 +66,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     TextView timeTv;
     Button btnTimePick;
     Button postBtn;
-    Button btnImageTag;
-    Button btnEventTag;
-    Button btnProductTag;
+    ImageButton btnImageTag;
+    ImageButton btnEventTag;
+    ImageButton btnProductTag;
     ImageView addIcon;
 
     int hour;
@@ -107,9 +108,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onClick(View view) {
 
-                btnImageTag.setBackgroundResource(R.drawable.button);
-                btnEventTag.setBackgroundResource(R.drawable.btnbox);
-                btnProductTag.setBackgroundResource(R.drawable.button);
+                btnImageTag.setBackgroundResource(R.drawable.postd);
+                btnEventTag.setBackgroundResource(R.drawable.events);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
 
                 dateTv.setVisibility(View.VISIBLE);
                 btnDatePick.setVisibility(View.VISIBLE);
@@ -122,9 +123,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
         btnImageTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnImageTag.setBackgroundResource(R.drawable.btnbox);
-                btnEventTag.setBackgroundResource(R.drawable.button);
-                btnProductTag.setBackgroundResource(R.drawable.button);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
 
 
                 dateTv.setVisibility(View.GONE);
@@ -138,9 +139,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
         btnProductTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnImageTag.setBackgroundResource(R.drawable.button);
-                btnEventTag.setBackgroundResource(R.drawable.button);
-                btnProductTag.setBackgroundResource(R.drawable.btnbox);
+                btnImageTag.setBackgroundResource(R.drawable.postd);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.products);
 
 
                 dateTv.setVisibility(View.GONE);

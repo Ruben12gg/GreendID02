@@ -91,25 +91,26 @@
         android:layout_below="@+id/selected_pic_view"
         android:layout_centerHorizontal="true">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnImageTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Image" />
+            android:src="@drawable/postd"
+             />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnEventTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/btnImageTag"
-            android:text="Event" />
+            android:src="@drawable/eventd" />
 
 
-        <Button
+        <ImageButton
             android:id="@+id/btnProductTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,7 +118,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_toRightOf="@+id/btnEventTag"
-            android:text="Product" />
+            android:src="@drawable/productd" />
 
 
     </RelativeLayout>

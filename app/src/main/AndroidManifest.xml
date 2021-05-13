@@ -17,10 +17,12 @@
         <activity android:name=".CheckUser" />
         <activity android:name=".EditProfile" />
         <activity android:name=".LoginCredentialsActivity" />
-        <activity android:name=".NewPost" />
+        <activity android:name=".NewPost"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".User" />
         <activity android:name=".Notifications" />
-        <activity android:name=".Search" />
+        <activity android:name=".Search"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Home" />
         <activity android:name=".Login" android:noHistory="true"/>
         <activity android:name=".Settings" />
