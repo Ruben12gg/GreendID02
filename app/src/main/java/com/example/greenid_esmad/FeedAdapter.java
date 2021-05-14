@@ -65,6 +65,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         TextView tvDescription;
         ImageView pfp;
         ImageView contentPic;
+        ImageView locationIcon;
         ImageButton btnLike;
         ImageButton btnComment;
         ImageButton btnSaved;
@@ -89,6 +90,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             tvLikeVal = itemView.findViewById(R.id.comments_val);
             tvCommentVal = itemView.findViewById(R.id.location);
             tvLocation = itemView.findViewById(R.id.pf_name);
+            locationIcon = itemView.findViewById(R.id.location_icon);
             contentPic = itemView.findViewById(R.id.post_image);
             pfp = itemView.findViewById(R.id.pfp);
             tvDescription = itemView.findViewById(R.id.descriptionText);
@@ -120,9 +122,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
 
-        holder.modalView.setVisibility(View.INVISIBLE);
-        holder.impactfulBadge.setVisibility(View.INVISIBLE);
-        holder.impactfulCounter.setVisibility(View.INVISIBLE);
+        holder.modalView.setVisibility(View.GONE);
+        holder.impactfulBadge.setVisibility(View.GONE);
+        holder.impactfulCounter.setVisibility(View.GONE);
+        holder.ecoIdeaBadge.setVisibility(View.GONE);
+        holder.ecoIdeaCounter.setVisibility(View.GONE);
+        holder.locationIcon.setVisibility(View.GONE);
 
         ContentFeed contentFeed = mData.get(position);
         holder.tvAuthor.setText(contentFeed.getAuthor());
@@ -158,6 +163,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Log.d("COMMENTSVAL", commentVal);
         Log.d("DATE", date);
         Log.d("DESCRIPTION", description);
+
+        if (commentVal.isEmpty()){
+            holder.locationIcon.setVisibility(View.GONE);
+        } else {
+            holder.locationIcon.setVisibility(View.VISIBLE);
+        }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -219,8 +230,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                         //Impactful reward display
                         if (impactfulVal.equals("0")) {
 
-                            holder.impactfulBadge.setVisibility(View.INVISIBLE);
-                            holder.impactfulCounter.setVisibility(View.INVISIBLE);
+                            holder.impactfulBadge.setVisibility(View.GONE);
+                            holder.impactfulCounter.setVisibility(View.GONE);
 
                         } else {
 
@@ -232,8 +243,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                         //EcoIdea reward display
                         if (ecoIdeaVal.equals("0")) {
 
-                            holder.ecoIdeaBadge.setVisibility(View.INVISIBLE);
-                            holder.ecoIdeaCounter.setVisibility(View.INVISIBLE);
+                            holder.ecoIdeaBadge.setVisibility(View.GONE);
+                            holder.ecoIdeaCounter.setVisibility(View.GONE);
 
                         } else {
 

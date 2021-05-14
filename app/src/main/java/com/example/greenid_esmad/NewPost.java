@@ -71,6 +71,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     ImageButton btnProductTag;
     ImageView addIcon;
 
+    String pickedTime;
+    String pickedDate;
+
     int hour;
     int minute;
 
@@ -186,11 +189,40 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
+
         postBtn = findViewById(R.id.postBtn);
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadPicture();
+
+                pickedTime = btnTimePick.getText().toString();
+                pickedDate = btnDatePick.getText().toString();
+
+                //Verify if all the required content for each type of post is present
+                if (postType == null) {
+                    String message = "Please, select the type of post that you want to do.";
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_LONG;
+                    Toast toast = Toast.makeText(context, message, duration);
+                    toast.show();
+
+                } else if (postType.equals("event")) {
+                    if (pickedTime.equals("Pick time") || pickedDate.equals("Pick date")) {
+
+                        String message = "Don't forget to setup a date and time for your event.";
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context, message, duration);
+                        toast.show();
+
+                    } else {
+                        uploadPicture();
+                    }
+                } else if (postType.equals("image") || postType.equals("product")) {
+                    uploadPicture();
+
+                }
+
             }
         });
 
@@ -346,23 +378,50 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
                                                     String postId = UUID.randomUUID().toString();
 
-                                                    Map<String, Object> data = new HashMap<>();
-                                                    data.put("author", name);
-                                                    data.put("authorId", authorId);
-                                                    data.put("authorPfp", pfpUrl);
-                                                    data.put("location", locationTxt);
-                                                    data.put("description", descriptionTxt);
-                                                    data.put("contentUrl", downloadUrl3);
-                                                    data.put("likeVal", likeVal);
-                                                    data.put("commentVal", commentVal);
-                                                    data.put("date", dateTxt);
-                                                    data.put("impactful", "0");
-                                                    data.put("ecoIdea", "0");
-                                                    data.put("postId", postId);
+                                                    if (postType.equals("event")) {
+
+                                                        Map<String, Object> data = new HashMap<>();
+                                                        data.put("author", name);
+                                                        data.put("authorId", authorId);
+                                                        data.put("authorPfp", pfpUrl);
+                                                        data.put("location", locationTxt);
+                                                        data.put("description", descriptionTxt);
+                                                        data.put("contentUrl", downloadUrl3);
+                                                        data.put("likeVal", likeVal);
+                                                        data.put("commentVal", commentVal);
+                                                        data.put("date", dateTxt);
+                                                        data.put("postType", postType);
+                                                        data.put("eventDate", pickedDate);
+                                                        data.put("eventTime", pickedTime);
+                                                        data.put("impactful", "0");
+                                                        data.put("ecoIdea", "0");
+                                                        data.put("postId", postId);
+
+                                                        db.collection("users").document(userId).collection("posts").document(postId).set(data);
+                                                        db.collection("events").document(postId).set(data);
 
 
+                                                    } else {
 
-                                                    db.collection("users").document(userId).collection("posts").document(postId).set(data);
+                                                        Map<String, Object> data = new HashMap<>();
+                                                        data.put("author", name);
+                                                        data.put("authorId", authorId);
+                                                        data.put("authorPfp", pfpUrl);
+                                                        data.put("location", locationTxt);
+                                                        data.put("description", descriptionTxt);
+                                                        data.put("contentUrl", downloadUrl3);
+                                                        data.put("likeVal", likeVal);
+                                                        data.put("commentVal", commentVal);
+                                                        data.put("date", dateTxt);
+                                                        data.put("postType", postType);
+                                                        data.put("impactful", "0");
+                                                        data.put("ecoIdea", "0");
+                                                        data.put("postId", postId);
+
+                                                        db.collection("users").document(userId).collection("posts").document(postId).set(data);
+
+
+                                                    }
 
 
                                                     Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -440,7 +499,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
     }
 
-    public void showTimePicker(View view){
+    public void showTimePicker(View view) {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
