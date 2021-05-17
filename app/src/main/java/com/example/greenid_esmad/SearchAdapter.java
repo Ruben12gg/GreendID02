@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
@@ -23,7 +24,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    SearchAdapter(Context context, List<ContentSearch> data) {
+    SearchAdapter(Context context, ArrayList<ContentSearch> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

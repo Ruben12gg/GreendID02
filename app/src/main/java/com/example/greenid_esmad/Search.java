@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -39,12 +41,14 @@ import java.util.List;
 public class Search extends AppCompatActivity {
     RecyclerView recyclerView;
     SearchAdapter searchAdapter;
+    EventsAdapter eventsAdapter;
     ArrayList<ContentSearch> contentSearch = new ArrayList<>();
+    ArrayList<ContentEvents> contentEvents = new ArrayList<>();
     ImageButton btnSearch;
     ImageButton btnClear;
     EditText query;
-    TextView calendarTv;
-    CalendarView calendarView;
+    RelativeLayout eventsTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +59,12 @@ public class Search extends AppCompatActivity {
         query = findViewById(R.id.search_bar);
         btnSearch = findViewById(R.id.btnSearch);
         btnClear = findViewById(R.id.btnClear);
+        eventsTitle = findViewById(R.id.eventsTitleView);
 
-        calendarTv = findViewById(R.id.calendarTv);
-        calendarView = findViewById(R.id.calendarView);
-
-        calendarTv.setVisibility(View.VISIBLE);
-        calendarView.setVisibility(View.VISIBLE);
         btnClear.setVisibility(View.INVISIBLE);
+        eventsTitle.setVisibility(View.VISIBLE);
+
+        GetEvents();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -119,16 +122,16 @@ public class Search extends AppCompatActivity {
 
                 query.setText("");
                 btnClear.setVisibility(View.INVISIBLE);
-                calendarTv.setVisibility(View.VISIBLE);
-                calendarView.setVisibility(View.VISIBLE);
+                eventsTitle.setVisibility(View.VISIBLE);
 
 
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                     contentSearch.clear();
-                     RecyclerCall();
+                        contentSearch.clear();
+                        GetEvents();
+                        RecyclerCall();
                     }
                 }, 100);
             }
@@ -136,14 +139,57 @@ public class Search extends AppCompatActivity {
 
     }
 
+    private void GetEvents() {
+
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("events")
+                .orderBy("eventDate", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
+
+
+                                String author = document.getString("author");
+                                String authorId = document.getString("authorId");
+                                String authorPfp = document.getString("authorPfp");
+                                String date = document.getString("date");
+                                String contentUrl = document.getString("contentUrl");
+                                String likeVal = document.getString("likeVal");
+                                String commentVal = document.getString("commentVal");
+                                String location = document.getString("location");
+                                String description = document.getString("description");
+                                String postId = document.getId().toString();
+
+
+                                contentEvents.add(new ContentEvents(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
+
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                        RecyclerCallEvents();
+                    }
+                });
+    }
+
     private void getUsers() {
 
-        calendarTv.setVisibility(View.INVISIBLE);
-        calendarView.setVisibility(View.INVISIBLE);
         btnClear.setVisibility(View.VISIBLE);
+        eventsTitle.setVisibility(View.GONE);
+
 
         //clear user list before showing another search result
         contentSearch.clear();
+        contentEvents.clear();
 
         //create firebase reference
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -195,6 +241,16 @@ public class Search extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         searchAdapter = new SearchAdapter(this, contentSearch);
         recyclerView.setAdapter(searchAdapter);
+
+    }
+
+    private void RecyclerCallEvents() {
+
+        recyclerView = findViewById(R.id.rvSearch);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        eventsAdapter = new EventsAdapter(this, contentEvents);
+        recyclerView.setAdapter(eventsAdapter);
 
     }
 
