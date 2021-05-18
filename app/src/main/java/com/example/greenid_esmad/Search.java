@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,11 +22,14 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,9 +41,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
-public class Search extends AppCompatActivity {
+public class Search extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     RecyclerView recyclerView;
     SearchAdapter searchAdapter;
     EventsAdapter eventsAdapter;
@@ -47,7 +54,10 @@ public class Search extends AppCompatActivity {
     ImageButton btnSearch;
     ImageButton btnClear;
     EditText query;
+    TextView dateText;
     RelativeLayout eventsTitle;
+    Button btnDatePick;
+    String date;
 
 
     @Override
@@ -60,9 +70,12 @@ public class Search extends AppCompatActivity {
         btnSearch = findViewById(R.id.btnSearch);
         btnClear = findViewById(R.id.btnClear);
         eventsTitle = findViewById(R.id.eventsTitleView);
+        dateText = findViewById(R.id.dateInfo);
+        btnDatePick =findViewById(R.id.btnDatePick);
 
         btnClear.setVisibility(View.INVISIBLE);
         eventsTitle.setVisibility(View.VISIBLE);
+        dateText.setVisibility(View.GONE);
 
         GetEvents();
 
@@ -134,6 +147,14 @@ public class Search extends AppCompatActivity {
                         RecyclerCall();
                     }
                 }, 100);
+            }
+        });
+
+        btnDatePick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePicker();
+
             }
         });
 
@@ -252,6 +273,76 @@ public class Search extends AppCompatActivity {
         eventsAdapter = new EventsAdapter(this, contentEvents);
         recyclerView.setAdapter(eventsAdapter);
 
+    }
+
+    private void showDatePicker() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+
+
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+
+        Integer monthAdded = month + 1;
+        date = day + "/" + monthAdded + "/" + year;
+        btnDatePick.setText(date);
+
+        FilterEvents();
+
+    }
+
+    private void FilterEvents() {
+
+        contentEvents.clear();
+        dateText.setVisibility(View.VISIBLE);
+        dateText.setText("Checking events for: " + date);
+
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("events")
+                .whereEqualTo("eventDate", date)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
+
+
+                                String author = document.getString("author");
+                                String authorId = document.getString("authorId");
+                                String authorPfp = document.getString("authorPfp");
+                                String date = document.getString("date");
+                                String contentUrl = document.getString("contentUrl");
+                                String likeVal = document.getString("likeVal");
+                                String commentVal = document.getString("commentVal");
+                                String location = document.getString("location");
+                                String description = document.getString("description");
+                                String postId = document.getId().toString();
+
+
+                                contentEvents.add(new ContentEvents(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
+
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+                        RecyclerCallEvents();
+                    }
+                });
     }
 
 

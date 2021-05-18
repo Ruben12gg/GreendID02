@@ -62,8 +62,8 @@
         android:id="@+id/sb_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="72dp">
 
         <EditText
             android:id="@+id/search_bar"
@@ -109,11 +109,30 @@
             android:id="@+id/eventsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="Upcoming Events"
             android:textColor="@color/black_txt"
-            android:textSize="24sp"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnDatePick"
+            android:layout_width="96dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/input_box"
+            android:text="Filter Date"
+            android:textColor="@color/black_txt" />
+
+        <TextView
+            android:id="@+id/dateInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventsTitle"
             android:layout_marginStart="16dp"
-            />
+            android:text="Checking events for:"
+            android:textColor="@color/dark_gray_txt"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -127,7 +146,7 @@
             android:id="@+id/rvSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="59dp"/>
+            android:layout_marginBottom="59dp" />
 
     </RelativeLayout>
 </RelativeLayout>
