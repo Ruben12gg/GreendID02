@@ -17,12 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
 
@@ -262,6 +268,421 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 v.getContext().startActivity(i);*/
 
 
+            }
+        });
+
+        holder.btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("BTNCOMMENT", "Click on comment Btn");
+
+                Intent i = new Intent(v.getContext(), Comments.class);
+                i.putExtra("postAuthor", location);
+                i.putExtra("postAuthorPfp", authorPfp);
+                i.putExtra("authorId", authorId);
+                i.putExtra("commentId", commentId);
+                i.putExtra("date", date);
+                i.putExtra("description", description);
+                i.putExtra("postId", postId);
+                v.getContext().startActivity(i);
+            }
+        });
+
+        holder.btnSaved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //add the post to the favorites or remove it
+                db.collection("users").document(userId).collection("favorites").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                db.collection("users").document(userId).collection("favorites").document(postId).delete();
+                                holder.btnSaved.setImageResource(R.drawable.fav);
+                                Snackbar.make(view, "Removed Post from Favorites.", Snackbar.LENGTH_SHORT).show();
+
+                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d("TAG", "No such document");
+
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("author", author);
+                                data.put("authorPfp", authorPfp);
+                                data.put("location", location);
+                                data.put("likeVal", likesVal);
+                                data.put("commentVal", commentVal);
+                                data.put("date", date);
+                                data.put("description", description);
+                                data.put("contentUrl", contentUrl);
+                                data.put("postId", postId);
+
+                                db.collection("users").document(userId).collection("favorites").document(postId).set(data);
+                                holder.btnSaved.setImageResource(R.drawable.fav_green);
+                                Snackbar.make(view, "Added Post to Favorites!", Snackbar.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Log.d("TAG", "get failed with ", task.getException());
+                        }
+                    }
+                });
+            }
+        });
+
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("BTNLIKE", "Click on like Btnnn");
+
+                Log.d("USERID", userId);
+                Log.d("POSTID", postId);
+                Log.d("LIKEVAL", author);
+
+                //Add/remove like from post, depending on the case
+                db.collection("users").document(userId).collection("likes").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                //update value on the text View
+                                holder.btnLike.setImageResource(R.drawable.leaf);
+                                Integer newDislikeVal = Integer.parseInt(holder.tvAuthor.getText().toString()) - 1;
+                                String newDislikeValTxt = String.valueOf(newDislikeVal);
+                                holder.tvAuthor.setText(newDislikeValTxt);
+
+                                //update like value on the database
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String likeVal = document.getString("likeVal");
+                                                Integer newLikeVal = Integer.parseInt(likeVal) - 1;
+                                                String newLikeValTxt = String.valueOf(newLikeVal);
+
+                                                Map<String, Object> likeData = new HashMap<>();
+                                                likeData.put("likeVal", newLikeValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                //Remove post from the the user's liked collection
+                                db.collection("users").document(userId).collection("likes").document(postId).delete();
+
+
+                            } else {
+
+                                //Update like value on the text View
+                                holder.btnLike.setImageResource(R.drawable.leaf_green);
+                                Integer newLikesVal = Integer.parseInt(holder.tvAuthor.getText().toString()) + 1;
+                                String newLikesValTxt = String.valueOf(newLikesVal);
+                                holder.tvAuthor.setText(newLikesValTxt);
+
+                                //update like and add to database
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String likeVal = document.getString("likeVal");
+                                                Integer newLikeVal = Integer.parseInt(likeVal) + 1;
+                                                String newLikeValTxt = String.valueOf(newLikeVal);
+
+                                                Map<String, Object> likeData = new HashMap<>();
+                                                likeData.put("likeVal", newLikeValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+
+                                //add the post to the likes and generate notification
+                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+
+                                                Map<String, Object> data = new HashMap<>();
+                                                data.put("author", author);
+                                                data.put("authorPfp", authorPfp);
+                                                data.put("location", location);
+                                                data.put("likeVal", likesVal);
+                                                data.put("commentVal", commentVal);
+                                                data.put("date", date);
+                                                data.put("description", description);
+                                                data.put("contentUrl", contentUrl);
+                                                data.put("postId", postId);
+
+                                                db.collection("users").document(userId).collection("likes").document(postId).set(data);
+
+                                                String name = document.getString("name");
+                                                String pfpUrl = document.getString("pfp");
+                                                String contentTxt = name + " has liked your picture!";
+                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                Date date = new Date();
+                                                String dateTxt = formatter.format(date).toString();
+                                                String notifId = UUID.randomUUID().toString();
+
+                                                String authorId = contentEvents.getAuthorId();
+
+                                                Map<String, Object> dataNotif = new HashMap<>();
+                                                dataNotif.put("username", name);
+                                                dataNotif.put("pfpUrl", pfpUrl);
+                                                dataNotif.put("contentUrl", contentUrl);
+                                                dataNotif.put("commentVal", contentTxt);
+                                                dataNotif.put("date", dateTxt);
+                                                dataNotif.put("notifId", notifId);
+
+                                                db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+
+                            }
+                        } else {
+                            Log.d("TAG", "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+
+            }
+
+
+        });
+
+
+        //Reward selection logic (try with Switch/case later!)
+        holder.btnReward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                holder.modalView.setVisibility(View.VISIBLE);
+
+                holder.btnIdea.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        holder.btnImpact.setBackgroundResource(R.drawable.impactful_white);
+                        holder.btnIdea.setBackgroundResource(R.drawable.ecoidea_green);
+                        String reward = "IDEA";
+
+                        holder.btnOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d("REWARD", reward);
+
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String ideaVal = document.getString("ecoIdea");
+                                                Integer newIdeaVal = Integer.parseInt(ideaVal) + 1;
+                                                String newIdeaValTxt = String.valueOf(newIdeaVal);
+
+                                                Map<String, Object> rewardData = new HashMap<>();
+                                                rewardData.put("ecoIdea", newIdeaValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("users").document(authorId).update(rewardData);
+
+                                                //generate notification
+                                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+
+                                                                String name = document.getString("name");
+                                                                String pfpUrl = document.getString("pfp");
+                                                                String contentTxt = name + " rewarded your post with: Eco Idea";
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                                Date date = new Date();
+                                                                String dateTxt = formatter.format(date).toString();
+                                                                String notifId = UUID.randomUUID().toString();
+
+                                                                String authorId = contentEvents.getAuthorId();
+
+                                                                Map<String, Object> dataNotif = new HashMap<>();
+                                                                dataNotif.put("username", name);
+                                                                dataNotif.put("pfpUrl", pfpUrl);
+                                                                dataNotif.put("contentUrl", contentUrl);
+                                                                dataNotif.put("commentVal", contentTxt);
+                                                                dataNotif.put("date", dateTxt);
+                                                                dataNotif.put("notifId", notifId);
+
+                                                                db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                            } else {
+                                                                Log.d("TAG", "No such document");
+                                                            }
+                                                        } else {
+                                                            Log.d("TAG", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                holder.modalView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(view, "Award given!", Snackbar.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+
+                holder.btnImpact.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        holder.btnImpact.setBackgroundResource(R.drawable.impactful_green);
+                        holder.btnIdea.setBackgroundResource(R.drawable.ecoidea_white);
+                        String reward = "IMAPCTFUL";
+
+                        holder.btnOk.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d("REWARD", reward);
+
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String impactfulVal = document.getString("impactful");
+                                                Integer newImpactfulVal = Integer.parseInt(impactfulVal) + 1;
+                                                String newImpactfulValTxt = String.valueOf(newImpactfulVal);
+
+                                                Map<String, Object> rewardData = new HashMap<>();
+                                                rewardData.put("impactful", newImpactfulValTxt);
+
+                                                db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("users").document(authorId).update(rewardData);
+
+                                                //generate notification
+                                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+
+                                                                String name = document.getString("name");
+                                                                String pfpUrl = document.getString("pfp");
+                                                                String contentTxt = name + " rewarded your post with: Impactful";
+                                                                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                                                Date date = new Date();
+                                                                String dateTxt = formatter.format(date).toString();
+                                                                String notifId = UUID.randomUUID().toString();
+
+                                                                String authorId = contentEvents.getAuthorId();
+
+                                                                Map<String, Object> dataNotif = new HashMap<>();
+                                                                dataNotif.put("username", name);
+                                                                dataNotif.put("pfpUrl", pfpUrl);
+                                                                dataNotif.put("contentUrl", contentUrl);
+                                                                dataNotif.put("commentVal", contentTxt);
+                                                                dataNotif.put("date", dateTxt);
+                                                                dataNotif.put("notifId", notifId);
+
+                                                                db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                            } else {
+                                                                Log.d("TAG", "No such document");
+                                                            }
+                                                        } else {
+                                                            Log.d("TAG", "get failed with ", task.getException());
+                                                        }
+                                                    }
+                                                });
+
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+                                holder.modalView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(view, "Award given!", Snackbar.LENGTH_SHORT).show();
+
+
+                            }
+
+
+                        });
+                    }
+                });
+
+            }
+        });
+
+        holder.btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.modalView.setVisibility(View.INVISIBLE);
             }
         });
 

@@ -45,7 +45,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class Search extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class Search extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     RecyclerView recyclerView;
     SearchAdapter searchAdapter;
     EventsAdapter eventsAdapter;
@@ -53,9 +53,11 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
     ArrayList<ContentEvents> contentEvents = new ArrayList<>();
     ImageButton btnSearch;
     ImageButton btnClear;
+    ImageButton btnClearEvents;
     EditText query;
     TextView dateText;
     RelativeLayout eventsTitle;
+    RelativeLayout noEventsView;
     Button btnDatePick;
     String date;
 
@@ -69,13 +71,17 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
         query = findViewById(R.id.search_bar);
         btnSearch = findViewById(R.id.btnSearch);
         btnClear = findViewById(R.id.btnClear);
+        btnClearEvents = findViewById(R.id.btnClearEvents);
         eventsTitle = findViewById(R.id.eventsTitleView);
         dateText = findViewById(R.id.dateInfo);
-        btnDatePick =findViewById(R.id.btnDatePick);
+        btnDatePick = findViewById(R.id.btnDatePick);
+        noEventsView = findViewById(R.id.noEventsView);
 
         btnClear.setVisibility(View.INVISIBLE);
+        btnClearEvents.setVisibility(View.GONE);
         eventsTitle.setVisibility(View.VISIBLE);
         dateText.setVisibility(View.GONE);
+        noEventsView.setVisibility(View.GONE);
 
         GetEvents();
 
@@ -135,6 +141,9 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
 
                 query.setText("");
                 btnClear.setVisibility(View.INVISIBLE);
+                btnClearEvents.setVisibility(View.GONE);
+                btnDatePick.setText("Filter Date");
+                dateText.setVisibility(View.GONE);
                 eventsTitle.setVisibility(View.VISIBLE);
 
 
@@ -150,6 +159,13 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
             }
         });
 
+        btnClearEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClearEvents();
+            }
+        });
+
         btnDatePick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,10 +176,22 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
 
     }
 
+    private void ClearEvents() {
+
+        contentEvents.clear();
+        btnClearEvents.setVisibility(View.GONE);
+        dateText.setVisibility(View.GONE);
+        btnDatePick.setText("Filter Date");
+
+        GetEvents();
+
+    }
+
     private void GetEvents() {
 
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
+
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("events")
@@ -303,6 +331,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
 
         contentEvents.clear();
         dateText.setVisibility(View.VISIBLE);
+        btnClearEvents.setVisibility(View.VISIBLE);
         dateText.setText("Checking events for: " + date);
 
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
@@ -320,7 +349,6 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
 
-
                                 String author = document.getString("author");
                                 String authorId = document.getString("authorId");
                                 String authorPfp = document.getString("authorPfp");
@@ -335,14 +363,51 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
 
                                 contentEvents.add(new ContentEvents(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
 
-
                             }
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                         RecyclerCallEvents();
+                        /*CheckEvents();*/
+
                     }
                 });
+    }
+
+    private void CheckEvents() {
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("events")
+                .whereEqualTo("eventDate", date)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("FILTERED", document.getId() + " => " + document.getData());
+
+                                String id = document.getString("postId");
+
+                                Log.d("POST ID", id);
+
+                                if (id.isEmpty()) {
+                                    noEventsView.setVisibility(View.GONE);
+                                } else {
+                                    noEventsView.setVisibility(View.VISIBLE);
+                                }
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCallEvents();
+
+                    }
+                });
+
+
     }
 
 
