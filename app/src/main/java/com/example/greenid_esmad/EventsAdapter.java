@@ -369,6 +369,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                                                 likeData.put("likeVal", newLikeValTxt);
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
+                                                db.collection("events").document(postId).update(likeData);
+
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -409,6 +411,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                                                 likeData.put("likeVal", newLikeValTxt);
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
+                                                db.collection("events").document(postId).update(likeData);
+
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -525,6 +529,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                                                 rewardData.put("ecoIdea", newIdeaValTxt);
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("events").document(postId).update(rewardData);
                                                 db.collection("users").document(authorId).update(rewardData);
 
                                                 //generate notification
@@ -613,6 +618,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                                                 rewardData.put("impactful", newImpactfulValTxt);
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(rewardData);
+                                                db.collection("events").document(postId).update(rewardData);
                                                 db.collection("users").document(authorId).update(rewardData);
 
                                                 //generate notification
