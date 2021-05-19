@@ -61,6 +61,8 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
     Button btnDatePick;
     String date;
 
+    String id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
         btnClearEvents.setVisibility(View.GONE);
         eventsTitle.setVisibility(View.VISIBLE);
         dateText.setVisibility(View.GONE);
-        noEventsView.setVisibility(View.GONE);
+        noEventsView.setVisibility(View.VISIBLE);
 
         GetEvents();
 
@@ -368,7 +370,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
                         RecyclerCallEvents();
-                        /*CheckEvents();*/
+                        CheckEvents();
 
                     }
                 });
@@ -387,20 +389,18 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("FILTERED", document.getId() + " => " + document.getData());
 
-                                String id = document.getString("postId");
+                                id = document.getString("postId");
 
-                                Log.d("POST ID", id);
-
-                                if (id.isEmpty()) {
-                                    noEventsView.setVisibility(View.GONE);
-                                } else {
+                                if (id.isEmpty()){
                                     noEventsView.setVisibility(View.VISIBLE);
+                                } else {
+                                    noEventsView.setVisibility(View.INVISIBLE);
                                 }
-
                             }
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
+
 
                         RecyclerCallEvents();
 
