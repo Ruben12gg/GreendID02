@@ -1,6 +1,7 @@
 package com.example.greenid_esmad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,45 +64,31 @@ public class CheckUserAdapter extends RecyclerView.Adapter<CheckUserAdapter.View
         ContentCheckUser contentCheckUser = mData.get(position);
 
         final String contentUrl = contentCheckUser.getContentUrl();
-        /*final String pfpUrl = contentUser.getAuthorPfp();*/
+        final String authorId = contentCheckUser.getUserId();
+        final String postId = contentCheckUser.getPostId();
 
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
-        /*String author = contentUser.getAuthor();
-        String location = contentUser.getLocation();
-        String likesVal = contentUser.getLikeVal();
-        String commentVal = contentUser.getCommentVal();
-        String date = contentUser.getDate();
-        String description = contentUser.getDescription();
-        String postId = contentUser.getPostId();*/
-
-       /* Log.d("AUTHOR", author);
+        /*Log.d("AUTHOR", author);
         Log.d("LOCATION", location);
         Log.d("LIKES", likesVal);
         Log.d("COMMENTS", commentVal);
         Log.d("DATE", date);
         Log.d("DESCRIPTION", description);
-        Log.d("POSTID", postId);*/
+        Log.d("POSTID", postId);
         Log.d("CONTENT", contentUrl);
-        /*Log.d("PFP", pfpUrl);*/
+        Log.d("PFP", pfpUrl);*/
 
 
 
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("IMGCARD", "Clicked on Img Card " /*+ postId*/);
-
-               /* Intent i = new Intent(v.getContext(), CheckPost.class);
-                i.putExtra("author", author);
-                i.putExtra("location", location);
-                i.putExtra("likeVal", likesVal);
-                i.putExtra("commentVal", commentVal);
-                i.putExtra("date", date);
-                i.putExtra("description", description);
-                i.putExtra("contentUrl", contentUrl);
+                Intent i = new Intent(v.getContext(), CheckPost.class);
+                i.putExtra("authorId", authorId);
                 i.putExtra("postId", postId);
-                v.getContext().startActivity(i);*/
+                i.putExtra("contentUrl", contentUrl);
+                v.getContext().startActivity(i);
 
 
             }

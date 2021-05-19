@@ -156,14 +156,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         String commentId = contentFeed.getCommentId();
         String userId = contentFeed.getUserId();
 
-        Log.d("AUTHOR", author);
-        Log.d("AUTHORID", authorId);
-        Log.d("LOCATION", location);
-        Log.d("LIKESVAL", likesVal);
-        Log.d("COMMENTSVAL", commentVal);
-        Log.d("DATE", date);
-        Log.d("DESCRIPTION", description);
-
         if (commentVal.isEmpty()){
             holder.locationIcon.setVisibility(View.GONE);
         } else {

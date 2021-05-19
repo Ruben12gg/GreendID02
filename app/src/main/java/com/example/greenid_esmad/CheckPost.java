@@ -82,15 +82,6 @@ public class CheckPost extends AppCompatActivity {
         final String contentUrl = getIntent().getStringExtra("contentUrl");
         final String postId = getIntent().getStringExtra("postId");
 
-        Log.d("AUTHOR", authorTxt);
-        Log.d("LOCATION", location);
-        Log.d("LIKEVAL", likeVal);
-        Log.d("COMMENTVAL", commentVal);
-        Log.d("DATE", dateTxt);
-        Log.d("DESCRIPTION", descriptionTxt);
-        Log.d("CONTENTURL", contentUrl);
-        Log.d("POSTID", postId);
-
 
         topName = findViewById(R.id.authorPost);
         contentPic = findViewById(R.id.imgPost);
@@ -111,18 +102,50 @@ public class CheckPost extends AppCompatActivity {
         ecoIdeaCounter = findViewById(R.id.ecoIdeaCounter);
         modalView = findViewById(R.id.modalView);
 
-        topName.setText(authorTxt + "'s Post");
-        author.setText(authorTxt);
-        Picasso.get().load(contentUrl).into(contentPic);
-        description.setText(descriptionTxt);
-        date.setText(dateTxt);
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Get profile Data
+        db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        final String authorTxt = document.getString("author");
+                        final String authorPfp = document.getString("authorPfp");
+                        final String location = document.getString("location");
+                        final String likeVal = document.getString("likeVal");
+                        final String commentVal = document.getString("commentVal");
+                        final String dateTxt = document.getString("date");
+                        final String descriptionTxt = document.getString("description");
+                        final String contentUrl = document.getString("contentUrl");
+
+                        topName.setText(authorTxt + "'s Post");
+                        author.setText(authorTxt);
+                        Picasso.get().load(contentUrl).into(contentPic);
+                        description.setText(descriptionTxt);
+                        date.setText(dateTxt);
+
+                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
 
         modalView.setVisibility(View.INVISIBLE);
         impactfulBadge.setVisibility(View.INVISIBLE);
         ecoIdeaBadge.setVisibility(View.INVISIBLE);
 
         //Get post Data (likes/comments) in real time
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -145,11 +168,6 @@ public class CheckPost extends AppCompatActivity {
                 }
             }
         });
-
-
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
 
         likeBtn = findViewById(R.id.likeBtn);
         saveBtn = findViewById(R.id.saveBtn);

@@ -369,19 +369,14 @@ public class CheckUser extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("USER POSTS", document.getId() + " => " + document.getData());
 
-                                /*String authorPfp = document.getString("authorPfp");*/
                                 String contentUrl = document.getString("contentUrl");
-                                /*String author = document.getString("author");
-                                String date = document.getString("date");
-                                String likeVal = document.getString("likeVal");
-                                String commentVal = document.getString("commentVal");
-                                String location = document.getString("location");
-                                String description = document.getString("description");
                                 String postId = document.getId();
-*/
+
+                                String authorId = bioTxt;
+
                                 Log.d("IMAGES", contentUrl);
 
-                                contentCheckUser.add(new ContentCheckUser(contentUrl));
+                                contentCheckUser.add(new ContentCheckUser(contentUrl, authorId, postId));
 
 
                             }

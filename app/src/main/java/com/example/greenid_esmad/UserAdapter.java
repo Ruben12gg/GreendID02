@@ -39,6 +39,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
+
         ImageView contentPic;
         RelativeLayout resultCard;
 
@@ -61,7 +62,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-
         ContentUser contentUser = mData.get(position);
 
         final String contentUrl = contentUser.getContentUrl();
@@ -76,26 +76,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         String date = contentUser.getDate();
         String description = contentUser.getDescription();
         String postId = contentUser.getPostId();
-
-        Log.d("AUTHOR", author);
-        Log.d("LOCATION", location);
-        Log.d("LIKES", likesVal);
-        Log.d("COMMENTS", commentVal);
-        Log.d("DATE", date);
-        Log.d("DESCRIPTION", description);
-        Log.d("POSTID", postId);
-        Log.d("CONTENT", contentUrl);
-        Log.d("PFP", pfpUrl);
+        String userId = contentUser.getUserId();
 
 
 
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("IMGCARD", "Clicked on Img Card " + postId);
+                Log.d("author", author);
+                Log.d("location", location);
+                Log.d("likeVal", likesVal);
+                Log.d("commentVal", commentVal);
+                Log.d("date", date);
+                Log.d("description", description);
+                Log.d("postId", postId);
+                Log.d("userId", userId);
+                Log.d("contentUrl", contentUrl);
+                Log.d("pfpUrl", pfpUrl);
+                Log.d("IMGCARD", "Clicked on Img Card" + postId);
 
-               /* Intent i = new Intent(v.getContext(), CheckPost.class);
+                Intent i = new Intent(v.getContext(), CheckPost.class);
                 i.putExtra("author", author);
+                i.putExtra("authorId", userId);
                 i.putExtra("location", location);
                 i.putExtra("likeVal", likesVal);
                 i.putExtra("commentVal", commentVal);
@@ -103,7 +105,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 i.putExtra("description", description);
                 i.putExtra("contentUrl", contentUrl);
                 i.putExtra("postId", postId);
-                v.getContext().startActivity(i);*/
+                i.putExtra("authorPfp", author);
+                v.getContext().startActivity(i);
 
 
             }

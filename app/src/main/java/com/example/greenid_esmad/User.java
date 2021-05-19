@@ -203,10 +203,22 @@ public class User extends AppCompatActivity {
                                 String location = document.getString("location");
                                 String description = document.getString("description");
                                 String postId = document.getId();
+                                String userId = document.getString("authorId");
+
+                                Log.d("authorPfp", authorPfp);
+                                Log.d("contentUrl", contentUrl);
+                                Log.d("author", author);
+                                Log.d("date", date);
+                                Log.d("likeVal", likeVal);
+                                Log.d("commentVal", commentVal);
+                                Log.d("location", location);
+                                Log.d("description", description);
+                                Log.d("postId", postId);
+                                Log.d("authorId", userId);
 
                                 Log.d("IMAGES", contentUrl);
 
-                                contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId));
+                                contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId));
 
 
                             }
