@@ -103,6 +103,19 @@ public class CheckPost extends AppCompatActivity {
         ecoIdeaCounter = findViewById(R.id.ecoIdeaCounter);
         modalView = findViewById(R.id.modalView);
 
+        //navigate to user profile
+        author.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
+
+            }
+        });
+
+
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
