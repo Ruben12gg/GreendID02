@@ -170,8 +170,15 @@
                 android:layout_below="@id/pfName"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:autoLink="all"
+                android:enabled="true"
+                android:focusable="true"
+                android:linksClickable="true"
+                android:longClickable="true"
                 android:text="@string/pfBio"
                 android:textColor="@color/black_txt"
+                android:textColorLink="@color/dark_gray_txt"
+                android:textIsSelectable="true"
                 android:textSize="35px" />
 
         </RelativeLayout>

@@ -63,8 +63,8 @@
         android:layout_width="300dp"
         android:layout_height="170dp"
         android:layout_below="@+id/main_toolbar"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp">
 
         <TextView
             android:layout_width="300dp"
@@ -126,8 +126,8 @@
         android:layout_height="64dp"
         android:layout_below="@+id/main_toolbar"
         android:layout_marginTop="215dp"
-        android:gravity="end"
-        android:layout_marginEnd="16dp">
+        android:layout_marginEnd="16dp"
+        android:gravity="end">
 
         <ImageView
             android:id="@+id/impactfulBadge"
@@ -226,21 +226,21 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_below="@+id/imgPost"
-        android:layout_toEndOf="@+id/comments_val"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_toEndOf="@+id/comments_val"
         android:background="@drawable/fav"
-        android:src="@drawable/fav"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:src="@drawable/fav" />
 
     <ImageButton
         android:id="@+id/btnGift"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginEnd="8dp"
         android:layout_below="@+id/imgPost"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_toEndOf="@+id/saveBtn"
         android:background="@drawable/rewards" />
 
@@ -276,8 +276,15 @@
         android:layout_below="@id/author"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:autoLink="all"
+        android:enabled="true"
+        android:focusable="true"
+        android:linksClickable="true"
+        android:longClickable="true"
         android:text="DESCRIPTION"
         android:textColor="@color/black_txt"
+        android:textColorLink="@color/dark_gray_txt"
+        android:textIsSelectable="true"
         android:textSize="16sp" />
 
     <RelativeLayout
