@@ -86,10 +86,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ViewHolder(View itemView) {
             super(itemView);
 
-            tvAuthor = itemView.findViewById(R.id.likes_val);
-            tvLikeVal = itemView.findViewById(R.id.comments_val);
-            tvCommentVal = itemView.findViewById(R.id.location);
-            tvLocation = itemView.findViewById(R.id.pf_name);
+            tvAuthor = itemView.findViewById(R.id.pf_name);
+            tvLikeVal = itemView.findViewById(R.id.likes_val);
+            tvCommentVal = itemView.findViewById(R.id.comments_val);
+            tvLocation = itemView.findViewById(R.id.location);
             locationIcon = itemView.findViewById(R.id.location_icon);
             contentPic = itemView.findViewById(R.id.post_image);
             pfp = itemView.findViewById(R.id.pfp);
@@ -130,33 +130,36 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.locationIcon.setVisibility(View.GONE);
 
         ContentFeed contentFeed = mData.get(position);
-        holder.tvAuthor.setText(contentFeed.getAuthor());
-        holder.tvDate.setText(contentFeed.getDate());
-        holder.tvLikeVal.setText(contentFeed.getLikeVal());
-        holder.tvCommentVal.setText(contentFeed.getCommentVal());
-        holder.tvLocation.setText(contentFeed.getLocation());
-        holder.tvDescription.setText(contentFeed.getDescription());
+        String author = contentFeed.getContentUrl();
+        String authorId = contentFeed.getAuthorId();
+        String location = contentFeed.getLocation();
+        String likesVal = contentFeed.getDate();
+        String commentVal = contentFeed.getCommentVal();
+        String date = contentFeed.getLikeVal();
+        String description = contentFeed.getDescription();
+        String postId = contentFeed.getPostId();
+        String userId = contentFeed.getUserId();
+        String ecoIdea = contentFeed.getEcoIdea();
+        String eventDate = contentFeed.getEventDate();
+        String eventTime = contentFeed.getEventTime();
+        String impactful = contentFeed.getImpactful();
+        String postType = contentFeed.getPostType();
 
+        holder.tvAuthor.setText(author);
+        holder.tvDate.setText(date);
+        holder.tvLikeVal.setText(likesVal);
+        holder.tvCommentVal.setText(commentVal);
+        holder.tvLocation.setText(location);
+        holder.tvDescription.setText(description);
 
         final String authorPfp = contentFeed.getAuthorPfp();
-        final String contentUrl = contentFeed.getContentUrl();
-
+        final String contentUrl = contentFeed.getAuthor();
 
         Picasso.get().load(authorPfp).into(holder.pfp);
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
-        String author = contentFeed.getAuthor();
-        String authorId = contentFeed.getAuthorId();
-        String location = contentFeed.getLocation();
-        String likesVal = contentFeed.getLikeVal();
-        String commentVal = contentFeed.getCommentVal();
-        String date = contentFeed.getDate();
-        String description = contentFeed.getDescription();
-        String postId = contentFeed.getPostId();
-        String commentId = contentFeed.getCommentId();
-        String userId = contentFeed.getUserId();
 
-        if (commentVal.isEmpty()){
+        if (location.isEmpty()) {
             holder.locationIcon.setVisibility(View.GONE);
         } else {
             holder.locationIcon.setVisibility(View.VISIBLE);
@@ -269,7 +272,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 i.putExtra("authorId", authorId);
                 i.putExtra("location", location);
                 i.putExtra("likeVal", likesVal);
-                i.putExtra("commentId", commentId);
                 i.putExtra("commentVal", commentVal);
                 i.putExtra("date", date);
                 i.putExtra("description", description);
@@ -290,7 +292,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 i.putExtra("postAuthor", location);
                 i.putExtra("postAuthorPfp", authorPfp);
                 i.putExtra("authorId", authorId);
-                i.putExtra("commentId", commentId);
                 i.putExtra("date", date);
                 i.putExtra("description", description);
                 i.putExtra("postId", postId);
@@ -319,18 +320,25 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                                 Map<String, Object> data = new HashMap<>();
                                 data.put("author", author);
+                                data.put("authorId", authorId);
                                 data.put("authorPfp", authorPfp);
-                                data.put("location", location);
-                                data.put("likeVal", likesVal);
                                 data.put("commentVal", commentVal);
+                                data.put("likeVal", likesVal);
+                                data.put("contentUrl", contentUrl);
                                 data.put("date", date);
                                 data.put("description", description);
-                                data.put("contentUrl", contentUrl);
+                                data.put("ecoIdea", ecoIdea);
+                                data.put("eventDate", eventDate);
+                                data.put("eventTime", eventTime);
+                                data.put("impactful", impactful);
+                                data.put("location", location);
                                 data.put("postId", postId);
+                                data.put("postType", postType);
 
                                 db.collection("users").document(userId).collection("favorites").document(postId).set(data);
                                 holder.btnSaved.setImageResource(R.drawable.fav_green);
                                 Snackbar.make(view, "Added Post to Favorites!", Snackbar.LENGTH_SHORT).show();
+
                             }
                         } else {
                             Log.d("TAG", "get failed with ", task.getException());

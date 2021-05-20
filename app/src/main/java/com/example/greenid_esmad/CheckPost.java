@@ -65,6 +65,7 @@ public class CheckPost extends AppCompatActivity {
     Button btnOk;
     RelativeLayout modalView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -643,20 +644,60 @@ public class CheckPost extends AppCompatActivity {
                             } else {
                                 Log.d("TAG", "No such document");
 
-                                Map<String, Object> dataFav = new HashMap<>();
-                                dataFav.put("author", authorTxt);
-                                dataFav.put("authorPfp", authorPfp);
-                                dataFav.put("location", location);
-                                dataFav.put("likeVal", likeVal);
-                                dataFav.put("commentVal", commentVal);
-                                dataFav.put("date", dateTxt);
-                                dataFav.put("description", descriptionTxt);
-                                dataFav.put("contentUrl", contentUrl);
-                                dataFav.put("postId", postId);
 
-                                db.collection("users").document(userId).collection("favorites").document(postId).set(dataFav);
-                                saveBtn.setImageResource(R.drawable.fav_green);
-                                Snackbar.make(view, "Added Post to Favorites!", Snackbar.LENGTH_SHORT).show();
+                                db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document.exists()) {
+
+                                                String author = document.getString("author");
+                                                String authorPfp = document.getString("authorPfp");
+                                                String commentVal = document.getString("commentVal");
+                                                String likesVal = document.getString("likeVal");
+                                                String contentUrl = document.getString("contentUrl");
+                                                String date = document.getString("date");
+                                                String description = document.getString("description");
+                                                String ecoIdea = document.getString("ecoIdea");
+                                                String eventDate = document.getString("eventDate");
+                                                String eventTime = document.getString("eventTime");
+                                                String impactful = document.getString("impactful");
+                                                String location = document.getString("location");
+                                                String postType = document.getString("postType");
+
+                                                Map<String, Object> dataFav = new HashMap<>();
+                                                dataFav.put("author", author);
+                                                dataFav.put("authorId", authorId);
+                                                dataFav.put("authorPfp", authorPfp);
+                                                dataFav.put("commentVal", commentVal);
+                                                dataFav.put("likeVal", likesVal);
+                                                dataFav.put("contentUrl", contentUrl);
+                                                dataFav.put("date", date);
+                                                dataFav.put("description", description);
+                                                dataFav.put("ecoIdea", ecoIdea);
+                                                dataFav.put("eventDate", eventDate);
+                                                dataFav.put("eventTime", eventTime);
+                                                dataFav.put("impactful", impactful);
+                                                dataFav.put("location", location);
+                                                dataFav.put("postId", postId);
+                                                dataFav.put("postType", postType);
+
+                                                db.collection("users").document(userId).collection("favorites").document(postId).set(dataFav);
+                                                saveBtn.setImageResource(R.drawable.fav_green);
+                                                Snackbar.make(view, "Added Post to Favorites!", Snackbar.LENGTH_SHORT).show();
+
+                                                Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                            } else {
+                                                Log.d("TAG", "No such document");
+                                            }
+                                        } else {
+                                            Log.d("TAG", "get failed with ", task.getException());
+                                        }
+                                    }
+                                });
+
+
                             }
                         } else {
                             Log.d("TAG", "get failed with ", task.getException());

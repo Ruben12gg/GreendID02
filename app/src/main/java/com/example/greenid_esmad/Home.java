@@ -89,8 +89,6 @@ public class Home extends AppCompatActivity {
         });
 
 
-
-
         db.collection("users").document(userId).collection("following")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -117,7 +115,6 @@ public class Home extends AppCompatActivity {
 
                                                         String author = document.getString("author");
                                                         String authorId = document.getString("authorId");
-                                                        Log.d("AUTHOR", author);
                                                         String authorPfp = document.getString("authorPfp");
                                                         String date = document.getString("date");
                                                         String contentUrl = document.getString("contentUrl");
@@ -126,9 +123,14 @@ public class Home extends AppCompatActivity {
                                                         String location = document.getString("location");
                                                         String description = document.getString("description");
                                                         String postId = document.getId().toString();
+                                                        String ecoIdea = document.getString("ecoIdea");
+                                                        String eventDate = document.getString("eventDate");
+                                                        String eventTime = document.getString("eventTime");
+                                                        String impactful = document.getString("impactful");
+                                                        String postType = document.getString("postType");
 
 
-                                                        feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
+                                                        feedContent.add(new ContentFeed(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
 
 
                                                     }
@@ -143,7 +145,7 @@ public class Home extends AppCompatActivity {
                         } else {
                             Log.d("TAG", "Error getting documents: ", task.getException());
                         }
-                       /* RecyclerCall();*/
+                        /* RecyclerCall();*/
                     }
                 });
 

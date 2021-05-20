@@ -20,8 +20,9 @@
         app:menu="@menu/menu_navigation" />
 
     <RelativeLayout
+        android:id="@+id/toolbarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_toolbar"
@@ -58,61 +59,77 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/tagBtnsView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_below="@+id/toolbarView"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btnrl">
+        android:layout_marginTop="8dp">
+
+        <ImageButton
+            android:id="@+id/btnImageTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/postd" />
+
+        <ImageButton
+            android:id="@+id/btnEventTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/btnImageTag"
+            android:background="@drawable/eventd" />
 
 
         <ImageButton
-            android:id="@+id/postbtn"
-            android:layout_width="104dp"
-            android:layout_height="40dp"
-            android:background="@drawable/postbtn"
-            android:layout_marginTop="20dp"
-            android:layout_toLeftOf="@+id/eventbtn"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            />
+            android:id="@+id/btnProductTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toRightOf="@+id/btnEventTag"
+            android:background="@drawable/productd" />
 
 
-        <ImageButton
-            android:id="@+id/eventbtn"
-            android:layout_width="104dp"
-            android:layout_height="40dp"
-            android:background="@drawable/eventbtn"
-            android:layout_marginTop="20dp"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/noContentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            />
+            android:layout_centerVertical="true"
+            android:text="No posts added, yet..."
+            android:textAlignment="center"
+            android:textColor="@color/light_txt"
+            android:textSize="16sp" />
 
-        <ImageButton
-            android:id="@+id/productbtn"
-            android:layout_width="104dp"
-            android:layout_height="40dp"
-            android:background="@drawable/productbtn"
-            android:layout_toRightOf="@+id/eventbtn"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            />
+
     </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/tabs_view"
+    <RelativeLayout
+        android:id="@+id/tabs_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tagBtnsView"
+        android:layout_marginTop="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFavorites"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
-            android:layout_below="@+id/btnrl">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvFavorites"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="52dp"/>
-        </RelativeLayout>
-
-
+            android:layout_marginBottom="52dp" />
     </RelativeLayout>
+
+
+</RelativeLayout>
 

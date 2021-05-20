@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,11 +36,202 @@ public class Favorites extends AppCompatActivity {
     ArrayList<ContentFavorites> contentFavorites = new ArrayList<>();
 
     ImageButton btnBack;
+    ImageButton btnImageTag;
+    ImageButton btnEventTag;
+    ImageButton btnProductTag;
+    RelativeLayout noContentView;
+    RelativeLayout noContentViewFiltered;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+
+        btnImageTag = findViewById(R.id.btnImageTag);
+        btnProductTag = findViewById(R.id.btnProductTag);
+        btnEventTag = findViewById(R.id.btnEventTag);
+        noContentView = findViewById(R.id.noContentView);
+
+
+        btnEventTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                btnImageTag.setBackgroundResource(R.drawable.postd);
+                btnEventTag.setBackgroundResource(R.drawable.events);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+
+                contentFavorites.clear();
+
+                //Access user Id from GLOBALS
+                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                String userId = globalUserId.getUserIdGlobal();
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                db.collection("users").document(userId).collection("favorites")
+                        .whereEqualTo("postType", "event")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER FAVORITES", document.getId() + " => " + document.getData());
+                                        String author = document.getString("author");
+                                        String authorId = document.getString("authorId");
+                                        String authorPfp = document.getString("authorPfp");
+                                        String date = document.getString("date");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId().toString();
+                                        String ecoIdea = document.getString("ecoIdea");
+                                        String eventDate = document.getString("eventDate");
+                                        String eventTime = document.getString("eventTime");
+                                        String impactful = document.getString("impactful");
+                                        String postType = document.getString("postType");
+
+
+                                        contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+
+
+            }
+        });
+
+        btnImageTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentFavorites.clear();
+
+                //Access user Id from GLOBALS
+                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                String userId = globalUserId.getUserIdGlobal();
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                List<String> FavArray = new ArrayList<String>();
+                db.collection("users").document(userId).collection("favorites")
+                        .whereEqualTo("postType", "image")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER FAVORITES", document.getId() + " => " + document.getData());
+                                        String author = document.getString("author");
+                                        String authorId = document.getString("authorId");
+                                        String authorPfp = document.getString("authorPfp");
+                                        String date = document.getString("date");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId().toString();
+                                        String ecoIdea = document.getString("ecoIdea");
+                                        String eventDate = document.getString("eventDate");
+                                        String eventTime = document.getString("eventTime");
+                                        String impactful = document.getString("impactful");
+                                        String postType = document.getString("postType");
+
+                                        contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
+
+                                       
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+
+
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+
+
+            }
+        });
+
+        btnProductTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnImageTag.setBackgroundResource(R.drawable.postd);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.products);
+
+
+                contentFavorites.clear();
+
+                //Access user Id from GLOBALS
+                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                String userId = globalUserId.getUserIdGlobal();
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                db.collection("users").document(userId).collection("favorites")
+                        .whereEqualTo("postType", "product")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER FAVORITES", document.getId() + " => " + document.getData());
+                                        String author = document.getString("author");
+                                        String authorId = document.getString("authorId");
+                                        String authorPfp = document.getString("authorPfp");
+                                        String date = document.getString("date");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId().toString();
+                                        String ecoIdea = document.getString("ecoIdea");
+                                        String eventDate = document.getString("eventDate");
+                                        String eventTime = document.getString("eventTime");
+                                        String impactful = document.getString("impactful");
+                                        String postType = document.getString("postType");
+
+                                        contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+
+
+            }
+        });
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -87,7 +279,6 @@ public class Favorites extends AppCompatActivity {
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
-        Log.d("USERID", userId);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -99,7 +290,6 @@ public class Favorites extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("USER FAVORITES", document.getId() + " => " + document.getData());
-
                                 String author = document.getString("author");
                                 String authorId = document.getString("authorId");
                                 String authorPfp = document.getString("authorPfp");
@@ -110,9 +300,14 @@ public class Favorites extends AppCompatActivity {
                                 String location = document.getString("location");
                                 String description = document.getString("description");
                                 String postId = document.getId().toString();
+                                String ecoIdea = document.getString("ecoIdea");
+                                String eventDate = document.getString("eventDate");
+                                String eventTime = document.getString("eventTime");
+                                String impactful = document.getString("impactful");
+                                String postType = document.getString("postType");
 
+                                contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
 
-                                contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
 
                             }
                         } else {
@@ -126,7 +321,7 @@ public class Favorites extends AppCompatActivity {
 
         btnBack = findViewById(R.id.btnBack);
 
-        //navegação para o user
+        //return to user
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
