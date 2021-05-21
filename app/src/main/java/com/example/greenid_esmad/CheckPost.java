@@ -271,8 +271,8 @@ public class CheckPost extends AppCompatActivity {
                         //Impactful reward display
                         if (impactfulVal.equals("0")) {
 
-                            impactfulBadge.setVisibility(View.INVISIBLE);
-                            impactfulCounter.setVisibility(View.INVISIBLE);
+                            impactfulBadge.setVisibility(View.GONE);
+                            impactfulCounter.setVisibility(View.GONE);
 
                         } else {
 
@@ -284,8 +284,8 @@ public class CheckPost extends AppCompatActivity {
                         //EcoIdea reward display
                         if (ecoIdeaVal.equals("0")) {
 
-                            ecoIdeaBadge.setVisibility(View.INVISIBLE);
-                            ecoIdeaCounter.setVisibility(View.INVISIBLE);
+                            ecoIdeaBadge.setVisibility(View.GONE);
+                            ecoIdeaCounter.setVisibility(View.GONE);
 
                         } else {
 

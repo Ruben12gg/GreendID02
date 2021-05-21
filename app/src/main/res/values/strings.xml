@@ -27,7 +27,7 @@
     <string name="CommentsVal">0</string>
 
     //Search
-    <string name="SearchKeywords">Search Keywords...</string>
+    <string name="SearchKeywords">Search other users...</string>
     <string name="Caption">Caption</string>
     <string name="Hashtag">Hashtag</string>
     <string name="calendar"> Event Calendar</string>
