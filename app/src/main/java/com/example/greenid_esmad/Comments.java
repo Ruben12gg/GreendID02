@@ -33,7 +33,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -51,6 +53,8 @@ public class Comments extends AppCompatActivity {
     ImageView post_author_pfp;
     TextView description_view;
     ImageButton btnBack;
+
+    String contentUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,10 +192,53 @@ public class Comments extends AppCompatActivity {
                         commentData.put("commentVal", commentTxt);
                         commentData.put("commentId", comment_id);
 
+
                         String postId = getIntent().getStringExtra("postId");
 
                         //post the comment to db
                         db.collection("users").document(authorId).collection("posts").document(postId).collection("comments").document(comment_id).set(commentData);
+
+                        //Generate and send notification data
+                        //Get contentURL
+                        db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+
+                                        contentUrl = document.getString("contentUrl");
+
+                                        String contentTxt = name + " commented your post.";
+                                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy HH:mm");
+                                        Date date = new Date();
+                                        String dateNotifTxt = formatter.format(date).toString();
+                                        String notifId = UUID.randomUUID().toString();
+
+                                        Map<String, Object> dataNotif = new HashMap<>();
+                                        dataNotif.put("username", name);
+                                        dataNotif.put("pfpUrl", author_pfp);
+                                        dataNotif.put("contentUrl", contentUrl);
+                                        dataNotif.put("commentVal", contentTxt);
+                                        dataNotif.put("date", dateNotifTxt);
+                                        dataNotif.put("notifId", notifId);
+                                        dataNotif.put("postId", postId);
+                                        dataNotif.put("authorId", authorId);
+
+                                        db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
+
+
+                                    } else {
+                                        Log.d("TAG", "No such document");
+                                    }
+                                } else {
+                                    Log.d("TAG", "get failed with ", task.getException());
+                                }
+                            }
+                        });
+
+
+
 
                         //clear input box after post
                         add_comment.getText().clear();

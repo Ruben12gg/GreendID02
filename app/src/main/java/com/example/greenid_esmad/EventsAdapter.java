@@ -123,7 +123,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         holder.locationIcon.setVisibility(View.GONE);
 
 
-
         ContentEvents contentEvents = mData.get(position);
         holder.tvAuthor.setText(contentEvents.getAuthor());
         holder.tvDate.setText(contentEvents.getDate());
@@ -151,7 +150,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         String commentId = contentEvents.getCommentId();
         String userId = contentEvents.getUserId();
 
-        if (commentVal.isEmpty()){
+        if (userId.equals(authorId)){
+            holder.btnReward.setVisibility(View.GONE);
+        } else {
+            holder.btnReward.setVisibility(View.VISIBLE);
+        }
+
+        if (commentVal.isEmpty()) {
             holder.locationIcon.setVisibility(View.GONE);
         } else {
             holder.locationIcon.setVisibility(View.VISIBLE);
@@ -258,15 +263,35 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             public void onClick(View v) {
                 Log.d("TAG", "XPTO");
 
-                /*Intent i = new Intent(v.getContext(), CheckUser.class);
-                i.putExtra("pfName", pfName);
-                i.putExtra("pfp", pfpPic);
-                i.putExtra("bio", bio);
-                i.putExtra("followers", followers);
-                i.putExtra("following", following);
-                i.putExtra("id", id);
-                v.getContext().startActivity(i);*/
+                Intent i = new Intent(v.getContext(), CheckPost.class);
+                i.putExtra("authorId", userId);
+                i.putExtra("postId", postId);
+                v.getContext().startActivity(i);
 
+
+            }
+        });
+
+
+        //navigate to user profile
+        holder.tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
+
+            }
+        });
+
+        holder.pfp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
 
             }
         });
@@ -372,7 +397,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                                                 db.collection("events").document(postId).update(likeData);
 
 
-
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                                             } else {
                                                 Log.d("TAG", "No such document");
@@ -412,7 +436,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
                                                 db.collection("users").document(authorId).collection("posts").document(postId).update(likeData);
                                                 db.collection("events").document(postId).update(likeData);
-
 
 
                                                 Log.d("TAG", "DocumentSnapshot data: " + document.getData());
@@ -465,6 +488,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                                                 dataNotif.put("commentVal", contentTxt);
                                                 dataNotif.put("date", dateTxt);
                                                 dataNotif.put("notifId", notifId);
+                                                dataNotif.put("postId", postId);
+                                                dataNotif.put("authorId", authorId);
 
                                                 db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 

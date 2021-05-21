@@ -158,6 +158,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         Picasso.get().load(authorPfp).into(holder.pfp);
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
+        if (userId.equals(authorId)){
+            holder.btnReward.setVisibility(View.GONE);
+        } else {
+            holder.btnReward.setVisibility(View.VISIBLE);
+        }
+
 
         if (location.isEmpty()) {
             holder.locationIcon.setVisibility(View.GONE);
@@ -501,6 +507,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                                                 dataNotif.put("commentVal", contentTxt);
                                                 dataNotif.put("date", dateTxt);
                                                 dataNotif.put("notifId", notifId);
+                                                dataNotif.put("postId", postId);
+                                                dataNotif.put("authorId", authorId);
 
                                                 db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 

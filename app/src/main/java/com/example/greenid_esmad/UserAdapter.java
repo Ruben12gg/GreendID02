@@ -83,17 +83,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("author", author);
-                Log.d("location", location);
-                Log.d("likeVal", likesVal);
-                Log.d("commentVal", commentVal);
-                Log.d("date", date);
-                Log.d("description", description);
-                Log.d("postId", postId);
-                Log.d("userId", userId);
-                Log.d("contentUrl", contentUrl);
-                Log.d("pfpUrl", pfpUrl);
-                Log.d("IMGCARD", "Clicked on Img Card" + postId);
+
 
                 Intent i = new Intent(v.getContext(), CheckPost.class);
                 i.putExtra("author", author);
