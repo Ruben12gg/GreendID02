@@ -61,17 +61,13 @@ public class Comments extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-        String postAuthor = getIntent().getStringExtra("postAuthor");
         String authorId = getIntent().getStringExtra("authorId");
-        String postAuthorPfp = getIntent().getStringExtra("postAuthorPfp");
         String description = getIntent().getStringExtra("description");
 
         post_author = findViewById(R.id.username);
         post_author_pfp = findViewById(R.id.profile_image);
         description_view = findViewById(R.id.description);
 
-        post_author.setText(postAuthor);
-        Picasso.get().load(postAuthorPfp).into(post_author_pfp);
         description_view.setText(description);
 
         //Access user Id from GLOBALS
@@ -99,6 +95,10 @@ public class Comments extends AppCompatActivity {
                                 String commentVal = document.getString("commentVal");
 
                                 contentComments.add(new ContentComments(author, authorPfp, authorId, commentId, commentVal));
+                                post_author.setText(author);
+                                Picasso.get().load(authorPfp).into(post_author_pfp);
+
+
 
                             }
                         } else {

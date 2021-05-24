@@ -112,7 +112,7 @@
             android:layout_marginStart="16dp"
             android:text="Upcoming Events"
             android:textColor="@color/black_txt"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnDatePick"
@@ -133,7 +133,7 @@
             android:layout_marginStart="16dp"
             android:text="Checking events for:"
             android:textColor="@color/dark_gray_txt"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
         <ImageButton
             android:id="@+id/btnClearEvents"
