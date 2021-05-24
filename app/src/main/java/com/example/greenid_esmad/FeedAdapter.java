@@ -158,6 +158,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Picasso.get().load(authorPfp).into(holder.pfp);
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
+        if (userId.equals(authorId)){
+            holder.btnReward.setVisibility(View.GONE);
+        } else {
+            holder.btnReward.setVisibility(View.VISIBLE);
+        }
+
 
         if (location.isEmpty()) {
             holder.locationIcon.setVisibility(View.GONE);
@@ -257,6 +263,29 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
                 }
+            }
+        });
+
+        //navigate to user profile
+        holder.tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
+
+            }
+        });
+
+        holder.pfp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
+
             }
         });
 
@@ -367,9 +396,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                                 //update value on the text View
                                 holder.btnLike.setImageResource(R.drawable.leaf);
-                                Integer newDislikeVal = Integer.parseInt(holder.tvAuthor.getText().toString()) - 1;
+                                Integer newDislikeVal = Integer.parseInt(holder.tvLikeVal.getText().toString()) - 1;
                                 String newDislikeValTxt = String.valueOf(newDislikeVal);
-                                holder.tvAuthor.setText(newDislikeValTxt);
+                                holder.tvLikeVal.setText(newDislikeValTxt);
 
                                 //update like value on the database
                                 db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -407,9 +436,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
                                 //Update like value on the text View
                                 holder.btnLike.setImageResource(R.drawable.leaf_green);
-                                Integer newLikesVal = Integer.parseInt(holder.tvAuthor.getText().toString()) + 1;
+                                Integer newLikesVal = Integer.parseInt(holder.tvLikeVal.getText().toString()) + 1;
                                 String newLikesValTxt = String.valueOf(newLikesVal);
-                                holder.tvAuthor.setText(newLikesValTxt);
+                                holder.tvLikeVal.setText(newLikesValTxt);
 
                                 //update like and add to database
                                 db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -479,6 +508,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 dataNotif.put("commentVal", contentTxt);
                                                 dataNotif.put("date", dateTxt);
                                                 dataNotif.put("notifId", notifId);
+                                                dataNotif.put("postId", postId);
+                                                dataNotif.put("authorId", authorId);
 
                                                 db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 

@@ -157,7 +157,7 @@ public class Favorites extends AppCompatActivity {
 
                                         contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
 
-                                       
+
                                     }
                                 } else {
                                     Log.d("TAG", "Error getting documents: ", task.getException());

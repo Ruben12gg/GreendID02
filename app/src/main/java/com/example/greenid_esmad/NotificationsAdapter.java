@@ -15,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -37,7 +40,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         return new NotificationsAdapter.ViewHolder(view);
 
 
-
     }
 
 
@@ -48,7 +50,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         ImageView profile_image;
         ImageView contentPic;
         RelativeLayout resultCard;
-
 
 
         ViewHolder(View itemView) {
@@ -96,15 +97,42 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", "XPTO");
-                Log.d("NOTIFID", notifId);
-                Log.d("USERID", userId);
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(userId).collection("notifications").document(notifId).delete();
+                if (contentUrl.isEmpty() || contentUrl == null) {
 
-                Intent i = new Intent(v.getContext(), Notifications.class);
-                v.getContext().startActivity(i);
+                    Intent i = new Intent(v.getContext(), CheckUser.class);
+                    i.putExtra("bio", userId);
+                    v.getContext().startActivity(i);
+
+                } else {
+
+                    //Get profile Data
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("users").document(userId).collection("notifications").document(notifId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+
+                                    String postId = document.getString("postId");
+                                    Intent i = new Intent(v.getContext(), CheckPost.class);
+                                    i.putExtra("authorId", userId);
+                                    i.putExtra("postId", postId);
+                                    v.getContext().startActivity(i);
+
+                                    Log.d("authorID + postID", userId + " " + postId);
+
+                                } else {
+                                    Log.d("TAG", "No such document");
+                                }
+                            } else {
+                                Log.d("TAG", "get failed with ", task.getException());
+                            }
+                        }
+                    });
+                }
+
 
             }
         });
@@ -120,14 +148,12 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         });
 
 
-
         //Check if there's an image to show on the notification to prevent crashing from trying to load null img src into imgView
-        if (contentUrl.isEmpty()) {
+        if (contentUrl.isEmpty() || contentUrl == null) {
             return;
         } else {
             Picasso.get().load(contentUrl).into(holder.contentPic);
         }
-
 
 
     }
@@ -137,7 +163,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public int getItemCount() {
         return mData.size();
     }
-
 
 
 }

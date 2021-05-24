@@ -52,6 +52,9 @@ public class CheckUser extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<ContentCheckUser> contentCheckUser = new ArrayList<>();
 
+    String pfName;
+    String pfpTxt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,35 +68,52 @@ public class CheckUser extends AppCompatActivity {
         followers = findViewById(R.id.followersVal_Check);
         following = findViewById(R.id.followingVal_Check);
 
-        final String pfName = getIntent().getStringExtra("pfName");
-        final String pfpTxt = getIntent().getStringExtra("pfp");
+
         final String bioTxt = getIntent().getStringExtra("bio");
-        final String followersTxt = getIntent().getStringExtra("followers");
-        final String followingTxt = getIntent().getStringExtra("following");
-        final String idTxt = getIntent().getStringExtra("id");
-
-
-        Log.d("PFNAME", pfName);
-        Log.d("PFP", pfpTxt);
-        Log.d("BIO", bioTxt);
-        Log.d("FOLLOWERS", followersTxt);
-        Log.d("FOLLOWING", followingTxt);
-        Log.d("ID", idTxt);
-
-        usernameTop.setText(pfName);
-        username.setText(pfName);
-        bio.setText(followingTxt);
-        followers.setText(followersTxt);
-        following.setText(idTxt);
-        Picasso.get().load(pfpTxt).into(pfp);
 
 
         //Access user Id from GLOBALS
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
 
-        btnFollow = findViewById(R.id.btnFollow);
+        //Get profile Data
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        pfName = document.getString("name");
+                        usernameTop.setText(pfName);
+                        username.setText(pfName);
+
+                        String followVal = document.getString("followersVal");
+                        followers.setText(followVal);
+
+                        String followingVal = document.getString("followingVal");
+                        following.setText(followingVal);
+
+                        String bioTxt = document.getString("bio");
+                        bio.setText(bioTxt);
+
+
+                        pfpTxt = document.getString("pfp");
+                        Picasso.get().load(pfpTxt).into(pfp);
+
+                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+        btnFollow = findViewById(R.id.btnFollow);
 
         //Change followBtn text accordingly if the user follows the person or not
         db.collection("users").document(userId).collection("following").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

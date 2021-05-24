@@ -65,6 +65,9 @@ public class CheckPost extends AppCompatActivity {
     Button btnOk;
     RelativeLayout modalView;
 
+    String likeVal;
+    String contentUrl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +79,12 @@ public class CheckPost extends AppCompatActivity {
         final String authorPfp = getIntent().getStringExtra("authorPfp");
         final String authorId = getIntent().getStringExtra("authorId");
         final String location = getIntent().getStringExtra("commentVal");
-        final String likeVal = getIntent().getStringExtra("author");
         final String commentVal = getIntent().getStringExtra("likeVal");
         final String dateTxt = getIntent().getStringExtra("date");
         final String descriptionTxt = getIntent().getStringExtra("description");
-        final String contentUrl = getIntent().getStringExtra("contentUrl");
         final String postId = getIntent().getStringExtra("postId");
+
+
 
 
         topName = findViewById(R.id.authorPost);
@@ -107,7 +110,44 @@ public class CheckPost extends AppCompatActivity {
         GLOBALS globalUserId = (GLOBALS) getApplicationContext();
         String userId = globalUserId.getUserIdGlobal();
 
+        if (userId.equals(authorId)){
+            btnReward.setVisibility(View.GONE);
+        } else {
+            btnReward.setVisibility(View.VISIBLE);
+        }
+
+        //Get contentURL
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        contentUrl = document.getString("contentUrl");
+
+
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //navigate to user profile
+        author.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
+
+            }
+        });
 
         //Get profile Data
         db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -120,7 +160,7 @@ public class CheckPost extends AppCompatActivity {
                         final String authorTxt = document.getString("author");
                         final String authorPfp = document.getString("authorPfp");
                         final String location = document.getString("location");
-                        final String likeVal = document.getString("likeVal");
+                        likeVal = document.getString("likeVal");
                         final String commentVal = document.getString("commentVal");
                         final String dateTxt = document.getString("date");
                         final String descriptionTxt = document.getString("description");
@@ -231,8 +271,8 @@ public class CheckPost extends AppCompatActivity {
                         //Impactful reward display
                         if (impactfulVal.equals("0")) {
 
-                            impactfulBadge.setVisibility(View.INVISIBLE);
-                            impactfulCounter.setVisibility(View.INVISIBLE);
+                            impactfulBadge.setVisibility(View.GONE);
+                            impactfulCounter.setVisibility(View.GONE);
 
                         } else {
 
@@ -244,8 +284,8 @@ public class CheckPost extends AppCompatActivity {
                         //EcoIdea reward display
                         if (ecoIdeaVal.equals("0")) {
 
-                            ecoIdeaBadge.setVisibility(View.INVISIBLE);
-                            ecoIdeaCounter.setVisibility(View.INVISIBLE);
+                            ecoIdeaBadge.setVisibility(View.GONE);
+                            ecoIdeaCounter.setVisibility(View.GONE);
 
                         } else {
 
@@ -305,7 +345,7 @@ public class CheckPost extends AppCompatActivity {
                                                 db.collection("users").document(authorId).update(rewardData);
 
                                                 //generate notification
-                                                db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                db.collection("users").document(userId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                         if (task.isSuccessful()) {
@@ -328,6 +368,8 @@ public class CheckPost extends AppCompatActivity {
                                                                 dataNotif.put("commentVal", contentTxt);
                                                                 dataNotif.put("date", dateTxt);
                                                                 dataNotif.put("notifId", notifId);
+                                                                dataNotif.put("postId", postId);
+                                                                dataNotif.put("authorId", authorId);
 
                                                                 db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 
@@ -582,6 +624,7 @@ public class CheckPost extends AppCompatActivity {
 
                                                 db.collection("users").document(userId).collection("likes").document(postId).set(data);
 
+                                                //Generate and send notification data
                                                 String name = document.getString("name");
                                                 String pfpUrl = document.getString("pfp");
                                                 String contentTxt = name + " has liked your picture!";
@@ -590,8 +633,6 @@ public class CheckPost extends AppCompatActivity {
                                                 String dateNotifTxt = formatter.format(date).toString();
                                                 String notifId = UUID.randomUUID().toString();
 
-
-                                                //Generate and send notification data
                                                 Map<String, Object> dataNotif = new HashMap<>();
                                                 dataNotif.put("username", name);
                                                 dataNotif.put("pfpUrl", pfpUrl);
@@ -599,6 +640,8 @@ public class CheckPost extends AppCompatActivity {
                                                 dataNotif.put("commentVal", contentTxt);
                                                 dataNotif.put("date", dateNotifTxt);
                                                 dataNotif.put("notifId", notifId);
+                                                dataNotif.put("postId", postId);
+                                                dataNotif.put("authorId", authorId);
 
                                                 db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 

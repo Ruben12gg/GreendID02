@@ -1,6 +1,7 @@
 package com.example.greenid_esmad;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
         final String pfp = contentComments.getAuthorPfp();
         final String author = contentComments.getAuthor();
+        final String authorId = contentComments.getAuthorId();
         final String comment = contentComments.getCommentVal();
 
         holder.tvAuthor.setText(author);
@@ -84,6 +86,29 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
                 Log.d("COMMENTCARD", "Clicked on Comment Card ");
 
 
+
+            }
+        });
+
+        //navigate to user profile
+        holder.tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
+
+            }
+        });
+
+        holder.pfp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(v.getContext(), CheckUser.class);
+                i.putExtra("bio", authorId);
+                v.getContext().startActivity(i);
 
             }
         });
