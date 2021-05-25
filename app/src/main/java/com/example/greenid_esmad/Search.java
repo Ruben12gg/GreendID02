@@ -133,6 +133,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
             @Override
             public void onClick(View view) {
 
+                noEventsView.setVisibility(View.GONE);
                 getUsers();
             }
         });
@@ -148,6 +149,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
                 dateText.setVisibility(View.GONE);
                 eventsTitle.setVisibility(View.VISIBLE);
 
+                noEventsView.setVisibility(View.VISIBLE);
 
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(new Runnable() {

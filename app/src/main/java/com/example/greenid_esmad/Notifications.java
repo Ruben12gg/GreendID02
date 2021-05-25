@@ -2,6 +2,8 @@ package com.example.greenid_esmad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,14 +30,19 @@ import com.example.greenid_esmad.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Notifications extends AppCompatActivity {
 
@@ -104,9 +111,40 @@ public class Notifications extends AppCompatActivity {
         String userId = globalUserId.getUserIdGlobal();
         Log.d("USERID", userId);
 
+
         contentNotifications.clear();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(userId).collection("notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                   
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
 
         //Get notifs
         db.collection("users").document(userId).collection("notifications")
