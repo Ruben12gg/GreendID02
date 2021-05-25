@@ -27,6 +27,7 @@ import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -35,7 +36,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -59,8 +63,10 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
     RelativeLayout eventsTitle;
     RelativeLayout noEventsView;
     Button btnDatePick;
-    String date;
+    ImageView notificationDot;
 
+
+    String date;
     String id;
 
 
@@ -79,6 +85,9 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
         btnDatePick = findViewById(R.id.btnDatePick);
         noEventsView = findViewById(R.id.noEventsView);
 
+        notificationDot = findViewById(R.id.notificationDot);
+        notificationDot.setVisibility(View.GONE);
+
         btnClear.setVisibility(View.INVISIBLE);
         btnClearEvents.setVisibility(View.GONE);
         eventsTitle.setVisibility(View.VISIBLE);
@@ -86,6 +95,42 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
         noEventsView.setVisibility(View.VISIBLE);
 
         GetEvents();
+
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //Listen for new notifications
+        db.collection("users").document(userId).collection("notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @com.google.firebase.database.annotations.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+
+                                    notificationDot.setVisibility(View.VISIBLE);
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 

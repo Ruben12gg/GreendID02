@@ -1,7 +1,6 @@
 package com.example.greenid_esmad;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,13 +16,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -41,6 +45,8 @@ public class Favorites extends AppCompatActivity {
     ImageButton btnProductTag;
     RelativeLayout noContentView;
     RelativeLayout noContentViewFiltered;
+    ImageView notificationDot;
+
 
 
     @Override
@@ -52,6 +58,9 @@ public class Favorites extends AppCompatActivity {
         btnProductTag = findViewById(R.id.btnProductTag);
         btnEventTag = findViewById(R.id.btnEventTag);
         noContentView = findViewById(R.id.noContentView);
+
+        notificationDot = findViewById(R.id.notificationDot);
+        notificationDot.setVisibility(View.GONE);
 
 
         btnEventTag.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +122,44 @@ public class Favorites extends AppCompatActivity {
 
             }
         });
+
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Listen for new notifications
+        db.collection("users").document(userId).collection("notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+
+                                    notificationDot.setVisibility(View.VISIBLE);
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
 
         btnImageTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,11 +323,7 @@ public class Favorites extends AppCompatActivity {
             }
 
         });
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users").document(userId).collection("favorites")
                 .get()

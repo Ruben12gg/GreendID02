@@ -134,7 +134,7 @@ public class Notifications extends AppCompatActivity {
                                 case MODIFIED:
                                     Log.d("MODIFY", "Modified" + dc.getDocument().getData());
 
-                                   
+
 
                                     break;
                                 case REMOVED:

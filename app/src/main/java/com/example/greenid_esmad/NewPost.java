@@ -33,8 +33,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -70,6 +74,8 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     ImageButton btnEventTag;
     ImageButton btnProductTag;
     ImageView addIcon;
+    ImageView notificationDot;
+
 
     String pickedTime;
     String pickedDate;
@@ -83,6 +89,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
+
+        notificationDot = findViewById(R.id.notificationDot);
+        notificationDot.setVisibility(View.GONE);
 
         addIcon = findViewById(R.id.addIcon);
         addIcon.setVisibility(View.VISIBLE);
@@ -225,6 +234,43 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
             }
         });
+
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Listen for new notifications
+        db.collection("users").document(userId).collection("notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @com.google.firebase.database.annotations.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+
+                                    notificationDot.setVisibility(View.VISIBLE);
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 

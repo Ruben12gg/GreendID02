@@ -17,7 +17,19 @@
         android:paddingRight="20dp"
         app:itemIconTint="@drawable/selector"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/menu_navigation" />
+        app:menu="@menu/menu_navigation">
+
+        <ImageView
+            android:id="@+id/notificationDot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="end"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/circle_notification"
+            />
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <RelativeLayout
         android:id="@+id/toolbarView"

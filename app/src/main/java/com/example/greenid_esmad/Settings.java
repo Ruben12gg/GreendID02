@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -27,6 +28,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.File;
 
@@ -37,12 +43,17 @@ public class Settings extends AppCompatActivity {
     Button logoutBtn;
     Button delBtn;
     Button clearBtn;
+    ImageView notificationDot;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        notificationDot = findViewById(R.id.notificationDot);
+        notificationDot.setVisibility(View.GONE);
 
         editBtn = findViewById(R.id.btn2);
 
@@ -83,6 +94,43 @@ public class Settings extends AppCompatActivity {
                 modal.show(getSupportFragmentManager(), "Dialog");
             }
         });
+
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //Listen for new notifications
+        db.collection("users").document(userId).collection("notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @com.google.firebase.database.annotations.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+
+                                    notificationDot.setVisibility(View.VISIBLE);
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

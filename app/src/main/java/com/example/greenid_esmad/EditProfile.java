@@ -105,6 +105,7 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+
         btnImg = findViewById(R.id.btnImg);
         btnImg.setOnClickListener(new View.OnClickListener() {
             @Override
