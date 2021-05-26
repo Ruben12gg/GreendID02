@@ -76,6 +76,7 @@ public class CheckPost extends AppCompatActivity {
 
     String likeVal;
     String contentUrl;
+    String descriptionTxt;
 
 
     @Override
@@ -90,10 +91,7 @@ public class CheckPost extends AppCompatActivity {
         final String location = getIntent().getStringExtra("commentVal");
         final String commentVal = getIntent().getStringExtra("likeVal");
         final String dateTxt = getIntent().getStringExtra("date");
-        final String descriptionTxt = getIntent().getStringExtra("description");
         final String postId = getIntent().getStringExtra("postId");
-
-
 
 
         topName = findViewById(R.id.authorPost);
@@ -137,6 +135,7 @@ public class CheckPost extends AppCompatActivity {
                     if (document.exists()) {
 
                         contentUrl = document.getString("contentUrl");
+                        descriptionTxt = document.getString("description");
 
 
                     } else {

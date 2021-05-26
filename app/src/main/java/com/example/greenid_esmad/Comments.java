@@ -66,6 +66,7 @@ public class Comments extends AppCompatActivity {
 
         String authorId = getIntent().getStringExtra("authorId");
         String description = getIntent().getStringExtra("description");
+        String postId = getIntent().getStringExtra("postId");
 
         post_author = findViewById(R.id.username);
         post_author_pfp = findViewById(R.id.profile_image);
@@ -78,7 +79,6 @@ public class Comments extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        String postId = getIntent().getStringExtra("postId");
 
         //Get comment data
         db.collection("users").document(authorId).collection("posts").document(postId).collection("comments")
@@ -97,9 +97,6 @@ public class Comments extends AppCompatActivity {
                                 String commentVal = document.getString("commentVal");
 
                                 contentComments.add(new ContentComments(author, authorPfp, authorId, commentId, commentVal));
-                                post_author.setText(author);
-                                Picasso.get().load(authorPfp).into(post_author_pfp);
-
 
 
                             }
@@ -123,6 +120,29 @@ public class Comments extends AppCompatActivity {
                         String author_pfp = document.getString("pfp");
                         pfp = findViewById(R.id.pfp);
                         Picasso.get().load(author_pfp).into(pfp);
+
+
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //Get author Data
+        db.collection("users").document(authorId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String author_pfp = document.getString("pfp");
+                        String authorName = document.getString("name");
+
+                        post_author.setText(authorName);
+                        Picasso.get().load(author_pfp).into(post_author_pfp);
 
 
                     } else {
