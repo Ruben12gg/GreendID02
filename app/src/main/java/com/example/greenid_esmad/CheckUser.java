@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -53,6 +54,7 @@ public class CheckUser extends AppCompatActivity {
     Button btnFollow;
     ImageView notificationDot;
 
+    SharedPreferences sharedPreferences;
 
     CheckUserAdapter checkUserAdapter;
     RecyclerView recyclerView;
@@ -80,10 +82,8 @@ public class CheckUser extends AppCompatActivity {
 
         final String bioTxt = getIntent().getStringExtra("bio");
 
-
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         //Get profile Data
         FirebaseFirestore db = FirebaseFirestore.getInstance();

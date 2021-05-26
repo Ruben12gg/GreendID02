@@ -48,8 +48,6 @@ public class Settings extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

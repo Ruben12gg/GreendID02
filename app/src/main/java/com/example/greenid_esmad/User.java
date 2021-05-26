@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -50,6 +51,7 @@ public class User extends AppCompatActivity {
     ImageButton favoritesBtn;
     ImageView notificationDot;
 
+    SharedPreferences sharedPreferences;
 
     UserAdapter userAdapter;
     RecyclerView recyclerView;
@@ -130,9 +132,8 @@ public class User extends AppCompatActivity {
         });
 
 
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();

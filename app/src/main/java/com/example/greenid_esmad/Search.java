@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,6 +66,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
     Button btnDatePick;
     ImageView notificationDot;
 
+    SharedPreferences sharedPreferences;
 
     String date;
     String id;
@@ -96,8 +98,8 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
 
         GetEvents();
 
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         //Listen for new notifications
@@ -238,9 +240,8 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
 
     private void GetEvents() {
 
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
-
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("events")

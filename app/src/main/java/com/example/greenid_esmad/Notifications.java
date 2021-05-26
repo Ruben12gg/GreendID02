@@ -198,8 +198,8 @@ public class Notifications extends AppCompatActivity {
 
                                         String notifId = document.getString("notifId");
 
-                                        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                                        String userId = globalUserId.getUserIdGlobal();
+                                        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                                        String userId = sharedPreferences.getString("userId", "");
 
                                         db.collection("users").document(userId).collection("notifications").document(notifId).delete();
 
@@ -268,9 +268,8 @@ public class Notifications extends AppCompatActivity {
         contentNotifications.clear();
 
         //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
-        Log.d("USERID", userId);
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

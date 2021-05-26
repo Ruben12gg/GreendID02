@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -70,6 +71,8 @@ public class CheckPost extends AppCompatActivity {
     RelativeLayout modalView;
     ImageView notificationDot;
 
+    SharedPreferences sharedPreferences;
+
 
     String likeVal;
     String contentUrl;
@@ -115,9 +118,8 @@ public class CheckPost extends AppCompatActivity {
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
 
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         if (userId.equals(authorId)){
             btnReward.setVisibility(View.GONE);
@@ -551,8 +553,6 @@ public class CheckPost extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d("BTNLIKE", "Click on like Btnnn");
 
-                Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_right);
-                likeBtn.setAnimation(animation);
 
                 Log.d("USERID", userId);
                 Log.d("POSTID", postId);

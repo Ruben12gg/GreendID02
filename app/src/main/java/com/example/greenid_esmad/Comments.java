@@ -1,6 +1,7 @@
 package com.example.greenid_esmad;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +55,8 @@ public class Comments extends AppCompatActivity {
     TextView description_view;
     ImageButton btnBack;
 
+    SharedPreferences sharedPreferences;
+
     String contentUrl;
 
     @Override
@@ -70,9 +73,8 @@ public class Comments extends AppCompatActivity {
 
         description_view.setText(description);
 
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -163,9 +165,8 @@ public class Comments extends AppCompatActivity {
 
         Toast.makeText(Comments.this, "Comment added!", Toast.LENGTH_SHORT).show();
 
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
 
         String authorId = getIntent().getStringExtra("authorId");

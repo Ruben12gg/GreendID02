@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -51,54 +52,7 @@ public class Home extends AppCompatActivity {
     ImageView notificationDot;
 
     private NotificationManagerCompat notificationManagerCompat;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Log.d("Destroyed", "Hello from the grave!");
-
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
-
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        //Listen for new notifications
-        db.collection("users").document(userId).collection("notifications")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshots,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w("ERROR", "listen:error", e);
-                            return;
-                        }
-
-                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
-                            switch (dc.getType()) {
-                                case ADDED:
-                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
-
-                                    notificationDot.setVisibility(View.VISIBLE);
-                                    SendOnNotifChannel();
-
-                                    break;
-                                case MODIFIED:
-                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
-
-                                    break;
-                                case REMOVED:
-                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
-                                    break;
-                            }
-                        }
-
-                    }
-                });
-
-
-    }
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +74,8 @@ public class Home extends AppCompatActivity {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Get data from profile to make the logic to show/hide follow message
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
-
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
         //Listen for new notifications
         db.collection("users").document(userId).collection("notifications")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {

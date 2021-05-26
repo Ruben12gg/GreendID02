@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +48,7 @@ public class Favorites extends AppCompatActivity {
     RelativeLayout noContentViewFiltered;
     ImageView notificationDot;
 
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -74,9 +76,8 @@ public class Favorites extends AppCompatActivity {
 
                 contentFavorites.clear();
 
-                //Access user Id from GLOBALS
-                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                String userId = globalUserId.getUserIdGlobal();
+                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId", "");
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -123,9 +124,8 @@ public class Favorites extends AppCompatActivity {
             }
         });
 
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -170,9 +170,8 @@ public class Favorites extends AppCompatActivity {
 
                 contentFavorites.clear();
 
-                //Access user Id from GLOBALS
-                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                String userId = globalUserId.getUserIdGlobal();
+                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId", "");
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -231,9 +230,8 @@ public class Favorites extends AppCompatActivity {
 
                 contentFavorites.clear();
 
-                //Access user Id from GLOBALS
-                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                String userId = globalUserId.getUserIdGlobal();
+                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId", "");
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 

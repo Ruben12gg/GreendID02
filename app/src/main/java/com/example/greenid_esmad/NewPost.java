@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,6 +77,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     ImageView addIcon;
     ImageView notificationDot;
 
+    SharedPreferences sharedPreferences;
 
     String pickedTime;
     String pickedDate;
@@ -235,8 +237,8 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -386,9 +388,8 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                                 public void onSuccess(Uri uri) {
 
 
-                                    //Access user Id from GLOBALS
-                                    GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                                    String userId = globalUserId.getUserIdGlobal();
+                                    sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                                    String userId = sharedPreferences.getString("userId", "");
 
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 

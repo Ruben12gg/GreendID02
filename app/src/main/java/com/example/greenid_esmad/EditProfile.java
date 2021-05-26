@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,6 +56,8 @@ public class EditProfile extends AppCompatActivity {
     StorageReference storageReference;
     FirebaseStorage storage;
 
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +74,8 @@ public class EditProfile extends AppCompatActivity {
         storageReference = storage.getReference();
 
 
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -182,9 +184,8 @@ public class EditProfile extends AppCompatActivity {
 
     private void uploadPicture() {
 
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         //create and show a progress upload bar
         final ProgressDialog progDiag = new ProgressDialog(this);
