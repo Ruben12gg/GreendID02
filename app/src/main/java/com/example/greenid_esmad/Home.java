@@ -93,7 +93,7 @@ public class Home extends AppCompatActivity {
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
 
                                     notificationDot.setVisibility(View.VISIBLE);
-                                    SendOnNotifChannel();
+                                    /*SendOnNotifChannel();*/
 
                                     break;
                                 case MODIFIED:
