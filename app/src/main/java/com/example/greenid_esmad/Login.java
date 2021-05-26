@@ -47,6 +47,7 @@ public class Login extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     SharedPreferences sharedPreferences;
+    boolean deletedAcc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class Login extends AppCompatActivity {
         SignInButton lgnBtn = findViewById(R.id.login_email_button);
         lgnBtn.setSize(SignInButton.SIZE_STANDARD);
 
+        deletedAcc = getIntent().getBooleanExtra("deletedAcc",false);
 
         // Call Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +83,7 @@ public class Login extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userIdCache = sharedPreferences.getString("userId", "");
 
-        if (userIdCache.isEmpty()){
+        if (userIdCache.isEmpty() || deletedAcc){
             return;
         } else {
             String userId = sharedPreferences.getString("userId","");
