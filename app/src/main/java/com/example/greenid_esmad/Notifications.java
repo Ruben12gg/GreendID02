@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -53,6 +54,9 @@ public class Notifications extends AppCompatActivity {
     ImageView emptyImg;
     TextView emptyTxt;
 
+
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,9 @@ public class Notifications extends AppCompatActivity {
 
         emptyImg.setVisibility(View.VISIBLE);
         emptyTxt.setVisibility(View.VISIBLE);
+
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -104,12 +111,6 @@ public class Notifications extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        //Access user Id from GLOBALS
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
-        Log.d("USERID", userId);
 
 
         contentNotifications.clear();

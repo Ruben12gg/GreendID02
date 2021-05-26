@@ -3,15 +3,21 @@ package com.example.greenid_esmad;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +50,56 @@ public class Home extends AppCompatActivity {
     ImageView followerImg;
     ImageView notificationDot;
 
+    private NotificationManagerCompat notificationManagerCompat;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d("Destroyed", "Hello from the grave!");
+
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Listen for new notifications
+        db.collection("users").document(userId).collection("notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+
+                                    notificationDot.setVisibility(View.VISIBLE);
+                                    SendOnNotifChannel();
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +107,8 @@ public class Home extends AppCompatActivity {
 
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
+
+        notificationManagerCompat = NotificationManagerCompat.from(this);
 
         followerTxt = findViewById(R.id.textView2);
         followerImg = findViewById(R.id.imageView);
@@ -83,6 +141,7 @@ public class Home extends AppCompatActivity {
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
 
                                     notificationDot.setVisibility(View.VISIBLE);
+                                    SendOnNotifChannel();
 
                                     break;
                                 case MODIFIED:
@@ -97,7 +156,6 @@ public class Home extends AppCompatActivity {
 
                     }
                 });
-
 
         //Get profile Data
         db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -236,6 +294,32 @@ public class Home extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void SendOnNotifChannel() {
+
+        Intent notifIntent = new Intent(this, Notifications.class);
+        //Access user Id from GLOBALS
+        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+        String userId = globalUserId.getUserIdGlobal();
+        notifIntent.putExtra("userId", userId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                notifIntent,
+                0
+        );
+
+        Notification notification = new NotificationCompat.Builder(this, GLOBALS.CHANNEL_1_ID)
+                .setSmallIcon(R.drawable.logo_greenid)
+                .setContentTitle("GreenID")
+                .setContentText("You have new profile interactions!")
+                .setContentIntent(pendingIntent)
+                .build();
+
+        notificationManagerCompat.notify(1, notification);
+
+
     }
 
     private void RecyclerCall() {

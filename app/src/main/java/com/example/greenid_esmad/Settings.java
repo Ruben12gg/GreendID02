@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,8 @@ public class Settings extends AppCompatActivity {
     Button clearBtn;
     ImageView notificationDot;
 
+    SharedPreferences sharedPreferences;
+
 
 
     @Override
@@ -72,6 +75,10 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("LOGOUT", "Logout Btn");
+                // get or create SharedPreferences
+                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                // save your string in SharedPreferences
+                sharedPreferences.edit().putString("userId", "").commit();
                 logout();
             }
         });

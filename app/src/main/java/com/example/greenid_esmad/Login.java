@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class Login extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
 
     FirebaseAuth mAuth;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,6 @@ public class Login extends AppCompatActivity {
 
         SignInButton lgnBtn = findViewById(R.id.login_email_button);
         lgnBtn.setSize(SignInButton.SIZE_STANDARD);
-       // Button lgnBtn = findViewById(R.id.login_email_button);
 
 
         // Call Firebase Auth
@@ -75,6 +76,19 @@ public class Login extends AppCompatActivity {
 
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //Auto sign in if there's a userId already saved in memory cache
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        String userIdCache = sharedPreferences.getString("userId", "");
+
+        if (userIdCache.isEmpty()){
+            return;
+        } else {
+            String userId = sharedPreferences.getString("userId","");
+            GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+            globalUserId.setUserIdGlobal(userId);
+            startHomeAct();
+        }
 
 
     }
@@ -163,6 +177,11 @@ public class Login extends AppCompatActivity {
                                 GLOBALS globalUserId = (GLOBALS) getApplicationContext();
                                 globalUserId.setUserIdGlobal(userId);
 
+                                // get or create SharedPreferences
+                                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                                // save your string in SharedPreferences
+                                sharedPreferences.edit().putString("userId", userId).commit();
+
 
                                 // Welcome Toast
                                 String message = "Welcome " + displayName + "!";
@@ -201,6 +220,11 @@ public class Login extends AppCompatActivity {
                                 //Add userId to GLOBALS
                                 GLOBALS globalUserId = (GLOBALS) getApplicationContext();
                                 globalUserId.setUserIdGlobal(userId);
+
+                                // get or create SharedPreferences
+                                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                                // save your string in SharedPreferences
+                                sharedPreferences.edit().putString("userId", userId).commit();
 
                             }
                         } else {
