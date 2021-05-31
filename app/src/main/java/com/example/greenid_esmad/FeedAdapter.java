@@ -77,10 +77,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         ImageView ecoIdeaBadge;
         TextView impactfulCounter;
         TextView ecoIdeaCounter;
-        ImageButton btn;
         Button btnOk;
         RelativeLayout modalView;
         RelativeLayout resultCard;
+        RelativeLayout reportView;
+        RelativeLayout utilityBarView;
+        ImageButton btnClose2;
+        TextView reportTv;
 
 
         ViewHolder(View itemView) {
@@ -109,6 +112,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             ecoIdeaCounter = itemView.findViewById(R.id.ecoIdeaCounter);
             resultCard = itemView.findViewById(R.id.post_card_02);
             modalView = itemView.findViewById(R.id.modalView);
+            reportView = itemView.findViewById(R.id.reportView);
+            btnClose2 = itemView.findViewById(R.id.btnClose2);
+            reportTv = itemView.findViewById(R.id.reportTv);
+            utilityBarView = itemView.findViewById(R.id.utilityBarView);
+
             itemView.setOnClickListener(this);
         }
 
@@ -128,6 +136,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.ecoIdeaBadge.setVisibility(View.GONE);
         holder.ecoIdeaCounter.setVisibility(View.GONE);
         holder.locationIcon.setVisibility(View.GONE);
+        holder.reportView.setVisibility(View.GONE);
 
         ContentFeed contentFeed = mData.get(position);
         String author = contentFeed.getContentUrl();
@@ -286,6 +295,42 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 i.putExtra("bio", authorId);
                 v.getContext().startActivity(i);
 
+            }
+        });
+
+        holder.utilityBarView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                holder.reportView.setVisibility(View.VISIBLE);
+
+                return false;
+            }
+        });
+
+        holder.reportTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Map<String, Object> reportdata = new HashMap<>();
+                reportdata.put("postId", postId);
+                reportdata.put("contentUrl", contentUrl);
+                reportdata.put("description", description);
+                reportdata.put("authorId", authorId);
+
+                db.collection("reports").document(postId).set(reportdata);
+
+                holder.reportView.setVisibility(View.GONE);
+                Snackbar.make(v, "Post reported!", Snackbar.LENGTH_SHORT).show();
+
+            }
+        });
+
+        holder.btnClose2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                holder.reportView.setVisibility(View.GONE);
             }
         });
 
