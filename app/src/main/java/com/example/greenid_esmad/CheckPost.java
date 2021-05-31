@@ -70,6 +70,10 @@ public class CheckPost extends AppCompatActivity {
     Button btnOk;
     RelativeLayout modalView;
     ImageView notificationDot;
+    RelativeLayout reportView;
+    RelativeLayout utilityBarView;
+    ImageButton btnClose2;
+    TextView reportTv;
 
     SharedPreferences sharedPreferences;
 
@@ -113,8 +117,15 @@ public class CheckPost extends AppCompatActivity {
         ecoIdeaCounter = findViewById(R.id.ecoIdeaCounter);
         modalView = findViewById(R.id.modalView);
 
+        reportView = findViewById(R.id.reportView);
+        btnClose2 = findViewById(R.id.btnClose2);
+        reportTv = findViewById(R.id.reportTv);
+        utilityBarView = findViewById(R.id.utilityBarView);
+
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
+
+        reportView.setVisibility(View.GONE);
 
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
@@ -535,6 +546,42 @@ public class CheckPost extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        contentPic.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                reportView.setVisibility(View.VISIBLE);
+
+                return false;
+            }
+        });
+
+        reportTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Map<String, Object> reportdata = new HashMap<>();
+                reportdata.put("postId", postId);
+                reportdata.put("contentUrl", contentUrl);
+                reportdata.put("description", descriptionTxt);
+                reportdata.put("authorId", authorId);
+
+                db.collection("reports").document(postId).set(reportdata);
+
+                reportView.setVisibility(View.GONE);
+                Snackbar.make(v, "Post reported!", Snackbar.LENGTH_SHORT).show();
+
+            }
+        });
+
+        btnClose2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                reportView.setVisibility(View.GONE);
             }
         });
 
