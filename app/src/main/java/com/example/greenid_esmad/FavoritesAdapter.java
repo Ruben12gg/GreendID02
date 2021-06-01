@@ -170,7 +170,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             holder.tvDescription.setText(description);
         }
 
-        
+
         final String authorPfp = contentFavorites.getAuthorPfp();
         final String contentUrl = contentFavorites.getAuthor();
 
