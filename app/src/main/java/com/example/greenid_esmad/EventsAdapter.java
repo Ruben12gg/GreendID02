@@ -138,8 +138,17 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         holder.tvLikeVal.setText(contentEvents.getLikeVal());
         holder.tvCommentVal.setText(contentEvents.getCommentVal());
         holder.tvLocation.setText(contentEvents.getLocation());
-        holder.tvDescription.setText(contentEvents.getDescription());
 
+        //Cut down description Txt if it's too big to fully appear on post post
+        String description = contentEvents.getDescription();
+        if (description.length() >= 35) {
+
+            String subDesc = description.substring(0, 34) + "...";
+            holder.tvDescription.setText(subDesc);
+
+        } else {
+            holder.tvDescription.setText(description);
+        }
 
         final String authorPfp = contentEvents.getAuthorPfp();
         final String contentUrl = contentEvents.getContentUrl();
@@ -154,7 +163,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         String likesVal = contentEvents.getLikeVal();
         String commentVal = contentEvents.getCommentVal();
         String date = contentEvents.getDate();
-        String description = contentEvents.getDescription();
         String postId = contentEvents.getPostId();
         String commentId = contentEvents.getCommentId();
         String userId = contentEvents.getUserId();

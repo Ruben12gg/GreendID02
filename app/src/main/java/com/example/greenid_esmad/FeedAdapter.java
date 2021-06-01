@@ -159,7 +159,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.tvLikeVal.setText(likesVal);
         holder.tvCommentVal.setText(commentVal);
         holder.tvLocation.setText(location);
-        holder.tvDescription.setText(description);
+
+        //Cut down description Txt if it's too big to fully appear on post post
+        if (description.length() >= 35) {
+
+            String subDesc = description.substring(0, 34) + "...";
+            holder.tvDescription.setText(subDesc);
+
+        } else {
+            holder.tvDescription.setText(description);
+        }
 
         final String authorPfp = contentFeed.getAuthorPfp();
         final String contentUrl = contentFeed.getAuthor();
@@ -167,7 +176,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Picasso.get().load(authorPfp).into(holder.pfp);
         Picasso.get().load(contentUrl).into(holder.contentPic);
 
-        if (userId.equals(authorId)){
+        if (userId.equals(authorId)) {
             holder.btnReward.setVisibility(View.GONE);
         } else {
             holder.btnReward.setVisibility(View.VISIBLE);

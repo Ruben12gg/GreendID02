@@ -159,8 +159,18 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
         holder.tvLikeVal.setText(likesVal);
         holder.tvCommentVal.setText(commentVal);
         holder.tvLocation.setText(location);
-        holder.tvDescription.setText(description);
 
+        //Cut down description Txt if it's too big to fully appear on post post
+        if (description.length() >= 35) {
+
+            String subDesc = description.substring(0, 34) + "...";
+            holder.tvDescription.setText(subDesc);
+
+        } else {
+            holder.tvDescription.setText(description);
+        }
+
+        
         final String authorPfp = contentFavorites.getAuthorPfp();
         final String contentUrl = contentFavorites.getAuthor();
 
