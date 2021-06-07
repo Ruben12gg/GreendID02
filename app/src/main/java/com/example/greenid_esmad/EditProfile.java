@@ -5,15 +5,19 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,12 +54,15 @@ public class EditProfile extends AppCompatActivity {
     ImageView pfp;
     EditText username;
     EditText bio;
+    TextView nameCounter;
     Button saveBtn;
     ImageButton returnBtn;
     ImageButton btnImg;
     Uri imageUri;
     StorageReference storageReference;
     FirebaseStorage storage;
+
+    Integer nameTxtVal;
 
     SharedPreferences sharedPreferences;
 
@@ -69,6 +77,7 @@ public class EditProfile extends AppCompatActivity {
         bio = findViewById(R.id.bioSettings);
         saveBtn = findViewById(R.id.save);
         returnBtn = findViewById(R.id.backBtn);
+        nameCounter = findViewById(R.id.userNameCounter);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -76,6 +85,7 @@ public class EditProfile extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -108,6 +118,34 @@ public class EditProfile extends AppCompatActivity {
         });
 
 
+        username.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String nameTxt = username.getText().toString();
+                nameTxtVal = nameTxt.length();
+                String nameCounterTxt = nameTxtVal + "/12";
+                nameCounter.setText(nameCounterTxt);
+
+                if (nameTxtVal > 12) {
+                    nameCounter.setTextColor(getResources().getColor(R.color.colorAccent));
+                } else {
+                    nameCounter.setTextColor(getResources().getColor(R.color.light_gray_txt));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         btnImg = findViewById(R.id.btnImg);
         btnImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,32 +154,49 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+
         //Save new data on button click
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String newUsername = username.getText().toString();
-                String newBio = bio.getText().toString();
+                //Dont let the username be too big
+                if (nameTxtVal > 12) {
+
+                    // Success Toast
+                    String message = "Your profile name can't have more than 12 characters";
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, message, duration);
+                    toast.show();
+
+                    return;
+
+                } else {
+
+                    String newUsername = username.getText().toString();
+                    String newBio = bio.getText().toString();
 
 
-                Map<String, Object> data = new HashMap<>();
-                data.put("name", newUsername);
-                data.put("bio", newBio);
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("name", newUsername);
+                    data.put("bio", newBio);
 
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(userId).update(data);
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("users").document(userId).update(data);
 
-                // Success Toast
-                String message = "Your profile was updated!";
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, message, duration);
-                toast.show();
+                    // Success Toast
+                    String message = "Your profile was updated!";
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, message, duration);
+                    toast.show();
 
-                uploadPicture();
-                /* finish();*/
+                    uploadPicture();
+                    /* finish();*/
+
+                }
 
             }
         });

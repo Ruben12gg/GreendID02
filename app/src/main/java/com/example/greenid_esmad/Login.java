@@ -47,6 +47,7 @@ public class Login extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     SharedPreferences sharedPreferences;
+    String displayName;
     boolean deletedAcc;
 
     @Override
@@ -136,7 +137,10 @@ public class Login extends AppCompatActivity {
                 Uri pfp = account.getPhotoUrl();
                 Log.d("PFP", pfp.toString());
 
-                String displayName = account.getDisplayName();
+                displayName = account.getDisplayName();
+                if (displayName.length() > 12){
+                    displayName = displayName.substring(0, 12);
+                }
                 Log.d("Display Name", displayName);
 
                 String userId = account.getId();
