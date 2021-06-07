@@ -82,6 +82,7 @@ public class CheckUser extends AppCompatActivity {
 
 
         final String bioTxt = getIntent().getStringExtra("bio");
+        Log.d("ID", bioTxt);
 
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
@@ -228,7 +229,12 @@ public class CheckUser extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
 
+                                //remove the user from our following list
                                 db.collection("users").document(userId).collection("following").document(bioTxt).delete();
+
+                                //remove own user from the other user followers
+                                db.collection("users").document(bioTxt).collection("followers").document(userId).delete();
+
                                 btnFollow.setText("Follow");
                                 Drawable box = getResources().getDrawable(R.drawable.btnbox);
                                 btnFollow.setBackground(box);
@@ -306,7 +312,12 @@ public class CheckUser extends AppCompatActivity {
                                 data.put("pfp", pfpTxt);
                                 data.put("userId", bioTxt);
 
+                                //add the user to our following list
                                 db.collection("users").document(userId).collection("following").document(bioTxt).set(data);
+
+                                //Add own user to the other user followers
+                                db.collection("users").document(bioTxt).collection("followers").document(userId).set(data);
+
                                 btnFollow.setText("Unfollow");
                                 Drawable redBox = getResources().getDrawable(R.drawable.btnbox_red);
                                 btnFollow.setBackground(redBox);
