@@ -95,15 +95,55 @@
 
 
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/selected_pic_view"
+        android:id="@+id/txtrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/posttxt"
+            android:text="@string/posttxt"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:textColor="@color/dark_green_bg"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventtxt"
+            android:text="@string/eventtxt"
+            android:layout_toRightOf="@+id/posttxt"
+            android:textColor="@color/dark_green_bg"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/producttxt"
+            android:text="@string/producttxt"
+            android:layout_toRightOf="@+id/eventtxt"
+            android:textColor="@color/dark_green_bg"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="28dp"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/tagBtnsView"
+        android:layout_below="@+id/txtrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/selected_pic_view"
         android:layout_centerHorizontal="true">
 
-        <ImageButton
+    <ImageButton
             android:id="@+id/btnImageTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
