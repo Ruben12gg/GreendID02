@@ -193,6 +193,7 @@
         android:layout_height="318dp"
         android:layout_below="@id/post"
         android:fillViewport="true"
+        android:paddingTop="16dp"
         android:scrollbars="vertical">
 
         <RelativeLayout
