@@ -81,11 +81,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pfp"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
             android:layout_below="@id/main_toolbar"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             app:civ_border_width="2dp" />
 
 
@@ -147,15 +147,15 @@
         <RelativeLayout
             android:id="@+id/bioView"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/pfp">
 
             <TextView
                 android:id="@+id/pfName"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/pfName"
                 android:textColor="@color/black_txt"
                 android:textSize="16sp"
@@ -165,19 +165,37 @@
                 android:id="@+id/userRank"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
+                android:layout_marginTop="4dp"
                 android:layout_below="@+id/bio"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="4dp"
                 android:text="@string/pfRank"
                 android:textColor="@color/black_txt"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/UR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bio"
+                android:text="?"
+                android:layout_toRightOf="@id/userRank"
+                android:textSize="16sp"
+                android:textColor="@color/black_txt"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="4dp"
+                android:textStyle="bold"></TextView>
 
             <TextView
                 android:id="@+id/bio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pfName"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:autoLink="all"
                 android:enabled="true"
                 android:focusable="true"
@@ -187,14 +205,14 @@
                 android:textColor="@color/black_txt"
                 android:textColorLink="@color/dark_gray_txt"
                 android:textIsSelectable="true"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/badgeView"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="40dp"
             android:layout_below="@id/bioView">
 
         </RelativeLayout>
