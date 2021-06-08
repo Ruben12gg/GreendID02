@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -50,9 +51,13 @@ public class Home extends AppCompatActivity {
     TextView followerTxt;
     ImageView followerImg;
     ImageView notificationDot;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    String userId;
 
     private NotificationManagerCompat notificationManagerCompat;
     SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +75,26 @@ public class Home extends AppCompatActivity {
         followerTxt.setVisibility(View.INVISIBLE);
         followerImg.setVisibility(View.INVISIBLE);
 
+        swipeRefreshLayout = findViewById(R.id.refreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                feedContent.clear();
+                getContent();
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Get data from profile to make the logic to show/hide follow message
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
+        userId = sharedPreferences.getString("userId", "");
+
+
         //Listen for new notifications
         db.collection("users").document(userId).collection("notifications")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -141,6 +160,56 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        getContent();
+
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Set Home Selected
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId()) {
+
+                    case R.id.home:
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), Home.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.search:
+                        startActivity(new Intent(getApplicationContext(), Search.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.new_post:
+                        startActivity(new Intent(getApplicationContext(), NewPost.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.user:
+                        startActivity(new Intent(getApplicationContext(), User.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+
+
+                    case R.id.notifications:
+                        startActivity(new Intent(getApplicationContext(), Notifications.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+
+
+                }
+
+                return false;
+            }
+        });
+    }
+
+    private void getContent() {
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users").document(userId).collection("following")
                 .get()
@@ -202,50 +271,6 @@ public class Home extends AppCompatActivity {
                 });
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-
-        // Set Home Selected
-        bottomNavigationView.setSelectedItemId(R.id.home);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                switch (menuItem.getItemId()) {
-
-                    case R.id.home:
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), Home.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-                    case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), Search.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-                    case R.id.new_post:
-                        startActivity(new Intent(getApplicationContext(), NewPost.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-                    case R.id.user:
-                        startActivity(new Intent(getApplicationContext(), User.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-
-                    case R.id.notifications:
-                        startActivity(new Intent(getApplicationContext(), Notifications.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-
-                }
-
-                return false;
-            }
-        });
     }
 
     private void SendOnNotifChannel() {

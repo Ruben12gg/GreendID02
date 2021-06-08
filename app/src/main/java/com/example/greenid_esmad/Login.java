@@ -47,6 +47,7 @@ public class Login extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     SharedPreferences sharedPreferences;
+
     String displayName;
     boolean deletedAcc;
 
@@ -84,6 +85,7 @@ public class Login extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userIdCache = sharedPreferences.getString("userId", "");
 
+        //prevent crash if user deleted account or has cache cleaned and reset/set a new value
         if (userIdCache.isEmpty() || deletedAcc){
             return;
         } else {
@@ -185,8 +187,10 @@ public class Login extends AppCompatActivity {
 
                                 // get or create SharedPreferences
                                 sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-                                // save your string in SharedPreferences
+
+                                // save data in SharedPreferences
                                 sharedPreferences.edit().putString("userId", userId).commit();
+
 
 
                                 // Welcome Toast
@@ -229,8 +233,10 @@ public class Login extends AppCompatActivity {
 
                                 // get or create SharedPreferences
                                 sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-                                // save your string in SharedPreferences
+
+                                // save data in SharedPreferences
                                 sharedPreferences.edit().putString("userId", userId).commit();
+
 
                             }
                         } else {
