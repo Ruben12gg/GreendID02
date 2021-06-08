@@ -99,7 +99,7 @@
 
             <TextView
                 android:id="@+id/followersVal"
-                android:layout_width="68dp"
+                android:layout_width="72dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="32dp"
                 android:text="@string/FollowersVal"
@@ -109,7 +109,7 @@
 
             <TextView
                 android:id="@+id/followingVal"
-                android:layout_width="68dp"
+                android:layout_width="72dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="30dp"
                 android:layout_toEndOf="@+id/followersVal"
@@ -120,7 +120,7 @@
 
             <TextView
                 android:id="@+id/followers"
-                android:layout_width="68dp"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/followersVal"
                 android:layout_marginStart="32dp"
@@ -131,7 +131,7 @@
 
             <TextView
                 android:id="@+id/following"
-                android:layout_width="68dp"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/followingVal"
                 android:layout_marginStart="30dp"

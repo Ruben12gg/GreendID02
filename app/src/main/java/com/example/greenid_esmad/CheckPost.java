@@ -403,6 +403,10 @@ public class CheckPost extends AppCompatActivity {
                                                 Integer newIdeaVal = Integer.parseInt(ideaVal) + 1;
                                                 String newIdeaValTxt = String.valueOf(newIdeaVal);
 
+                                                ecoIdeaCounter.setText(newIdeaValTxt);
+                                                ecoIdeaBadge.setVisibility(View.VISIBLE);
+                                                ecoIdeaCounter.setVisibility(View.VISIBLE);
+
                                                 Map<String, Object> rewardData = new HashMap<>();
                                                 rewardData.put("ecoIdea", newIdeaValTxt);
 
@@ -491,6 +495,10 @@ public class CheckPost extends AppCompatActivity {
                                                 String impactfulVal = document.getString("impactful");
                                                 Integer newImpactfulVal = Integer.parseInt(impactfulVal) + 1;
                                                 String newImpactfulValTxt = String.valueOf(newImpactfulVal);
+
+                                                impactfulCounter.setText(newImpactfulValTxt);
+                                                impactfulCounter.setVisibility(View.VISIBLE);
+                                                impactfulBadge.setVisibility(View.VISIBLE);
 
                                                 Map<String, Object> rewardData = new HashMap<>();
                                                 rewardData.put("impactful", newImpactfulValTxt);

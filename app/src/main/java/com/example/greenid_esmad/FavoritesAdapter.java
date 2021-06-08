@@ -624,6 +624,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                                                 Integer newIdeaVal = Integer.parseInt(ideaVal) + 1;
                                                 String newIdeaValTxt = String.valueOf(newIdeaVal);
 
+                                                holder.ecoIdeaCounter.setText(newIdeaValTxt);
+                                                holder.ecoIdeaBadge.setVisibility(View.VISIBLE);
+                                                holder.ecoIdeaCounter.setVisibility(View.VISIBLE);
+
+
                                                 Map<String, Object> rewardData = new HashMap<>();
                                                 rewardData.put("ecoIdea", newIdeaValTxt);
 
@@ -711,6 +716,11 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
                                                 String impactfulVal = document.getString("impactful");
                                                 Integer newImpactfulVal = Integer.parseInt(impactfulVal) + 1;
                                                 String newImpactfulValTxt = String.valueOf(newImpactfulVal);
+
+                                                holder.impactfulCounter.setText(newImpactfulValTxt);
+                                                holder.impactfulCounter.setVisibility(View.VISIBLE);
+                                                holder.impactfulBadge.setVisibility(View.VISIBLE);
+
 
                                                 Map<String, Object> rewardData = new HashMap<>();
                                                 rewardData.put("impactful", newImpactfulValTxt);
