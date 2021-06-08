@@ -155,10 +155,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         String postType = contentFeed.getPostType();
 
         holder.tvAuthor.setText(author);
-        holder.tvDate.setText(date);
         holder.tvLikeVal.setText(likesVal);
         holder.tvCommentVal.setText(commentVal);
         holder.tvLocation.setText(location);
+
+        if (postType.equals("event")){
+            holder.tvDate.setText("Event Date: " + eventDate);
+        } else {
+            holder.tvDate.setText(date);
+        }
 
         //Cut down description Txt if it's too big to fully appear on post post
         if (description.length() >= 35) {

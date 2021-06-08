@@ -209,10 +209,47 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/tagBtnsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/badgeView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp">
+
+            <ImageButton
+                android:id="@+id/btnImageTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/postd" />
+
+            <ImageButton
+                android:id="@+id/btnEventTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/btnImageTag"
+                android:background="@drawable/eventd" />
+
+
+            <ImageButton
+                android:id="@+id/btnProductTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toRightOf="@+id/btnEventTag"
+                android:background="@drawable/productd" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/imgGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/badgeView">
+            android:layout_below="@+id/tagBtnsView">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/imgGridRv"
