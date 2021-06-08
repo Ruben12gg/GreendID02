@@ -39,7 +39,7 @@
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/top_menu_bg"
+            android:background="@color/dark_green_bg"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,8 @@
                 android:id="@+id/imageContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                />
 
             <ImageButton
                 android:id="@+id/addIcon"
@@ -92,44 +93,95 @@
 
 
         </androidx.cardview.widget.CardView>
-
-
     </RelativeLayout>
 
+
+
     <RelativeLayout
-        android:id="@+id/tagBtnsView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/selected_pic_view"
+        android:id="@+id/post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/selected_pic_view"
-        android:layout_centerHorizontal="true">
+        android:layout_toLeftOf="@+id/event"
+        android:layout_marginEnd="24dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/posttxt"
+            android:text="@string/posttxt"
+            android:textColor="@color/dark_green_bg"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
 
         <ImageButton
             android:id="@+id/btnImageTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/postd" />
+            android:layout_below="@+id/posttxt"
+            android:background="@drawable/postd"
+            android:layout_marginTop="8dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_pic_view"
+        android:id="@+id/event"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventtxt"
+            android:text="@string/eventtxt"
+            android:textColor="@color/dark_green_bg"
+            android:textSize="14sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"/>
 
         <ImageButton
             android:id="@+id/btnEventTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_toRightOf="@+id/btnImageTag"
-            android:background="@drawable/eventd" />
+            android:layout_below="@id/eventtxt"
+            android:background="@drawable/eventd"
+            android:layout_marginTop="8dp"/>
+    </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/selected_pic_view"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/event"
+            android:layout_marginStart="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/producttxt"
+            android:text="@string/producttxt"
+            android:textColor="@color/dark_green_bg"
+            android:textSize="14sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"/>
 
 
         <ImageButton
             android:id="@+id/btnProductTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_toRightOf="@+id/btnEventTag"
-            android:background="@drawable/productd" />
+            android:layout_below="@+id/producttxt"
+            android:background="@drawable/productd"
+            android:layout_marginTop="8dp"/>
 
 
     </RelativeLayout>
@@ -139,8 +191,9 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="318dp"
-        android:layout_below="@id/tagBtnsView"
+        android:layout_below="@id/post"
         android:fillViewport="true"
+        android:paddingTop="16dp"
         android:scrollbars="vertical">
 
         <RelativeLayout

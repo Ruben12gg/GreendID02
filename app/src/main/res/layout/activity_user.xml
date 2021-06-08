@@ -27,8 +27,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/circle_notification"
-            />
+            android:background="@drawable/circle_notification" />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <RelativeLayout
@@ -39,7 +38,7 @@
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/top_menu_bg"
+            android:background="@color/dark_green_bg"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,11 +81,11 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pfp"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
             android:layout_below="@id/main_toolbar"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
             app:civ_border_width="2dp" />
 
 
@@ -100,49 +99,47 @@
 
             <TextView
                 android:id="@+id/followersVal"
-                android:layout_width="112dp"
+                android:layout_width="68dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="32dp"
                 android:text="@string/FollowersVal"
                 android:textAlignment="center"
                 android:textColor="@color/black_txt"
-                android:textSize="40px" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/followingVal"
-                android:layout_width="match_parent"
+                android:layout_width="68dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="48dp"
+                android:layout_marginStart="30dp"
                 android:layout_toEndOf="@+id/followersVal"
                 android:text="@string/FollowingVal"
                 android:textAlignment="center"
                 android:textColor="@color/black_txt"
-                android:textSize="40px" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/followers"
-                android:layout_width="64dp"
-                android:layout_height="30dp"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/followersVal"
-                android:layout_marginStart="48dp"
+                android:layout_marginStart="32dp"
                 android:text="@string/Followers"
                 android:textAlignment="center"
                 android:textColor="@color/light_txt"
-                android:textSize="35px" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/following"
-                android:layout_width="64dp"
-                android:layout_height="30dp"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/followingVal"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="56dp"
+                android:layout_marginStart="30dp"
                 android:layout_toRightOf="@+id/followers"
                 android:text="@string/Following"
                 android:textAlignment="center"
                 android:textColor="@color/light_txt"
-                android:textSize="35px" />
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
@@ -150,38 +147,55 @@
         <RelativeLayout
             android:id="@+id/bioView"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/pfp">
 
             <TextView
                 android:id="@+id/pfName"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/pfName"
                 android:textColor="@color/black_txt"
-                android:textSize="40px"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/userRank"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
-                android:layout_toRightOf="@+id/pfName"
+                android:layout_marginTop="4dp"
+                android:layout_below="@+id/bio"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="4dp"
                 android:text="@string/pfRank"
                 android:textColor="@color/black_txt"
-                android:textSize="40px" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/UR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bio"
+                android:text="?"
+                android:layout_toRightOf="@id/userRank"
+                android:textSize="16sp"
+                android:textColor="@color/black_txt"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="4dp"
+                android:textStyle="bold"></TextView>
 
             <TextView
                 android:id="@+id/bio"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_below="@id/pfName"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pfName"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:autoLink="all"
                 android:enabled="true"
                 android:focusable="true"
@@ -191,21 +205,16 @@
                 android:textColor="@color/black_txt"
                 android:textColorLink="@color/dark_gray_txt"
                 android:textIsSelectable="true"
-                android:textSize="35px" />
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/badgeView"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="40dp"
             android:layout_below="@id/bioView">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/line" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -255,12 +264,8 @@
                 android:id="@+id/imgGridRv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="56dp"
-                android:background="@color/light_txt"
-
                 />
 
         </RelativeLayout>

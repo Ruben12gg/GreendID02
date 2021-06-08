@@ -44,7 +44,9 @@ public class User extends AppCompatActivity {
     TextView tvName;
     TextView tvNameTop;
     TextView tvfollowersVal;
+    TextView followers;
     TextView tvfollowingVal;
+    TextView following;
     TextView tvbio;
     TextView userRank;
     ImageView ivPfp;
@@ -240,6 +242,39 @@ public class User extends AppCompatActivity {
 
                     }
                 });
+
+        //Navigation to followers/following
+        tvfollowingVal = findViewById(R.id.followingVal);
+        tvfollowingVal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Following.class));
+            }
+        });
+
+        tvfollowersVal = findViewById(R.id.followersVal);
+        tvfollowersVal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Followers.class));
+            }
+        });
+
+        following = findViewById(R.id.following);
+        following.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Following.class));
+            }
+        });
+
+        followers = findViewById(R.id.followers);
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Followers.class));
+            }
+        });
 
         //Listen for new notifications
         db.collection("users").document(userId).collection("notifications")

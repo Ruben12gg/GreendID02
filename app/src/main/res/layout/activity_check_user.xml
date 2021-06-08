@@ -44,7 +44,7 @@
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/top_menu_bg"
+            android:background="@color/dark_green_bg"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +160,7 @@
         <RelativeLayout
             android:id="@+id/bioView"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
+            android:layout_height="110dp"
             android:layout_below="@+id/pfp">
 
             <TextView
@@ -171,7 +171,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/pfName"
                 android:textColor="@color/black_txt"
-                android:textSize="40px"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -179,16 +179,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
-                android:layout_toRightOf="@+id/pfName_Check"
+                android:layout_below="@+id/bio_Check"
                 android:text="@string/pfRank"
                 android:textColor="@color/black_txt"
-                android:textSize="40px" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/bio_Check"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/pfName_Check"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
@@ -201,7 +200,7 @@
                 android:textIsSelectable="true"
                 android:focusable="true"
                 android:textColor="@color/black_txt"
-                android:textSize="35px" />
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
@@ -211,11 +210,6 @@
             android:layout_height="80dp"
             android:layout_below="@id/bioView">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/line" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -228,11 +222,8 @@
                 android:id="@+id/imgGridRv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="56dp"
-                android:background="@color/light_txt"
 
                 />
 

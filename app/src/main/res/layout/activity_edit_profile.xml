@@ -11,7 +11,7 @@
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/top_menu_bg"
+        android:background="@color/dark_green_bg"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:titleTextColor="#fff" />
@@ -49,22 +49,21 @@
         android:id="@+id/btnImg"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:background="@drawable/add"
-        android:layout_toRightOf="@+id/pfp"
-        android:layout_marginTop="172dp"
         android:layout_marginStart="-22dp"
-        />
+        android:layout_marginTop="172dp"
+        android:layout_toRightOf="@+id/pfp"
+        android:background="@drawable/add" />
 
     <TextView
         android:id="@+id/userTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pfp"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/username"
         android:textColor="@color/light_txt"
-        android:textSize="16dp"/>
+        android:textSize="16dp" />
 
 
     <EditText
@@ -82,15 +81,25 @@
         android:textSize="16sp" />
 
     <TextView
+        android:id="@+id/userNameCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usernameSettings"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp"
+        android:text="0/15"
+        android:textColor="@color/light_txt" />
+
+    <TextView
         android:id="@+id/bioTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameSettings"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:text="@string/bio"
         android:textColor="@color/light_txt"
-        android:textSize="16dp"/>
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/bioSettings"
