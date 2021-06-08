@@ -74,6 +74,7 @@ public class CheckPost extends AppCompatActivity {
     RelativeLayout utilityBarView;
     ImageButton btnClose2;
     TextView reportTv;
+    TextView eventDateTv;
 
     SharedPreferences sharedPreferences;
 
@@ -116,6 +117,7 @@ public class CheckPost extends AppCompatActivity {
         ecoIdeaBadge = findViewById(R.id.ecoIdeaBadge);
         ecoIdeaCounter = findViewById(R.id.ecoIdeaCounter);
         modalView = findViewById(R.id.modalView);
+        eventDateTv = findViewById(R.id.dateText);
 
         reportView = findViewById(R.id.reportView);
         btnClose2 = findViewById(R.id.btnClose2);
@@ -147,6 +149,16 @@ public class CheckPost extends AppCompatActivity {
 
                         contentUrl = document.getString("contentUrl");
                         descriptionTxt = document.getString("description");
+
+                        String postType = document.getString("postType");
+
+                        if (postType.equals("event")){
+                            eventDateTv.setVisibility(View.VISIBLE);
+                            String eventDate = document.getString("eventDate");
+                            eventDateTv.setText("Event Date: "+ eventDate);
+                        } else {
+                            eventDateTv.setVisibility(View.GONE);
+                        }
 
 
                     } else {
