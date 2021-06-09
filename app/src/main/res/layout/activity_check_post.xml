@@ -63,6 +63,15 @@
         android:layout_marginTop="12.5dp"
         android:background="@drawable/arrow_back" />
 
+    <ImageButton
+        android:id="@+id/delBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/delete_icon" />
+
     <com.zolad.zoominimageview.ZoomInImageView
         android:id="@+id/imgPost"
         android:layout_width="match_parent"
@@ -70,13 +79,15 @@
         android:layout_below="@+id/main_toolbar"
         android:scaleType="centerCrop" />
 
+
+
     <TextView
         android:id="@+id/dateText"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="312dp"
         android:text="Data"
         android:textColor="@color/white_txt"
         android:textSize="16sp" />
@@ -174,11 +185,58 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/delPostView"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_below="@+id/main_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="72dp"
+        android:background="@drawable/btnwhite">
+
+
+        <TextView
+            android:id="@+id/delTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Do you really want to delete this post?"
+            android:textColor="@color/dark_gray_txt" />
+
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:background="@drawable/btnwhite"
+            android:text="Yes"
+            android:textColor="@color/black_txt" />
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="64dp"
+            android:layout_height="40dp"
+            android:layout_toLeftOf="@+id/btnYes"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/btnbox_red"
+            android:text="No"
+            android:textColor="@color/white" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/rewardsView"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_below="@+id/main_toolbar"
-        android:layout_marginTop="215dp"
+        android:layout_marginTop="235dp"
         android:layout_marginEnd="16dp"
         android:gravity="end">
 

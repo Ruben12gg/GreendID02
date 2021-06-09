@@ -143,6 +143,42 @@ public class Home extends AppCompatActivity {
                     }
                 });
 
+        //Listen for post deletions
+        db.collection("users").document(userId).collection("posts")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @com.google.firebase.database.annotations.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("ADDED", "Added " + dc.getDocument().getData());
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+
+                                    feedContent.clear();
+
+                                    getContent();
+
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+
+
         //Get profile Data
         db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

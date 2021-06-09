@@ -68,6 +68,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
 
     SharedPreferences sharedPreferences;
 
+    String userId;
     String date;
     String id;
     Integer notifCounter = 0;
@@ -104,7 +105,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
         GetEvents();
 
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
+        userId = sharedPreferences.getString("userId", "");
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         //Listen for new notifications
@@ -138,6 +139,41 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
                                     break;
                                 case REMOVED:
                                     Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+
+        //Listen for post deletions
+        db.collection("users").document(userId).collection("posts")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @com.google.firebase.database.annotations.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("ADDED", "Added " + dc.getDocument().getData());
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+
+                                    contentEvents.clear();
+
+                                    GetEvents();
+
                                     break;
                             }
                         }

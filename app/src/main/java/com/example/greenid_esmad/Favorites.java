@@ -50,6 +50,7 @@ public class Favorites extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
+    String userId;
     Integer notifCounter = 0;
     Integer oldNotifCounter;
 
@@ -67,9 +68,52 @@ public class Favorites extends AppCompatActivity {
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
 
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId", "");
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
         GLOBALS globals = (GLOBALS) getApplicationContext();
         oldNotifCounter = globals.getOldNotifCounter();
         checkForNotifs();
+
+        getContent();
+
+        //Listen for post deletions
+        db.collection("users").document(userId).collection("posts")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @com.google.firebase.database.annotations.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("ADDED", "Added " + dc.getDocument().getData());
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+
+                                    contentFavorites.clear();
+
+                                    getContent();
+
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+
 
         btnEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +126,6 @@ public class Favorites extends AppCompatActivity {
 
                 contentFavorites.clear();
 
-                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-                String userId = sharedPreferences.getString("userId", "");
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 db.collection("users").document(userId).collection("favorites")
                         .whereEqualTo("postType", "event")
@@ -130,10 +170,6 @@ public class Favorites extends AppCompatActivity {
             }
         });
 
-        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Listen for new notifications
         db.collection("users").document(userId).collection("notifications")
@@ -336,6 +372,22 @@ public class Favorites extends AppCompatActivity {
         });
 
 
+        btnBack = findViewById(R.id.btnBack);
+
+        //return to user
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getApplicationContext(), User.class));
+            }
+        });
+
+    }
+
+    private void getContent() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(userId).collection("favorites")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -372,18 +424,6 @@ public class Favorites extends AppCompatActivity {
 
                     }
                 });
-
-        btnBack = findViewById(R.id.btnBack);
-
-        //return to user
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(getApplicationContext(), User.class));
-            }
-        });
-
     }
 
     private void RecyclerCall() {

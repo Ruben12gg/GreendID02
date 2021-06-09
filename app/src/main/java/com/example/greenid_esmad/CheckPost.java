@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,6 +59,7 @@ public class CheckPost extends AppCompatActivity {
     ImageButton likeBtn;
     ImageButton commentBtn;
     ImageButton saveBtn;
+    ImageButton btnDelPost;
 
     ImageButton btnReward;
     ImageButton btnClose;
@@ -69,6 +71,9 @@ public class CheckPost extends AppCompatActivity {
     TextView ecoIdeaCounter;
     Button btnOk;
     RelativeLayout modalView;
+    RelativeLayout delPostView;
+    Button btnNo;
+    Button btnYes;
     ImageView notificationDot;
     RelativeLayout reportView;
     RelativeLayout utilityBarView;
@@ -79,6 +84,9 @@ public class CheckPost extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
 
+    String userId;
+    String authorId;
+    String postId;
     String likeVal;
     String contentUrl;
     String descriptionTxt;
@@ -94,11 +102,11 @@ public class CheckPost extends AppCompatActivity {
         //receiving data from home activity
         final String authorTxt = getIntent().getStringExtra("location");
         final String authorPfp = getIntent().getStringExtra("authorPfp");
-        final String authorId = getIntent().getStringExtra("authorId");
+        authorId = getIntent().getStringExtra("authorId");
         final String location = getIntent().getStringExtra("commentVal");
         final String commentVal = getIntent().getStringExtra("likeVal");
         final String dateTxt = getIntent().getStringExtra("date");
-        final String postId = getIntent().getStringExtra("postId");
+        postId = getIntent().getStringExtra("postId");
 
 
         topName = findViewById(R.id.authorPost);
@@ -108,6 +116,9 @@ public class CheckPost extends AppCompatActivity {
         author = findViewById(R.id.author);
         description = findViewById(R.id.descriptionTxt);
         date = findViewById(R.id.date);
+        btnDelPost = findViewById(R.id.delBtn);
+
+        btnDelPost.setVisibility(View.GONE);
 
         btnReward = findViewById(R.id.btnGift);
         btnClose = findViewById(R.id.btnClose);
@@ -126,16 +137,23 @@ public class CheckPost extends AppCompatActivity {
         reportTv = findViewById(R.id.reportTv);
         utilityBarView = findViewById(R.id.utilityBarView);
 
+        delPostView = findViewById(R.id.delPostView);
+        btnNo = findViewById(R.id.btnNo);
+        btnYes = findViewById(R.id.btnYes);
+        delPostView.setVisibility(View.GONE);
+
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
 
         reportView.setVisibility(View.GONE);
 
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
+        userId = sharedPreferences.getString("userId", "");
 
         if (userId.equals(authorId)){
             btnReward.setVisibility(View.GONE);
+            btnDelPost.setVisibility(View.VISIBLE);
+
         } else {
             btnReward.setVisibility(View.VISIBLE);
         }
@@ -214,6 +232,31 @@ public class CheckPost extends AppCompatActivity {
 
                     }
                 });
+
+        //Post deletion
+        btnDelPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                delPostView.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delPostView.setVisibility(View.GONE);
+            }
+        });
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delPostView.setVisibility(View.GONE);
+                deletePost();
+            }
+        });
 
         //navigate to user profile
         author.setOnClickListener(new View.OnClickListener() {
@@ -625,7 +668,6 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
-        Context context = CheckPost.this;
 
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -966,6 +1008,21 @@ public class CheckPost extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+    private void deletePost() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).collection("posts").document(postId).delete();
+
+        String message = "Your post has been deleted!";
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, message, duration);
+        toast.show();
+
+        finish();
 
     }
 

@@ -56,6 +56,7 @@ public class User extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
+    String userId;
     Integer notifCounter = 0;
     Integer oldNotifCounter;
 
@@ -74,6 +75,9 @@ public class User extends AppCompatActivity {
         GLOBALS globals = (GLOBALS) getApplicationContext();
         oldNotifCounter = globals.getOldNotifCounter();
         checkForNotifs();
+
+        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId", "");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -142,10 +146,6 @@ public class User extends AppCompatActivity {
         });
 
 
-        sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
-
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //Get profile Data
@@ -202,53 +202,8 @@ public class User extends AppCompatActivity {
         });
 
 
-        //Get user Post images
-        db.collection("users").document(userId).collection("posts")
-                .orderBy("date", Query.Direction.DESCENDING)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+        getPosts();
 
-                                String authorPfp = document.getString("authorPfp");
-                                String contentUrl = document.getString("contentUrl");
-                                String author = document.getString("author");
-                                String date = document.getString("date");
-                                String likeVal = document.getString("likeVal");
-                                String commentVal = document.getString("commentVal");
-                                String location = document.getString("location");
-                                String description = document.getString("description");
-                                String postId = document.getId();
-                                String userId = document.getString("authorId");
-
-                                Log.d("authorPfp", authorPfp);
-                                Log.d("contentUrl", contentUrl);
-                                Log.d("author", author);
-                                Log.d("date", date);
-                                Log.d("likeVal", likeVal);
-                                Log.d("commentVal", commentVal);
-                                Log.d("location", location);
-                                Log.d("description", description);
-                                Log.d("postId", postId);
-                                Log.d("authorId", userId);
-
-                                Log.d("IMAGES", contentUrl);
-
-                                contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId));
-
-
-                            }
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-
-                        RecyclerCall();
-
-                    }
-                });
 
         //Navigation to followers/following
         tvfollowingVal = findViewById(R.id.followingVal);
@@ -322,7 +277,94 @@ public class User extends AppCompatActivity {
                     }
                 });
 
+        //Listen for post deletions
+        db.collection("users").document(userId).collection("posts")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@com.google.firebase.database.annotations.Nullable QuerySnapshot snapshots,
+                                        @com.google.firebase.database.annotations.Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
 
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("ADDED", "Added " + dc.getDocument().getData());
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+
+                                    contentUser.clear();
+
+                                    getPosts();
+
+                                    break;
+                            }
+                        }
+
+                    }
+                });
+
+
+    }
+
+    private void getPosts() {
+
+        //Get user Post images
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).collection("posts")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                String authorPfp = document.getString("authorPfp");
+                                String contentUrl = document.getString("contentUrl");
+                                String author = document.getString("author");
+                                String date = document.getString("date");
+                                String likeVal = document.getString("likeVal");
+                                String commentVal = document.getString("commentVal");
+                                String location = document.getString("location");
+                                String description = document.getString("description");
+                                String postId = document.getId();
+                                String userId = document.getString("authorId");
+
+                                Log.d("authorPfp", authorPfp);
+                                Log.d("contentUrl", contentUrl);
+                                Log.d("author", author);
+                                Log.d("date", date);
+                                Log.d("likeVal", likeVal);
+                                Log.d("commentVal", commentVal);
+                                Log.d("location", location);
+                                Log.d("description", description);
+                                Log.d("postId", postId);
+                                Log.d("authorId", userId);
+
+                                Log.d("IMAGES", contentUrl);
+
+                                contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId));
+
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
+                    }
+                });
 
     }
 
