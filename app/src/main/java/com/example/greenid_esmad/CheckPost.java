@@ -82,6 +82,8 @@ public class CheckPost extends AppCompatActivity {
     String likeVal;
     String contentUrl;
     String descriptionTxt;
+    Integer notifCounter = 0;
+    Integer oldNotifCounter;
 
 
     @Override
@@ -138,6 +140,10 @@ public class CheckPost extends AppCompatActivity {
             btnReward.setVisibility(View.VISIBLE);
         }
 
+        GLOBALS globals = (GLOBALS) getApplicationContext();
+        oldNotifCounter = globals.getOldNotifCounter();
+        checkForNotifs();
+
         //Get contentURL
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(authorId).collection("posts").document(postId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -186,7 +192,14 @@ public class CheckPost extends AppCompatActivity {
                                 case ADDED:
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
 
+                                    if (dc.getType().equals(DocumentChange.Type.ADDED)){
+
+                                        notifCounter++;
+                                        Log.d("NotifCounter", notifCounter.toString());
+
+                                    }
                                     notificationDot.setVisibility(View.VISIBLE);
+                                    checkForNotifs();
 
                                     break;
                                 case MODIFIED:
@@ -964,5 +977,25 @@ public class CheckPost extends AppCompatActivity {
         checkPostAdapter = new CheckPostAdapter(this, contentCheckPost);
         recyclerView.setAdapter(checkPostAdapter);
 
+    }
+
+    private void checkForNotifs() {
+
+
+        notificationDot = findViewById(R.id.notificationDot);
+
+        if (oldNotifCounter != null){
+            Log.d("OldNotif", oldNotifCounter.toString());
+
+        }
+
+        if (!notifCounter.equals(oldNotifCounter) && notifCounter > 0) {
+
+            notificationDot.setVisibility(View.VISIBLE);
+
+        } else {
+            notificationDot.setVisibility(View.GONE);
+
+        }
     }
 }

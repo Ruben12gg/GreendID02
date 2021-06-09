@@ -56,6 +56,9 @@ public class User extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
+    Integer notifCounter = 0;
+    Integer oldNotifCounter;
+
     UserAdapter userAdapter;
     RecyclerView recyclerView;
     ArrayList<ContentUser> contentUser = new ArrayList<>();
@@ -67,6 +70,10 @@ public class User extends AppCompatActivity {
 
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
+
+        GLOBALS globals = (GLOBALS) getApplicationContext();
+        oldNotifCounter = globals.getOldNotifCounter();
+        checkForNotifs();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -292,7 +299,14 @@ public class User extends AppCompatActivity {
                                 case ADDED:
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
 
+                                    if (dc.getType().equals(DocumentChange.Type.ADDED)){
+
+                                        notifCounter++;
+                                        Log.d("NotifCounter", notifCounter.toString());
+
+                                    }
                                     notificationDot.setVisibility(View.VISIBLE);
+                                    checkForNotifs();
 
                                     break;
                                 case MODIFIED:
@@ -320,6 +334,27 @@ public class User extends AppCompatActivity {
         userAdapter = new UserAdapter(this, contentUser);
         recyclerView.setAdapter(userAdapter);
 
+    }
+
+    private void checkForNotifs() {
+
+        Log.d("CHECKING", "checkForNotifs: ");
+
+        notificationDot = findViewById(R.id.notificationDot);
+
+        if (oldNotifCounter != null){
+            Log.d("OldNotif", oldNotifCounter.toString());
+
+        }
+
+        if (!notifCounter.equals(oldNotifCounter) && notifCounter > 0) {
+
+            notificationDot.setVisibility(View.VISIBLE);
+
+        } else {
+            notificationDot.setVisibility(View.GONE);
+
+        }
     }
 
 }

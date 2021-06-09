@@ -54,6 +54,7 @@ public class Notifications extends AppCompatActivity {
     ImageView emptyImg;
     TextView emptyTxt;
 
+    Integer notifCounter = 0;
 
     SharedPreferences sharedPreferences;
 
@@ -70,6 +71,8 @@ public class Notifications extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
+
+        GLOBALS globals = (GLOBALS) getApplicationContext();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -131,11 +134,12 @@ public class Notifications extends AppCompatActivity {
                             switch (dc.getType()) {
                                 case ADDED:
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+                                    notifCounter++;
+                                    Log.d("NOTIFCOUNTER", notifCounter.toString());
+                                    globals.setOldNotifCounter(notifCounter);
                                     break;
                                 case MODIFIED:
                                     Log.d("MODIFY", "Modified" + dc.getDocument().getData());
-
-
 
                                     break;
                                 case REMOVED:

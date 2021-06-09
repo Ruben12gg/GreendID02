@@ -54,6 +54,9 @@ public class Home extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
 
     String userId;
+    Integer notifCounter = 0;
+    Integer oldNotifCounter;
+
 
     private NotificationManagerCompat notificationManagerCompat;
     SharedPreferences sharedPreferences;
@@ -87,6 +90,10 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        GLOBALS globals = (GLOBALS) getApplicationContext();
+        oldNotifCounter = globals.getOldNotifCounter();
+
+        checkForNotifs();
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -111,7 +118,15 @@ public class Home extends AppCompatActivity {
                                 case ADDED:
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
 
+                                    if (dc.getType().equals(DocumentChange.Type.ADDED)){
+
+                                        notifCounter++;
+                                        Log.d("NotifCounter", notifCounter.toString());
+
+                                    }
                                     notificationDot.setVisibility(View.VISIBLE);
+                                    checkForNotifs();
+
                                     /*SendOnNotifChannel();*/
 
                                     break;
@@ -207,6 +222,26 @@ public class Home extends AppCompatActivity {
         });
     }
 
+    private void checkForNotifs() {
+
+
+        notificationDot = findViewById(R.id.notificationDot);
+
+        if (oldNotifCounter != null){
+            Log.d("OldNotif", oldNotifCounter.toString());
+
+        }
+
+        if (!notifCounter.equals(oldNotifCounter) && notifCounter > 0) {
+
+            notificationDot.setVisibility(View.VISIBLE);
+
+        } else {
+            notificationDot.setVisibility(View.GONE);
+
+        }
+    }
+
     private void getContent() {
 
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -273,7 +308,19 @@ public class Home extends AppCompatActivity {
 
     }
 
-    private void SendOnNotifChannel() {
+
+    private void RecyclerCall() {
+
+        recyclerView = findViewById(R.id.rvHome);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        feedAdapter = new FeedAdapter(this, feedContent);
+        recyclerView.setAdapter(feedAdapter);
+
+    }
+
+    //Deactivated code for external notifs
+    /*private void SendOnNotifChannel() {
 
         Intent notifIntent = new Intent(this, Notifications.class);
         //Access user Id from GLOBALS
@@ -297,15 +344,5 @@ public class Home extends AppCompatActivity {
         notificationManagerCompat.notify(1, notification);
 
 
-    }
-
-    private void RecyclerCall() {
-
-        recyclerView = findViewById(R.id.rvHome);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        feedAdapter = new FeedAdapter(this, feedContent);
-        recyclerView.setAdapter(feedAdapter);
-
-    }
+    }*/
 }

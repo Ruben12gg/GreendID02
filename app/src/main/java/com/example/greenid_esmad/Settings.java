@@ -48,6 +48,9 @@ public class Settings extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
 
+    Integer notifCounter = 0;
+    Integer oldNotifCounter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,8 @@ public class Settings extends AppCompatActivity {
 
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
+
+        checkForNotifs();
 
         editBtn = findViewById(R.id.btn2);
 
@@ -120,7 +125,14 @@ public class Settings extends AppCompatActivity {
                                 case ADDED:
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
 
+                                    if (dc.getType().equals(DocumentChange.Type.ADDED)){
+
+                                        notifCounter++;
+                                        Log.d("NotifCounter", notifCounter.toString());
+
+                                    }
                                     notificationDot.setVisibility(View.VISIBLE);
+                                    checkForNotifs();
 
                                     break;
                                 case MODIFIED:
@@ -217,6 +229,26 @@ public class Settings extends AppCompatActivity {
                         finish();
                     }
                 });
+    }
+
+    private void checkForNotifs() {
+
+
+        notificationDot = findViewById(R.id.notificationDot);
+
+        if (oldNotifCounter != null){
+            Log.d("OldNotif", oldNotifCounter.toString());
+
+        }
+
+        if (!notifCounter.equals(oldNotifCounter) && notifCounter > 0) {
+
+            notificationDot.setVisibility(View.VISIBLE);
+
+        } else {
+            notificationDot.setVisibility(View.GONE);
+
+        }
     }
 
 }

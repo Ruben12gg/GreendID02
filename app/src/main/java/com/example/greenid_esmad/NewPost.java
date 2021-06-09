@@ -81,6 +81,8 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
     String pickedTime;
     String pickedDate;
+    Integer notifCounter = 0;
+    Integer oldNotifCounter;
 
     int hour;
     int minute;
@@ -110,6 +112,10 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
         storageReference = storage.getReference();
 
         contentPic = findViewById(R.id.imageContent);
+
+        GLOBALS globals = (GLOBALS) getApplicationContext();
+        oldNotifCounter = globals.getOldNotifCounter();
+        checkForNotifs();
 
         addIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,8 +264,14 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                                 case ADDED:
                                     Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
 
-                                    notificationDot.setVisibility(View.VISIBLE);
+                                    if (dc.getType().equals(DocumentChange.Type.ADDED)){
 
+                                        notifCounter++;
+                                        Log.d("NotifCounter", notifCounter.toString());
+
+                                    }
+                                    notificationDot.setVisibility(View.VISIBLE);
+                                    checkForNotifs();
                                     break;
                                 case MODIFIED:
                                     Log.d("MODIFY", "Modified" + dc.getDocument().getData());
@@ -568,6 +580,26 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
         timePickerDialog.show();
 
+    }
+
+    private void checkForNotifs() {
+
+
+        notificationDot = findViewById(R.id.notificationDot);
+
+        if (oldNotifCounter != null){
+            Log.d("OldNotif", oldNotifCounter.toString());
+
+        }
+
+        if (!notifCounter.equals(oldNotifCounter) && notifCounter > 0) {
+
+            notificationDot.setVisibility(View.VISIBLE);
+
+        } else {
+            notificationDot.setVisibility(View.GONE);
+
+        }
     }
 
 }

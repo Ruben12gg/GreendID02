@@ -8,6 +8,7 @@ import android.os.Build;
 public class GLOBALS extends Application {
 
     private String userIdGlobal;
+    private Integer oldNotifCounter;
 
     public String getUserIdGlobal() {
         return userIdGlobal;
@@ -17,7 +18,16 @@ public class GLOBALS extends Application {
         this.userIdGlobal = userIdGlobal;
     }
 
-    public static final String CHANNEL_1_ID = "generalNotifs";
+
+    public Integer getOldNotifCounter() {
+        return oldNotifCounter;
+    }
+
+    public void setOldNotifCounter(Integer oldNotifCounter) {
+        this.oldNotifCounter = oldNotifCounter;
+    }
+
+    /*public static final String CHANNEL_1_ID = "generalNotifs";
 
     @Override
     public void onCreate() {
@@ -44,9 +54,7 @@ public class GLOBALS extends Application {
             notificationManager.createNotificationChannel(notificationChannel);
 
         }
-    }
-
-
+    }*/
 
 
 }

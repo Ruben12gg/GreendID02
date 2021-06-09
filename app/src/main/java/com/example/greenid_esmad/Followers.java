@@ -14,12 +14,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -34,8 +39,12 @@ public class Followers extends AppCompatActivity {
     ArrayList<ContentFollowers> contentFollowers = new ArrayList<>();
 
     String userId;
+    Integer notifCounter = 0;
+    Integer oldNotifCounter;
 
     ImageButton btnBack;
+    ImageView notificationDot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +53,15 @@ public class Followers extends AppCompatActivity {
 
         btnBack = findViewById(R.id.btnBack);
 
+        notificationDot = findViewById(R.id.notificationDot);
+        notificationDot.setVisibility(View.GONE);
+
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         userId = sharedPreferences.getString("userId", "");
 
+        GLOBALS globals = (GLOBALS) getApplicationContext();
+        oldNotifCounter = globals.getOldNotifCounter();
+        checkForNotifs();
         getUsers();
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +70,48 @@ public class Followers extends AppCompatActivity {
                 goBack();
             }
         });
+
+        //Listen for new notifications
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).collection("notifications")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w("ERROR", "listen:error", e);
+                            return;
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    Log.d("NOTIFY", "New notification: " + dc.getDocument().getData());
+
+                                    if (dc.getType().equals(DocumentChange.Type.ADDED)){
+
+                                        notifCounter++;
+                                        Log.d("NotifCounter", notifCounter.toString());
+
+                                    }
+                                    notificationDot.setVisibility(View.VISIBLE);
+                                    checkForNotifs();
+
+                                    /*SendOnNotifChannel();*/
+
+                                    break;
+                                case MODIFIED:
+                                    Log.d("MODIFY", "Modified" + dc.getDocument().getData());
+
+                                    break;
+                                case REMOVED:
+                                    Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+                    }
+                });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         // Set profile Selected
@@ -141,5 +198,25 @@ public class Followers extends AppCompatActivity {
         followersAdapter = new FollowersAdapter(this, contentFollowers);
         recyclerView.setAdapter(followersAdapter);
 
+    }
+
+    private void checkForNotifs() {
+
+
+        notificationDot = findViewById(R.id.notificationDot);
+
+        if (oldNotifCounter != null){
+            Log.d("OldNotif", oldNotifCounter.toString());
+
+        }
+
+        if (!notifCounter.equals(oldNotifCounter) && notifCounter > 0) {
+
+            notificationDot.setVisibility(View.VISIBLE);
+
+        } else {
+            notificationDot.setVisibility(View.GONE);
+
+        }
     }
 }
