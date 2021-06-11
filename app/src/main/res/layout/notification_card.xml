@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/notifications_card"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:layout_margin="10dp"
     android:background="@drawable/layout_bg">
 
@@ -11,15 +11,16 @@
         android:id="@+id/profile_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_margin="10dp" />
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_toStartOf="@+id/post_image"
-        android:layout_toEndOf="@+id/profile_image"
-        android:orientation="vertical">
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_toLeftOf="@+id/contentPic"
+        android:layout_toEndOf="@+id/profile_image">
 
         <TextView
             android:id="@+id/username"
@@ -47,8 +48,44 @@
         android:layout_width="96dp"
         android:layout_height="64dp"
         android:layout_alignParentEnd="true"
-        android:layout_margin="5dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
         android:scaleType="centerCrop" />
+
+    <ImageButton
+        android:id="@+id/dots"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/dot_icon"
+        android:layout_alignParentEnd="true"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/delView"
+        android:layout_width="88dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/btnbox_red">
+
+        <ImageButton
+            android:id="@+id/delNotif"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/delete_icon" />
+
+        <ImageButton
+            android:id="@+id/closeDel"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/delNotif"
+            android:background="@drawable/clear" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

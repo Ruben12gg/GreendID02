@@ -54,6 +54,7 @@ public class Notifications extends AppCompatActivity {
     ImageView emptyImg;
     TextView emptyTxt;
 
+    String userId;
     Integer notifCounter = 0;
 
     SharedPreferences sharedPreferences;
@@ -70,7 +71,7 @@ public class Notifications extends AppCompatActivity {
         emptyTxt.setVisibility(View.VISIBLE);
 
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
+        userId = sharedPreferences.getString("userId", "");
 
         GLOBALS globals = (GLOBALS) getApplicationContext();
 
@@ -140,10 +141,12 @@ public class Notifications extends AppCompatActivity {
                                     break;
                                 case MODIFIED:
                                     Log.d("MODIFY", "Modified" + dc.getDocument().getData());
-
                                     break;
                                 case REMOVED:
                                     Log.d("REMOVE", "Removed" + dc.getDocument().getData());
+                                    RefreshNotifs();
+                                    iconCheck();
+
                                     break;
                             }
                         }
@@ -151,39 +154,7 @@ public class Notifications extends AppCompatActivity {
                     }
                 });
 
-        //Get notifs
-        db.collection("users").document(userId).collection("notifications")
-                /*.orderBy("date", Query.Direction.ASCENDING)*/ //to use later on!
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
-
-                                String authorPfp = document.getString("pfpUrl");
-                                String contentUrl = document.getString("contentUrl");
-                                String commentVal = document.getString("commentVal");
-                                String author = document.getString("username");
-                                String notifId = document.getString("notifId");
-
-                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-                                String userId = globalUserId.getUserIdGlobal();
-
-
-                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId));
-
-                            }
-                        } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
-                        }
-
-                        RecyclerCall();
-
-                    }
-
-                });
+        getNotifs();
 
 
         delBtn = findViewById(R.id.delBtn);
@@ -228,6 +199,14 @@ public class Notifications extends AppCompatActivity {
         });
 
 
+        iconCheck();
+
+
+    }
+
+    private void iconCheck() {
+        //icon Check
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         List<String> NotifArray = new ArrayList<String>();
         db.collection("users").document(userId).collection("notifications")
                 .get()
@@ -259,8 +238,47 @@ public class Notifications extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void getNotifs() {
+
+        contentNotifications.clear();
+        //Get notifs
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).collection("notifications")
+                /*.orderBy("date", Query.Direction.ASCENDING)*/ //to use later on!
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                String authorPfp = document.getString("pfpUrl");
+                                String contentUrl = document.getString("contentUrl");
+                                String commentVal = document.getString("commentVal");
+                                String author = document.getString("username");
+                                String notifId = document.getString("notifId");
+
+                                GLOBALS globalUserId = (GLOBALS) getApplicationContext();
+                                String userId = globalUserId.getUserIdGlobal();
 
 
+                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId));
+
+                            }
+                        } else {
+                            Log.d("TAG", "Error getting documents: ", task.getException());
+                        }
+
+                        RecyclerCall();
+
+                    }
+
+                });
+
+        iconCheck();
     }
 
     private void RefreshNotifs() {
@@ -313,26 +331,7 @@ public class Notifications extends AppCompatActivity {
         emptyTxt.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("ONRESUME", "Activity resumed");
 
-
-    }
-
-    private void DelNotifs() {
-
-        contentNotifications.clear();
-
-        GLOBALS globalUserId = (GLOBALS) getApplicationContext();
-        String userId = globalUserId.getUserIdGlobal();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("users").document(userId).collection("notifications");
-
-
-    }
 
     private void RecyclerCall() {
 

@@ -49,6 +49,10 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         TextView tvCommentVal;
         ImageView profile_image;
         ImageView contentPic;
+        ImageButton dots;
+        ImageButton delNotif;
+        ImageButton close;
+        RelativeLayout delView;
         RelativeLayout resultCard;
 
 
@@ -59,6 +63,10 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             tvCommentVal = itemView.findViewById(R.id.comment);
             contentPic = itemView.findViewById(R.id.contentPic);
             profile_image = itemView.findViewById(R.id.profile_image);
+            dots = itemView.findViewById(R.id.dots);
+            delNotif = itemView.findViewById(R.id.delNotif);
+            close = itemView.findViewById(R.id.closeDel);
+            delView = itemView.findViewById(R.id.delView);
             resultCard = itemView.findViewById(R.id.notifications_card);
             itemView.setOnClickListener(this);
 
@@ -92,6 +100,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         final String notifId = contentNotifications.getNotifId();
         final String userId = contentNotifications.getUserId();
+
+        holder.delView.setVisibility(View.GONE);
 
 
         holder.resultCard.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +157,28 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             }
         });
 
+        holder.dots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.delView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        holder.delNotif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(userId).collection("notifications").document(notifId).delete();
+                holder.delView.setVisibility(View.GONE);
+            }
+        });
+
+        holder.close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.delView.setVisibility(View.GONE);
+            }
+        });
 
         //Check if there's an image to show on the notification to prevent crashing from trying to load null img src into imgView
         if (contentUrl.isEmpty() || contentUrl == null) {
