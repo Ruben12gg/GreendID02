@@ -56,7 +56,7 @@
         android:id="@+id/dots"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:background="@drawable/dot_icon"
+        android:background="@drawable/point_white"
         android:layout_alignParentEnd="true"
         />
 
