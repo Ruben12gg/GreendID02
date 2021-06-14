@@ -303,7 +303,7 @@ public class Home extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                                        Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
+                                                        /*Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());*/
 
 
                                                         String author = document.getString("author");

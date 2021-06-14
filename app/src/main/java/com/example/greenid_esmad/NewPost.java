@@ -16,6 +16,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,6 +67,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     FirebaseStorage storage;
     StorageReference storageReference;
     EditText description;
+    TextView descriptionTxtCounter;
     EditText location;
     TextView dateTv;
     Button btnDatePick;
@@ -79,8 +82,10 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
     SharedPreferences sharedPreferences;
 
+    String randomKey;
     String pickedTime;
     String pickedDate;
+    Integer descriptionTxtVal;
     Integer notifCounter = 0;
     Integer oldNotifCounter;
 
@@ -107,6 +112,10 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
         btnDatePick = findViewById(R.id.btnDatePick);
         timeTv = findViewById(R.id.eventTimeTv);
         btnTimePick = findViewById(R.id.btnTimePick);
+        location = findViewById(R.id.locationTxt);
+        description = findViewById(R.id.descriptionTxt);
+        descriptionTxtCounter = findViewById(R.id.descriptionCounter);
+
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -243,6 +252,35 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
+        //Limit description length
+        description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String descriptionTxt = description.getText().toString();
+                descriptionTxtVal = descriptionTxt.length();
+                String descriptionCountertxt = descriptionTxtVal + "/100";
+                descriptionTxtCounter.setText(descriptionCountertxt);
+
+                if (descriptionTxtVal > 100) {
+                    descriptionTxtCounter.setTextColor(getResources().getColor(R.color.colorAccent));
+                } else {
+                    descriptionTxtCounter.setTextColor(getResources().getColor(R.color.light_gray_txt));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
 
@@ -367,7 +405,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
         progDiag.show();
 
         //Generate a random name for the file
-        final String randomKey = UUID.randomUUID().toString();
+        randomKey = UUID.randomUUID().toString();
         StorageReference imageRef = storageReference.child("images/" + userId + "/" + randomKey);
 
 
@@ -378,6 +416,18 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
             Log.d("POSTTYPE", postType);
             String message = "You need to select a picture to post.";
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, message, duration);
+            toast.show();
+
+            return;
+
+        } else if (descriptionTxtVal > 100){
+
+            progDiag.dismiss();
+
+            String message = "The post description can't exceed 100 characters.";
             Context context = getApplicationContext();
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, message, duration);
@@ -417,8 +467,6 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                                                     String authorId = document.getString("id");
                                                     String pfpUrl = document.getString("pfp");
 
-                                                    location = findViewById(R.id.locationTxt);
-                                                    description = findViewById(R.id.descriptionTxt);
 
                                                     String locationTxt = location.getText().toString();
                                                     String descriptionTxt = description.getText().toString();
@@ -434,8 +482,6 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
                                                     String downloadUrl3 = uri.toString();
                                                     Log.d("IMAGE POST LINK", downloadUrl3);
-
-                                                    String postId = UUID.randomUUID().toString();
 
                                                     if (postType.equals("event")) {
 
@@ -454,10 +500,10 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                                                         data.put("eventTime", pickedTime);
                                                         data.put("impactful", "0");
                                                         data.put("ecoIdea", "0");
-                                                        data.put("postId", postId);
+                                                        data.put("postId", randomKey);
 
-                                                        db.collection("users").document(userId).collection("posts").document(postId).set(data);
-                                                        db.collection("events").document(postId).set(data);
+                                                        db.collection("users").document(userId).collection("posts").document(randomKey).set(data);
+                                                        db.collection("events").document(randomKey).set(data);
 
 
                                                     } else {
@@ -475,9 +521,9 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
                                                         data.put("postType", postType);
                                                         data.put("impactful", "0");
                                                         data.put("ecoIdea", "0");
-                                                        data.put("postId", postId);
+                                                        data.put("postId", randomKey);
 
-                                                        db.collection("users").document(userId).collection("posts").document(postId).set(data);
+                                                        db.collection("users").document(userId).collection("posts").document(randomKey).set(data);
 
 
                                                     }

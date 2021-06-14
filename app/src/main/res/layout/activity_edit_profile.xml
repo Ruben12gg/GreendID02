@@ -115,6 +115,16 @@
         android:textColor="@color/black_txt"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/bioCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bioSettings"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp"
+        android:text="0/100"
+        android:textColor="@color/light_txt" />
+
     <Button
         android:id="@+id/save"
         android:layout_width="match_parent"

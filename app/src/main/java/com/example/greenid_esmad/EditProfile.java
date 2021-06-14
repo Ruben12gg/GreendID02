@@ -55,6 +55,7 @@ public class EditProfile extends AppCompatActivity {
     EditText username;
     EditText bio;
     TextView nameCounter;
+    TextView bioCounter;
     Button saveBtn;
     ImageButton returnBtn;
     ImageButton btnImg;
@@ -63,6 +64,7 @@ public class EditProfile extends AppCompatActivity {
     FirebaseStorage storage;
 
     Integer nameTxtVal;
+    Integer bioTxtVal;
 
     SharedPreferences sharedPreferences;
 
@@ -78,6 +80,8 @@ public class EditProfile extends AppCompatActivity {
         saveBtn = findViewById(R.id.save);
         returnBtn = findViewById(R.id.backBtn);
         nameCounter = findViewById(R.id.userNameCounter);
+        bioCounter = findViewById(R.id.bioCounter);
+
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -118,6 +122,7 @@ public class EditProfile extends AppCompatActivity {
         });
 
 
+        //Limit username and bio length
         username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -132,10 +137,38 @@ public class EditProfile extends AppCompatActivity {
                 String nameCounterTxt = nameTxtVal + "/12";
                 nameCounter.setText(nameCounterTxt);
 
-                if (nameTxtVal > 12) {
+                if (nameTxtVal > 12 || nameTxtVal == 0) {
                     nameCounter.setTextColor(getResources().getColor(R.color.colorAccent));
                 } else {
                     nameCounter.setTextColor(getResources().getColor(R.color.light_gray_txt));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        bio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String nameTxt = bio.getText().toString();
+                bioTxtVal = nameTxt.length();
+                String nameCounterTxt = bioTxtVal + "/100";
+                bioCounter.setText(nameCounterTxt);
+
+                if (bioTxtVal > 100) {
+                    bioCounter.setTextColor(getResources().getColor(R.color.colorAccent));
+                } else {
+                    bioCounter.setTextColor(getResources().getColor(R.color.light_gray_txt));
                 }
 
             }
@@ -161,10 +194,10 @@ public class EditProfile extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Dont let the username be too big
-                if (nameTxtVal > 12) {
+                if (nameTxtVal > 12 || nameTxtVal == 0) {
 
                     // Success Toast
-                    String message = "Your profile name can't have more than 12 characters";
+                    String message = "Your username can't have more than 12 characters or be empty";
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, message, duration);

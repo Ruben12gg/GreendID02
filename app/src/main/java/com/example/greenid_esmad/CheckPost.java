@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -82,6 +86,7 @@ public class CheckPost extends AppCompatActivity {
     TextView eventDateTv;
 
     SharedPreferences sharedPreferences;
+    FirebaseStorage storage;
 
 
     String userId;
@@ -89,6 +94,7 @@ public class CheckPost extends AppCompatActivity {
     String postId;
     String likeVal;
     String contentUrl;
+    String postType;
     String descriptionTxt;
     Integer notifCounter = 0;
     Integer oldNotifCounter;
@@ -174,7 +180,7 @@ public class CheckPost extends AppCompatActivity {
                         contentUrl = document.getString("contentUrl");
                         descriptionTxt = document.getString("description");
 
-                        String postType = document.getString("postType");
+                        postType = document.getString("postType");
 
                         if (postType.equals("event")){
                             eventDateTv.setVisibility(View.VISIBLE);
@@ -869,7 +875,6 @@ public class CheckPost extends AppCompatActivity {
                                                 String eventTime = document.getString("eventTime");
                                                 String impactful = document.getString("impactful");
                                                 String location = document.getString("location");
-                                                String postType = document.getString("postType");
 
                                                 Map<String, Object> dataFav = new HashMap<>();
                                                 dataFav.put("author", author);
@@ -1009,12 +1014,45 @@ public class CheckPost extends AppCompatActivity {
             }
         });
 
+        Log.d("USERID_POSTID", userId + " " + postId);
+
+
     }
 
     private void deletePost() {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(userId).collection("posts").document(postId).delete();
+
+        if (postType.equals("event")){
+
+            db.collection("events").document(postId).delete();
+        }
+
+        // Create a storage reference from our app
+        storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        // Create a reference to the file to delete
+        StorageReference userImagesRef = storageRef.child("images/" + userId + "/" + postId);
+
+
+        // Delete user image stored files
+        userImagesRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+                Log.d("SUCCESS", "Success deleting image file!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+                Log.d("ERROR STORAGE", exception.toString());
+
+            }
+        });
+
 
         String message = "Your post has been deleted!";
         Context context = getApplicationContext();
