@@ -210,6 +210,98 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/modalView"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_below="@+id/main_toolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/btnwhite">
+
+            <TextView
+                android:id="@+id/GisTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/greenidtitle"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/Gis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_below="@id/GisTitle"
+                android:text="@string/greenidex"
+                android:textColor="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/RLImpact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Gis"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/impactBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/impactful_white"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/impactful"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toRightOf="@id/impactBtn"
+                android:text="@string/impactful"
+                android:textColor="@color/black" /></RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RLEcoideia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RLImpact"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
+            <ImageButton
+                android:id="@+id/ideaBtn"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/ecoidea_white"
+                android:scaleType="fitXY" />
+            <TextView
+                android:id="@+id/ecoideia"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toRightOf="@+id/ideaBtn"
+                android:text="@string/ecoideia"
+                android:textColor="@color/black" /></RelativeLayout>
+
+
+            <ImageButton
+                android:id="@+id/btnClose"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/clear" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/badgeView"
             android:layout_width="match_parent"
             android:layout_height="40dp"

@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.internal.StringResourceValueReader;
@@ -54,6 +55,11 @@ public class User extends AppCompatActivity {
     ImageButton favoritesBtn;
     ImageView notificationDot;
 
+    TextView UR;
+    RelativeLayout modalView;
+    ImageButton btnClose;
+
+
     SharedPreferences sharedPreferences;
 
     String userId;
@@ -80,6 +86,10 @@ public class User extends AppCompatActivity {
         userId = sharedPreferences.getString("userId", "");
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        modalView = findViewById(R.id.modalView);
+        UR = findViewById(R.id.UR);
+        btnClose = findViewById(R.id.btnClose);
 
         // Set user Selected
         bottomNavigationView.setSelectedItemId(R.id.user);
@@ -200,6 +210,21 @@ public class User extends AppCompatActivity {
                 }
             }
         });
+
+        modalView.setVisibility(View.GONE);
+
+        UR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                modalView.setVisibility(View.VISIBLE);}});
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                modalView.setVisibility(View.GONE);}});
+
 
 
         getPosts();
