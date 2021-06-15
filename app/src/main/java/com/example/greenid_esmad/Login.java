@@ -194,7 +194,7 @@ public class Login extends AppCompatActivity {
 
 
                                 // Welcome Toast
-                                String message = "Welcome " + displayName + "!";
+                                String message = "Welcome " + account.getDisplayName() + "!";
                                 Context context = getApplicationContext();
                                 int duration = Toast.LENGTH_SHORT;
                                 Toast toast = Toast.makeText(context, message, duration);
