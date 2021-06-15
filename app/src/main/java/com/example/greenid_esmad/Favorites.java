@@ -151,7 +151,7 @@ public class Favorites extends AppCompatActivity {
                                         String eventTime = document.getString("eventTime");
                                         String impactful = document.getString("impactful");
                                         String postType = document.getString("postType");
-
+                                        
 
                                         contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
 
