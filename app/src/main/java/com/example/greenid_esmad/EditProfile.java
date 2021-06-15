@@ -196,7 +196,7 @@ public class EditProfile extends AppCompatActivity {
                 //Dont let the username be too big
                 if (nameTxtVal > 12 || nameTxtVal == 0) {
 
-                    // Success Toast
+
                     String message = "Your username can't have more than 12 characters or be empty";
                     Context context = getApplicationContext();
                     int duration = Toast.LENGTH_SHORT;
@@ -204,6 +204,15 @@ public class EditProfile extends AppCompatActivity {
                     toast.show();
 
                     return;
+
+                } else if (bioTxtVal > 100){
+
+                    String message = "Your bio can't have more than 100 characters";
+                    Context context = getApplicationContext();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, message, duration);
+                    toast.show();
+
 
                 } else {
 
