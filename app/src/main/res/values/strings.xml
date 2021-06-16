@@ -20,6 +20,11 @@
     <string name="pfName">User Name</string>
     <string name="pfRank">User Rank</string>
     <string name="pfBio">User Biography</string>
+    <string name="greenidtitle">GreenID Score</string>
+    <string name="greenidex">Your "GreenID Score" is based on the points that you receive by getting rewarded in your posts.</string>
+    <string name="impactful"> "Impactful" gives you 15 points.</string>
+    <string name="ecoideia"> "Ecoideia" gives you 10 points.</string>
+
 
     //Dashboard
     <string name="Location">Location</string>
