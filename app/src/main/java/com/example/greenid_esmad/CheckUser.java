@@ -54,6 +54,10 @@ public class CheckUser extends AppCompatActivity {
     ImageButton btnBack;
     Button btnFollow;
     ImageView notificationDot;
+    ImageButton btnAllTag;
+    ImageButton btnImageTag;
+    ImageButton btnEventTag;
+    ImageButton btnProductTag;
 
     SharedPreferences sharedPreferences;
 
@@ -81,6 +85,11 @@ public class CheckUser extends AppCompatActivity {
 
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
+
+        btnAllTag = findViewById(R.id.btnAllTag);
+        btnImageTag = findViewById(R.id.btnImageTag);
+        btnProductTag = findViewById(R.id.btnProductTag);
+        btnEventTag = findViewById(R.id.btnEventTag);
 
         GLOBALS globals = (GLOBALS) getApplicationContext();
         oldNotifCounter = globals.getOldNotifCounter();
@@ -125,6 +134,190 @@ public class CheckUser extends AppCompatActivity {
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
                 }
+            }
+        });
+
+        btnAllTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentCheckUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(bioTxt).collection("posts")
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String contentUrl = document.getString("contentUrl");
+                                        String postId = document.getId();
+
+                                        String authorId = bioTxt;
+
+                                        String postType = document.getString("postType");
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentCheckUser.add(new ContentCheckUser(contentUrl, authorId, postId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+            }
+        });
+
+        btnImageTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentCheckUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(bioTxt).collection("posts")
+                        .whereEqualTo("postType", "image")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String contentUrl = document.getString("contentUrl");
+                                        String postId = document.getId();
+
+                                        String authorId = bioTxt;
+
+                                        String postType = document.getString("postType");
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentCheckUser.add(new ContentCheckUser(contentUrl, authorId, postId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+            }
+        });
+
+        btnEventTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentCheckUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(bioTxt).collection("posts")
+                        .whereEqualTo("postType", "event")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String contentUrl = document.getString("contentUrl");
+                                        String postId = document.getId();
+
+                                        String authorId = bioTxt;
+
+                                        String postType = document.getString("postType");
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentCheckUser.add(new ContentCheckUser(contentUrl, authorId, postId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+            }
+        });
+
+        btnProductTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentCheckUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(bioTxt).collection("posts")
+                        .whereEqualTo("postType", "product")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String contentUrl = document.getString("contentUrl");
+                                        String postId = document.getId();
+
+                                        String authorId = bioTxt;
+
+                                        String postType = document.getString("postType");
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentCheckUser.add(new ContentCheckUser(contentUrl, authorId, postId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
             }
         });
 
@@ -459,9 +652,11 @@ public class CheckUser extends AppCompatActivity {
 
                                 String authorId = bioTxt;
 
+                                String postType = document.getString("postType");
+
                                 Log.d("IMAGES", contentUrl);
 
-                                contentCheckUser.add(new ContentCheckUser(contentUrl, authorId, postId));
+                                contentCheckUser.add(new ContentCheckUser(contentUrl, authorId, postId, postType));
 
 
                             }

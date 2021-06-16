@@ -4,12 +4,7 @@ public class ContentCheckUser {
     private String contentUrl;
     private String userId;
     private String postId;
-
-    public ContentCheckUser(String contentUrl, String userId, String postId) {
-        this.contentUrl = contentUrl;
-        this.userId = userId;
-        this.postId = postId;
-    }
+    private String postType;
 
     public String getContentUrl() {
         return contentUrl;
@@ -33,6 +28,21 @@ public class ContentCheckUser {
 
     public void setPostId(String postId) {
         this.postId = postId;
+    }
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
+    public ContentCheckUser(String contentUrl, String userId, String postId, String postType) {
+        this.contentUrl = contentUrl;
+        this.userId = userId;
+        this.postId = postId;
+        this.postType = postType;
     }
 }
 

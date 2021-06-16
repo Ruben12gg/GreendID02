@@ -11,22 +11,7 @@ public class ContentUser {
     private String description;
     private String postId;
     private String userId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private String postType;
 
     public String getAuthorPfp() {
         return authorPfp;
@@ -84,6 +69,14 @@ public class ContentUser {
         this.location = location;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getPostId() {
         return postId;
     }
@@ -92,7 +85,23 @@ public class ContentUser {
         this.postId = postId;
     }
 
-    public ContentUser(String authorPfp, String contentUrl, String author, String date, String likeVal, String commentVal, String location, String description, String postId, String userId) {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
+    public ContentUser(String authorPfp, String contentUrl, String author, String date, String likeVal, String commentVal, String location, String description, String postId, String userId, String postType) {
         this.authorPfp = authorPfp;
         this.contentUrl = contentUrl;
         this.author = author;
@@ -103,6 +112,7 @@ public class ContentUser {
         this.description = description;
         this.postId = postId;
         this.userId = userId;
+        this.postType = postType;
     }
 }
 

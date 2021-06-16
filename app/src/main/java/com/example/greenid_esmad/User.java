@@ -37,6 +37,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User extends AppCompatActivity {
@@ -53,6 +54,10 @@ public class User extends AppCompatActivity {
     ImageButton settingsBtn;
     ImageButton favoritesBtn;
     ImageView notificationDot;
+    ImageButton btnAllTag;
+    ImageButton btnImageTag;
+    ImageButton btnEventTag;
+    ImageButton btnProductTag;
 
     SharedPreferences sharedPreferences;
 
@@ -71,6 +76,11 @@ public class User extends AppCompatActivity {
 
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
+
+        btnAllTag = findViewById(R.id.btnAllTag);
+        btnImageTag = findViewById(R.id.btnImageTag);
+        btnProductTag = findViewById(R.id.btnProductTag);
+        btnEventTag = findViewById(R.id.btnEventTag);
 
         GLOBALS globals = (GLOBALS) getApplicationContext();
         oldNotifCounter = globals.getOldNotifCounter();
@@ -119,6 +129,258 @@ public class User extends AppCompatActivity {
                 return false;
             }
 
+        });
+
+        btnAllTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(userId).collection("posts")
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String authorPfp = document.getString("authorPfp");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String author = document.getString("author");
+                                        String date = document.getString("date");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId();
+                                        String userId = document.getString("authorId");
+                                        String postType = document.getString("postType");
+
+                                        Log.d("authorPfp", authorPfp);
+                                        Log.d("contentUrl", contentUrl);
+                                        Log.d("author", author);
+                                        Log.d("date", date);
+                                        Log.d("likeVal", likeVal);
+                                        Log.d("commentVal", commentVal);
+                                        Log.d("location", location);
+                                        Log.d("description", description);
+                                        Log.d("postId", postId);
+                                        Log.d("authorId", userId);
+                                        Log.d("postType", postType);
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+            }
+        });
+
+        btnImageTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(userId).collection("posts")
+                        .whereEqualTo("postType", "image")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String authorPfp = document.getString("authorPfp");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String author = document.getString("author");
+                                        String date = document.getString("date");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId();
+                                        String userId = document.getString("authorId");
+                                        String postType = document.getString("postType");
+
+                                        Log.d("authorPfp", authorPfp);
+                                        Log.d("contentUrl", contentUrl);
+                                        Log.d("author", author);
+                                        Log.d("date", date);
+                                        Log.d("likeVal", likeVal);
+                                        Log.d("commentVal", commentVal);
+                                        Log.d("location", location);
+                                        Log.d("description", description);
+                                        Log.d("postId", postId);
+                                        Log.d("authorId", userId);
+                                        Log.d("postType", postType);
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+            }
+        });
+
+        btnEventTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(userId).collection("posts")
+                        .whereEqualTo("postType", "event")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String authorPfp = document.getString("authorPfp");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String author = document.getString("author");
+                                        String date = document.getString("date");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId();
+                                        String userId = document.getString("authorId");
+                                        String postType = document.getString("postType");
+
+                                        Log.d("authorPfp", authorPfp);
+                                        Log.d("contentUrl", contentUrl);
+                                        Log.d("author", author);
+                                        Log.d("date", date);
+                                        Log.d("likeVal", likeVal);
+                                        Log.d("commentVal", commentVal);
+                                        Log.d("location", location);
+                                        Log.d("description", description);
+                                        Log.d("postId", postId);
+                                        Log.d("authorId", userId);
+                                        Log.d("postType", postType);
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+            }
+        });
+
+        btnProductTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentUser.clear();
+
+                //Get user Post images
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(userId).collection("posts")
+                        .whereEqualTo("postType", "product")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER POSTS", document.getId() + " => " + document.getData());
+
+                                        String authorPfp = document.getString("authorPfp");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String author = document.getString("author");
+                                        String date = document.getString("date");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId();
+                                        String userId = document.getString("authorId");
+                                        String postType = document.getString("postType");
+
+                                        Log.d("authorPfp", authorPfp);
+                                        Log.d("contentUrl", contentUrl);
+                                        Log.d("author", author);
+                                        Log.d("date", date);
+                                        Log.d("likeVal", likeVal);
+                                        Log.d("commentVal", commentVal);
+                                        Log.d("location", location);
+                                        Log.d("description", description);
+                                        Log.d("postId", postId);
+                                        Log.d("authorId", userId);
+                                        Log.d("postType", postType);
+
+                                        Log.d("IMAGES", contentUrl);
+
+                                        contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+            }
         });
 
 
@@ -339,6 +601,7 @@ public class User extends AppCompatActivity {
                                 String description = document.getString("description");
                                 String postId = document.getId();
                                 String userId = document.getString("authorId");
+                                String postType = document.getString("postType");
 
                                 Log.d("authorPfp", authorPfp);
                                 Log.d("contentUrl", contentUrl);
@@ -350,10 +613,11 @@ public class User extends AppCompatActivity {
                                 Log.d("description", description);
                                 Log.d("postId", postId);
                                 Log.d("authorId", userId);
+                                Log.d("postType", postType);
 
                                 Log.d("IMAGES", contentUrl);
 
-                                contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId));
+                                contentUser.add(new ContentUser(contentUrl, author, authorPfp, date, likeVal, commentVal, location, description, postId, userId, postType));
 
 
                             }

@@ -222,23 +222,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/badgeView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp">
+            android:layout_centerHorizontal="true">
+
+            <ImageButton
+                android:id="@+id/btnAllTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/postd" />
 
             <ImageButton
                 android:id="@+id/btnImageTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
+                android:layout_toRightOf="@+id/btnAllTag"
                 android:background="@drawable/postd" />
 
             <ImageButton
                 android:id="@+id/btnEventTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_toRightOf="@+id/btnImageTag"
                 android:background="@drawable/eventd" />
 
@@ -247,9 +249,6 @@
                 android:id="@+id/btnProductTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_toRightOf="@+id/btnEventTag"
                 android:background="@drawable/productd" />
         </RelativeLayout>
