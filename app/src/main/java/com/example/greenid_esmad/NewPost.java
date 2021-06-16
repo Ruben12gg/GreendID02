@@ -85,7 +85,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
     String randomKey;
     String pickedTime;
     String pickedDate;
-    Integer descriptionTxtVal;
+    Integer descriptionTxtVal = 0;
     Integer notifCounter = 0;
     Integer oldNotifCounter;
 
@@ -435,7 +435,7 @@ public class NewPost extends AppCompatActivity implements DatePickerDialog.OnDat
 
             return;
 
-        } else {
+        } else  {
 
             //upload the file to the database and generate an usable url to display the picture
             imageRef.putFile(imageUri)
