@@ -88,6 +88,8 @@ public class User extends AppCompatActivity {
         btnProductTag = findViewById(R.id.btnProductTag);
         btnEventTag = findViewById(R.id.btnEventTag);
 
+        userRank = findViewById(R.id.userRank);
+
         GLOBALS globals = (GLOBALS) getApplicationContext();
         oldNotifCounter = globals.getOldNotifCounter();
         checkForNotifs();
@@ -100,6 +102,7 @@ public class User extends AppCompatActivity {
         modalView = findViewById(R.id.modalView);
         UR = findViewById(R.id.UR);
         btnClose = findViewById(R.id.btnClose);
+
 
         // Set user Selected
         bottomNavigationView.setSelectedItemId(R.id.user);
@@ -140,6 +143,15 @@ public class User extends AppCompatActivity {
             }
 
         });
+
+        userRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Scores.class));
+
+            }
+        });
+
 
         btnAllTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -458,6 +470,11 @@ public class User extends AppCompatActivity {
 
                         userRank = findViewById(R.id.userRank);
                         userRank.setText("GreenID Score: " + userRankValTotalTxt);
+
+                        Map<String, Object> rankData = new HashMap<>();
+                        rankData.put("score", userRankValTotalTxt);
+                        db.collection("users").document(userId).update(rankData);
+
 
                         String pfpUrl = document.getString("pfp");
                         ivPfp = findViewById(R.id.pfp);

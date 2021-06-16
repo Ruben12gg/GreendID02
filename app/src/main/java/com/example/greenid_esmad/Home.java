@@ -42,6 +42,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
 
@@ -192,6 +194,20 @@ public class Home extends AppCompatActivity {
                         int followingValNum = Integer.parseInt(followingValTxt);
 
                         Log.d("FOLLOWING VAL", String.valueOf(followingValNum));
+
+                        //user rank score calculations
+                        String impactful = document.getString("impactful");
+                        Integer impactfulMultiplier = Integer.parseInt(impactful);
+
+                        String ecoIdea = document.getString("ecoIdea");
+                        Integer ecoIdeaMultiplier = Integer.parseInt(ecoIdea);
+
+                        Integer userRankValTotal = (15 * impactfulMultiplier) + (10 * ecoIdeaMultiplier);
+                        String userRankValTotalTxt = String.valueOf(userRankValTotal);
+
+                        Map<String, Object> rankData = new HashMap<>();
+                        rankData.put("score", userRankValTotalTxt);
+                        db.collection("users").document(userId).update(rankData);
 
                         if (followingValTxt.equals("0")) {
 
