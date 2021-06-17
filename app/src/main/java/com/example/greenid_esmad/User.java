@@ -472,7 +472,7 @@ public class User extends AppCompatActivity {
                         userRank.setText("GreenID Score: " + userRankValTotalTxt);
 
                         Map<String, Object> rankData = new HashMap<>();
-                        rankData.put("score", userRankValTotalTxt);
+                        rankData.put("score", userRankValTotal);
                         db.collection("users").document(userId).update(rankData);
 
 

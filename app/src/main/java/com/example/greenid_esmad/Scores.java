@@ -92,7 +92,7 @@ public class Scores extends AppCompatActivity {
                                 String profileName = document.getString("name");
                                 String pfp = document.getString("pfp");
                                 String id = document.getString("id");
-                                String score = document.getString("score");
+                                String score = String.valueOf(document.getLong("score"));
                                 place++;
                                 String placeTxt = String.valueOf(place);
 

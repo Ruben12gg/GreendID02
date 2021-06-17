@@ -206,7 +206,7 @@ public class Home extends AppCompatActivity {
                         String userRankValTotalTxt = String.valueOf(userRankValTotal);
 
                         Map<String, Object> rankData = new HashMap<>();
-                        rankData.put("score", userRankValTotalTxt);
+                        rankData.put("score", userRankValTotal);
                         db.collection("users").document(userId).update(rankData);
 
                         if (followingValTxt.equals("0")) {
