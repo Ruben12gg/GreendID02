@@ -320,21 +320,24 @@
                 android:id="@+id/btnAllTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/postd" />
+                android:background="@drawable/alls"
+                android:layout_marginRight="8dp"/>
 
             <ImageButton
                 android:id="@+id/btnImageTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/btnAllTag"
-                android:background="@drawable/postd" />
+                android:background="@drawable/postd"
+                android:layout_marginRight="8dp"/>
 
             <ImageButton
                 android:id="@+id/btnEventTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/btnImageTag"
-                android:background="@drawable/eventd" />
+                android:background="@drawable/eventd"
+                android:layout_marginRight="8dp"/>
 
 
             <ImageButton

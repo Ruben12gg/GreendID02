@@ -163,8 +163,8 @@ public class CheckUser extends AppCompatActivity {
         btnAllTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.posts);
-                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnAllTag.setBackgroundResource(R.drawable.alls);
+                btnImageTag.setBackgroundResource(R.drawable.postd);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
 
@@ -209,7 +209,7 @@ public class CheckUser extends AppCompatActivity {
         btnImageTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.posts);
+                btnAllTag.setBackgroundResource(R.drawable.alld);
                 btnImageTag.setBackgroundResource(R.drawable.posts);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
@@ -255,9 +255,9 @@ public class CheckUser extends AppCompatActivity {
         btnEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.posts);
-                btnImageTag.setBackgroundResource(R.drawable.posts);
-                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnAllTag.setBackgroundResource(R.drawable.alld);
+                btnImageTag.setBackgroundResource(R.drawable.postd);
+                btnEventTag.setBackgroundResource(R.drawable.events);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
 
                 contentCheckUser.clear();
@@ -301,10 +301,10 @@ public class CheckUser extends AppCompatActivity {
         btnProductTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.posts);
-                btnImageTag.setBackgroundResource(R.drawable.posts);
+                btnAllTag.setBackgroundResource(R.drawable.alld);
+                btnImageTag.setBackgroundResource(R.drawable.postd);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
-                btnProductTag.setBackgroundResource(R.drawable.productd);
+                btnProductTag.setBackgroundResource(R.drawable.products);
 
                 contentCheckUser.clear();
 
