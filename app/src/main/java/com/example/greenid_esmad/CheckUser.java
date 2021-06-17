@@ -67,6 +67,8 @@ public class CheckUser extends AppCompatActivity {
 
     String pfName;
     String pfpTxt;
+    String ourPfp;
+    String ourName;
     Integer notifCounter = 0;
     Integer oldNotifCounter;
 
@@ -101,8 +103,29 @@ public class CheckUser extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
 
-        //Get profile Data
+        //Get our data
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+                        ourName = document.getString("name");
+                        ourPfp = document.getString("pfp");
+
+                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("TAG", "No such document");
+                    }
+                } else {
+                    Log.d("TAG", "get failed with ", task.getException());
+                }
+            }
+        });
+
+        //Get profile Data
         db.collection("users").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -512,9 +535,9 @@ public class CheckUser extends AppCompatActivity {
                             } else {
                                 Log.d("FOLLOW", "No user found: FOLLOWING!");
                                 Map<String, Object> data = new HashMap<>();
-                                data.put("pfName", pfName);
-                                data.put("pfp", pfpTxt);
-                                data.put("userId", bioTxt);
+                                data.put("pfName", ourName);
+                                data.put("pfp", ourPfp);
+                                data.put("userId", userId);
 
                                 //add the user to our following list
                                 db.collection("users").document(userId).collection("following").document(bioTxt).set(data);
@@ -612,6 +635,7 @@ public class CheckUser extends AppCompatActivity {
                                                 data.put("commentVal", contentTxt);
                                                 data.put("date", dateTxt);
                                                 data.put("notifId", notifId);
+                                                data.put("authorId", userId);
 
                                                 db.collection("users").document(bioTxt).collection("notifications").document(notifId).set(data);
 

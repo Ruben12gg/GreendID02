@@ -7,14 +7,16 @@ public class ContentNotifications {
     private String author;
     private String notifId;
     private String userId;
+    private String authorId;
 
-    public ContentNotifications(String authorPfp, String contentUrl, String commentVal, String author, String notifId, String userId) {
+    public ContentNotifications(String authorPfp, String contentUrl, String commentVal, String author, String notifId, String userId, String authorId) {
         this.authorPfp = authorPfp;
         this.contentUrl = contentUrl;
         this.commentVal = commentVal;
         this.author = author;
         this.notifId = notifId;
         this.userId = userId;
+        this.authorId = authorId;
     }
 
     public String getAuthorPfp() {
@@ -63,5 +65,13 @@ public class ContentNotifications {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 }

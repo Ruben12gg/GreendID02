@@ -260,12 +260,13 @@ public class Notifications extends AppCompatActivity {
                                 String commentVal = document.getString("commentVal");
                                 String author = document.getString("username");
                                 String notifId = document.getString("notifId");
+                                String authorId = document.getString("authorId");
 
                                 GLOBALS globalUserId = (GLOBALS) getApplicationContext();
                                 String userId = globalUserId.getUserIdGlobal();
 
 
-                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId));
+                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId, authorId));
 
                             }
                         } else {
@@ -310,12 +311,14 @@ public class Notifications extends AppCompatActivity {
                                 String commentVal = document.getString("commentVal");
                                 String author = document.getString("username");
                                 String notifId = document.getString("notifId");
+                                String authorId = document.getString("authorId");
+
 
                                 GLOBALS globalUserId = (GLOBALS) getApplicationContext();
                                 String userId = globalUserId.getUserIdGlobal();
 
 
-                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId));
+                                contentNotifications.add(new ContentNotifications(authorPfp, contentUrl, commentVal, author, notifId, userId, authorId));
 
                             }
                         } else {

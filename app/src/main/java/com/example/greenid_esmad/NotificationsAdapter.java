@@ -100,6 +100,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         final String notifId = contentNotifications.getNotifId();
         final String userId = contentNotifications.getUserId();
+        final String authorId = contentNotifications.getAuthorId();
 
         holder.delView.setVisibility(View.GONE);
 
@@ -111,7 +112,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                 if (contentUrl.isEmpty() || contentUrl == null) {
 
                     Intent i = new Intent(v.getContext(), CheckUser.class);
-                    i.putExtra("bio", userId);
+                    i.putExtra("bio", authorId);
                     v.getContext().startActivity(i);
 
                 } else {

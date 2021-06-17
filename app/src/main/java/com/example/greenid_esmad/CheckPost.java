@@ -641,6 +641,8 @@ public class CheckPost extends AppCompatActivity {
                                                         dataNotif.put("commentVal", contentTxt);
                                                         dataNotif.put("date", dateTxt);
                                                         dataNotif.put("notifId", notifId);
+                                                        dataNotif.put("postId", postId);
+                                                        dataNotif.put("authorId", authorId);
 
                                                         db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 

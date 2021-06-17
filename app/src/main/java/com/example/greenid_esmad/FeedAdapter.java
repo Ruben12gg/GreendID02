@@ -549,6 +549,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                 data.put("contentUrl", contentUrl);
                                                 data.put("postId", postId);
 
+
                                                 db.collection("users").document(userId).collection("likes").document(postId).set(data);
 
                                                 String name = document.getString("name");
@@ -703,6 +704,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                         dataNotif.put("commentVal", contentTxt);
                                                         dataNotif.put("date", dateTxt);
                                                         dataNotif.put("notifId", notifId);
+                                                        dataNotif.put("postId", postId);
+                                                        dataNotif.put("authorId", authorId);
+
 
                                                         db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 
@@ -802,6 +806,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                                                         dataNotif.put("commentVal", contentTxt);
                                                         dataNotif.put("date", dateTxt);
                                                         dataNotif.put("notifId", notifId);
+                                                        dataNotif.put("postId", postId);
+                                                        dataNotif.put("authorId", authorId);
 
                                                         db.collection("users").document(authorId).collection("notifications").document(notifId).set(dataNotif);
 
