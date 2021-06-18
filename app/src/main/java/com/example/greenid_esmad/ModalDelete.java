@@ -26,13 +26,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class ModalDelete extends DialogFragment {
 
     FirebaseStorage storage;
-    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -54,6 +56,108 @@ public class ModalDelete extends DialogFragment {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         //Delete profile Data
                         db.collection("users").document(userId).delete();
+
+                        //Delete posts
+                        db.collection("users").document(userId).collection("posts")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                String postId = document.getId();
+                                                db.collection("users").document(userId).collection("posts").document(postId).delete();
+
+                                            }
+                                        } else {
+                                            Log.d("TAG", "Error getting documents: ", task.getException());
+                                        }
+
+                                    }
+                                });
+
+                        //Delete following
+                        db.collection("users").document(userId).collection("following")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                String followingId = document.getId();
+                                                Log.d("FOLLOWING", followingId);
+                                                db.collection("users").document(userId).collection("following").document(followingId).delete();
+
+                                            }
+                                        } else {
+                                            Log.d("TAG", "Error getting documents: ", task.getException());
+                                        }
+
+                                    }
+                                });
+
+                        //Delete followers
+                        db.collection("users").document(userId).collection("followers")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                String followerId = document.getId();
+                                                db.collection("users").document(userId).collection("followers").document(followerId).delete();
+
+                                            }
+                                        } else {
+                                            Log.d("TAG", "Error getting documents: ", task.getException());
+                                        }
+
+                                    }
+                                });
+
+                        //Delete favorites
+                        db.collection("users").document(userId).collection("favorites")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                String favoriteId = document.getId();
+                                                db.collection("users").document(userId).collection("posts").document(favoriteId).delete();
+
+                                            }
+                                        } else {
+                                            Log.d("TAG", "Error getting documents: ", task.getException());
+                                        }
+
+                                    }
+                                });
+
+                        //Delete notifications
+                        db.collection("users").document(userId).collection("notifications")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                String notificationId = document.getId();
+                                                db.collection("users").document(userId).collection("notifications").document(notificationId).delete();
+
+                                            }
+                                        } else {
+                                            Log.d("TAG", "Error getting documents: ", task.getException());
+                                        }
+
+                                    }
+                                });
+
 
                         // Create a storage reference from our app
                         storage = FirebaseStorage.getInstance();

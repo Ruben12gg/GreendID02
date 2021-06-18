@@ -87,6 +87,8 @@ public class Login extends AppCompatActivity {
 
         //prevent crash if user deleted account or has cache cleaned and reset/set a new value
         if (userIdCache.isEmpty() || deletedAcc){
+            //clean the cached userId again in case deletedAcc == true so it doesn't auto login if user closes app
+            sharedPreferences.edit().putString("userId", "").commit();
             return;
         } else {
             String userId = sharedPreferences.getString("userId","");
@@ -190,7 +192,6 @@ public class Login extends AppCompatActivity {
 
                                 // save data in SharedPreferences
                                 sharedPreferences.edit().putString("userId", userId).commit();
-
 
 
                                 // Welcome Toast
