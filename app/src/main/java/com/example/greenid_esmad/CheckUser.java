@@ -539,6 +539,11 @@ public class CheckUser extends AppCompatActivity {
                                 data.put("pfp", ourPfp);
                                 data.put("userId", userId);
 
+                                Map<String, Object> dataFollowing = new HashMap<>();
+                                data.put("pfName", pfName);
+                                data.put("pfp", pfpTxt);
+                                data.put("userId", bioTxt);
+
                                 //add the user to our following list
                                 db.collection("users").document(userId).collection("following").document(bioTxt).set(data);
 
