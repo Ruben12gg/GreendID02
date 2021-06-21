@@ -7,10 +7,7 @@
     android:background="@color/white"
     tools:context=".Home">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,6 +69,17 @@
                 android:layout_marginTop="54dp"
                 android:layout_marginBottom="59dp" />
         </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp">
+
+        <!--Let this be empty so it doesn't crash-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
