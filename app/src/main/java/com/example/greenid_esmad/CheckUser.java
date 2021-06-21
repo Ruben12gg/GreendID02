@@ -540,12 +540,12 @@ public class CheckUser extends AppCompatActivity {
                                 data.put("userId", userId);
 
                                 Map<String, Object> dataFollowing = new HashMap<>();
-                                data.put("pfName", pfName);
-                                data.put("pfp", pfpTxt);
-                                data.put("userId", bioTxt);
+                                dataFollowing.put("pfName", pfName);
+                                dataFollowing.put("pfp", pfpTxt);
+                                dataFollowing.put("userId", bioTxt);
 
                                 //add the user to our following list
-                                db.collection("users").document(userId).collection("following").document(bioTxt).set(data);
+                                db.collection("users").document(userId).collection("following").document(bioTxt).set(dataFollowing);
 
                                 //Add own user to the other user followers
                                 db.collection("users").document(bioTxt).collection("followers").document(userId).set(data);
