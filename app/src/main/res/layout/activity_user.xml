@@ -340,7 +340,6 @@
                 android:background="@drawable/eventd"
                 android:layout_marginRight="8dp"/>
 
-
             <ImageButton
                 android:id="@+id/btnProductTag"
                 android:layout_width="wrap_content"

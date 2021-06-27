@@ -29,6 +29,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -41,6 +42,7 @@ public class Favorites extends AppCompatActivity {
     ArrayList<ContentFavorites> contentFavorites = new ArrayList<>();
 
     ImageButton btnBack;
+    ImageButton btnAllTag;
     ImageButton btnImageTag;
     ImageButton btnEventTag;
     ImageButton btnProductTag;
@@ -60,6 +62,7 @@ public class Favorites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
+        btnAllTag = findViewById(R.id.btnAllTag);
         btnImageTag = findViewById(R.id.btnImageTag);
         btnProductTag = findViewById(R.id.btnProductTag);
         btnEventTag = findViewById(R.id.btnEventTag);
@@ -118,7 +121,7 @@ public class Favorites extends AppCompatActivity {
         btnEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                btnAllTag.setBackgroundResource(R.drawable.alld);
                 btnImageTag.setBackgroundResource(R.drawable.postd);
                 btnEventTag.setBackgroundResource(R.drawable.events);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
@@ -210,9 +213,70 @@ public class Favorites extends AppCompatActivity {
                     }
                 });
 
+        btnAllTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.alls);
+                btnImageTag.setBackgroundResource(R.drawable.postd);
+                btnEventTag.setBackgroundResource(R.drawable.eventd);
+                btnProductTag.setBackgroundResource(R.drawable.productd);
+
+                contentFavorites.clear();
+
+                sharedPreferences = getSharedPreferences("userId", MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId", "");
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                List<String> FavArray = new ArrayList<String>();
+                db.collection("users").document(userId).collection("favorites")
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("USER FAVORITES", document.getId() + " => " + document.getData());
+                                        String author = document.getString("author");
+                                        String authorId = document.getString("authorId");
+                                        String authorPfp = document.getString("authorPfp");
+                                        String date = document.getString("date");
+                                        String contentUrl = document.getString("contentUrl");
+                                        String likeVal = document.getString("likeVal");
+                                        String commentVal = document.getString("commentVal");
+                                        String location = document.getString("location");
+                                        String description = document.getString("description");
+                                        String postId = document.getId().toString();
+                                        String ecoIdea = document.getString("ecoIdea");
+                                        String eventDate = document.getString("eventDate");
+                                        String eventTime = document.getString("eventTime");
+                                        String impactful = document.getString("impactful");
+                                        String postType = document.getString("postType");
+
+                                        contentFavorites.add(new ContentFavorites(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId, ecoIdea, eventDate, eventTime, impactful, postType));
+
+
+                                    }
+                                } else {
+                                    Log.d("TAG", "Error getting documents: ", task.getException());
+
+
+                                }
+
+                                RecyclerCall();
+
+                            }
+                        });
+
+
+            }
+        });
+
         btnImageTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.alld);
                 btnImageTag.setBackgroundResource(R.drawable.posts);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
@@ -272,6 +336,7 @@ public class Favorites extends AppCompatActivity {
         btnProductTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnAllTag.setBackgroundResource(R.drawable.alld);
                 btnImageTag.setBackgroundResource(R.drawable.postd);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
                 btnProductTag.setBackgroundResource(R.drawable.products);
