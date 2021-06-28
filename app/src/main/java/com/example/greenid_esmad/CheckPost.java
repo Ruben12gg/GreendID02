@@ -198,6 +198,12 @@ public class CheckPost extends AppCompatActivity {
 
                     } else {
                         Log.d("TAG", "No such document");
+                        String message = "This post no longer exists!";
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, message, duration);
+                        toast.show();
+                        finish();
                     }
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());

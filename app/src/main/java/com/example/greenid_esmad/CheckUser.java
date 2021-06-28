@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -153,6 +155,108 @@ public class CheckUser extends AppCompatActivity {
                         Log.d("TAG", "DocumentSnapshot data: " + document.getData());
                     } else {
                         Log.d("TAG", "No such document");
+                        String message = "User no longer exists!";
+                        Context context = getApplicationContext();
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, message, duration);
+                        toast.show();
+
+                        db.collection("users").document(userId).collection("followers").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+
+                                        db.collection("users").document(userId).collection("followers").document(bioTxt).delete();
+
+                                        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+
+                                                        String userFollowers = document.getString("followersVal");
+
+                                                        Integer newUserFollowers = Integer.parseInt(userFollowers) - 1;
+                                                        String newUserFollowersTxt = String.valueOf(newUserFollowers);
+
+                                                        Map<String, Object> data01 = new HashMap<>();
+                                                        data01.put("followersVal", newUserFollowersTxt);
+
+                                                        db.collection("users").document(userId).update(data01);
+
+
+                                                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                    } else {
+                                                        Log.d("TAG", "No such document");
+                                                    }
+                                                } else {
+                                                    Log.d("TAG", "get failed with ", task.getException());
+                                                }
+                                            }
+                                        });
+
+
+                                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                    } else {
+                                        Log.d("TAG", "No such document");
+                                    }
+                                } else {
+                                    Log.d("TAG", "get failed with ", task.getException());
+                                }
+                            }
+                        });
+
+                        db.collection("users").document(userId).collection("following").document(bioTxt).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+
+                                        db.collection("users").document(userId).collection("following").document(bioTxt).delete();
+
+                                        db.collection("users").document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+
+                                                        String userFollowing = document.getString("followingVal");
+
+                                                        Integer newUserFollowing = Integer.parseInt(userFollowing) - 1;
+                                                        String newUserFollowingTxt = String.valueOf(newUserFollowing);
+
+                                                        Map<String, Object> data02 = new HashMap<>();
+                                                        data02.put("followingVal", newUserFollowingTxt);
+
+                                                        db.collection("users").document(userId).update(data02);
+
+
+                                                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                                    } else {
+                                                        Log.d("TAG", "No such document");
+                                                    }
+                                                } else {
+                                                    Log.d("TAG", "get failed with ", task.getException());
+                                                }
+                                            }
+                                        });
+
+                                        Log.d("TAG", "DocumentSnapshot data: " + document.getData());
+                                    } else {
+                                        Log.d("TAG", "No such document");
+                                    }
+                                } else {
+                                    Log.d("TAG", "get failed with ", task.getException());
+                                }
+                            }
+                        });
+
+                        finish();
                     }
                 } else {
                     Log.d("TAG", "get failed with ", task.getException());
