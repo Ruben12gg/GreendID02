@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/notifications_card"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_margin="10dp"
+    android:layout_height="96dp"
+    android:layout_margin="4dp"
     android:background="@drawable/layout_bg">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -15,7 +15,8 @@
         android:layout_marginStart="5dp" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/value"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="8dp"
@@ -27,45 +28,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pfName"
+            android:textSize="13sp"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
 
         <TextView
             android:id="@+id/comment"
-            android:layout_width="180dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/username"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:maxLines="5"
             android:text="@string/CommentValue"
+            android:textSize="13sp"
             android:textColor="@color/black" />
 
     </RelativeLayout>
 
     <ImageView
         android:id="@+id/contentPic"
-        android:layout_width="96dp"
-        android:layout_height="64dp"
-        android:layout_alignParentEnd="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
+        android:layout_toLeftOf="@+id/dots"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:scaleType="centerCrop" />
 
     <ImageButton
         android:id="@+id/dots"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:background="@drawable/point_white"
-        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
         />
 
 
     <RelativeLayout
         android:id="@+id/delView"
-        android:layout_width="88dp"
-        android:layout_height="match_parent"
+        android:layout_width="96dp"
+        android:layout_height="60dp"
         android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/btnbox_red">
 
         <ImageButton
@@ -73,7 +79,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/delete_icon" />
 
         <ImageButton
@@ -81,8 +87,8 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/delNotif"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/clear_white" />
 
     </RelativeLayout>

@@ -47,11 +47,11 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="230dp"
-                android:layout_height="179dp"
+                android:layout_width="300dp"
+                android:layout_height="136dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="196dp"
-                app:srcCompat="@drawable/ic_idlestate" />
+                app:srcCompat="@drawable/illu_home" />
 
             <TextView
                 android:id="@+id/textView2"

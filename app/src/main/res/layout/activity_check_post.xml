@@ -339,8 +339,8 @@
         android:layout_below="@+id/imgPost"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_toEndOf="@+id/comments_val"
+        android:layout_marginEnd="64dp"
+        android:layout_alignParentRight="true"
         android:background="@drawable/fav"
         android:scaleType="fitXY"
         android:src="@drawable/fav" />
@@ -351,8 +351,8 @@
         android:layout_height="32dp"
         android:layout_below="@+id/imgPost"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_toEndOf="@+id/saveBtn"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentRight="true"
         android:background="@drawable/rewards" />
 
     <TextView
@@ -398,12 +398,20 @@
         android:textIsSelectable="true"
         android:textSize="16sp" />
 
+    <ImageView
+        android:id="@+id/lign"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/descriptionTxt"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/lign"></ImageView>
+
     <RelativeLayout
         android:id="@+id/commentsView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/descriptionTxt"
-        android:layout_marginTop="16dp">
+        android:layout_below="@id/lign"
+        android:layout_marginTop="2dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPost"

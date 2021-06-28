@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/posttxt"
             android:text="@string/posttxt"
-            android:textColor="@color/dark_green_bg"
+            android:textColor="@color/black"
             android:layout_centerHorizontal="true"
             android:textSize="14sp"
             android:layout_marginTop="4dp"/>
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/eventtxt"
             android:text="@string/eventtxt"
-            android:textColor="@color/dark_green_bg"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"/>
@@ -155,21 +155,21 @@
 
 
 
-        <RelativeLayout
-            android:id="@+id/product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/selected_pic_view"
-            android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@id/event"
-            android:layout_marginStart="24dp">
+    <RelativeLayout
+        android:id="@+id/product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_pic_view"
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/event"
+        android:layout_marginStart="24dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/producttxt"
             android:text="@string/producttxt"
-            android:textColor="@color/dark_green_bg"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="4dp"/>

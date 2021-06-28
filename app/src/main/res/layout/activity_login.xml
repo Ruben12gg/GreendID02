@@ -9,29 +9,43 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/blanck"
         app:srcCompat="@drawable/illustration_hand" />
 
 
     <RelativeLayout
+        android:id="@+id/blanck"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/imageView4"
-        android:layout_marginTop="-10dp">
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/login_bottom_panel">
 
-        <ImageView
+       <!-- <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/login_bottom_panel" />
-
+            app:srcCompat="@drawable/login_bottom_panel" />-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="Welcome to GreenID!"
+            android:textAlignment="center"
+            android:textColor="@color/light_green_bg"
+            android:textSize="16sp" />
         <ImageView
             android:id="@+id/logo"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_centerHorizontal="true"
+            android:layout_below="@id/textView"
             android:layout_marginTop="32dp"
             android:contentDescription="@string/app_logo"
             app:srcCompat="@drawable/logo_greenid" />
@@ -43,8 +57,7 @@
             android:layout_below="@+id/logo"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginTop="32dp"
             android:textSize="15sp" />
 
     </RelativeLayout>

@@ -303,20 +303,19 @@
                 android:layout_width="32dp"
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="32dp"
-                android:layout_toEndOf="@+id/comments_val"
                 android:background="@drawable/fav"
                 android:scaleType="fitXY"
-                android:src="@drawable/fav" />
+                android:layout_alignParentRight="true"
+                android:src="@drawable/fav"
+                android:layout_marginRight="80dp"/>
 
             <ImageButton
                 android:id="@+id/btnGift"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_toEndOf="@+id/btnSaved"
+                android:layout_marginRight="32dp"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/rewards" />
 
 

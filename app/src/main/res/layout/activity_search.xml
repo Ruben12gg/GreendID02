@@ -31,10 +31,6 @@
             />
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
@@ -62,11 +58,28 @@
             app:layout_constraintStart_toStartOf="@+id/main_toolbar"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_toolbar">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/outline"
+                android:hint="@string/SearchKeywords"
+                android:padding="16dp"
+                android:textColor="@color/black_txt"
+                android:textColorHint="@color/light_gray_txt"
+                android:textSize="16dp" />
         </ScrollView>
     </RelativeLayout>
 
@@ -75,48 +88,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp">
-
-        <EditText
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:drawablePadding="8dp"
-            android:hint="@string/SearchKeywords"
-            android:padding="16dp"
-            android:textColor="@color/black_txt"
-            android:textColorHint="@color/light_gray_txt"
-            android:textSize="16dp" />
+        android:layout_marginTop="11dp"
+        android:padding="16dp"
+        android:layout_marginBottom="24dp"
+        android:layout_below="@id/main_toolbar">
 
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/search" />
 
         <ImageButton
             android:id="@+id/btnClear"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="76dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/btnSearch"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/clear" />
     </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/eventsTitleView"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/sb_view">
-
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true">
         <TextView
             android:id="@+id/eventsTitle"
             android:layout_width="wrap_content"
@@ -124,19 +129,7 @@
             android:layout_marginStart="16dp"
             android:text="Upcoming Events"
             android:textColor="@color/black_txt"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/btnDatePick"
-            android:layout_width="83dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/input_box"
-            android:text="Filter Date"
-            android:textSize="12sp"
-            android:textColor="@color/black_txt" />
-
+            android:textSize="18sp" />
         <TextView
             android:id="@+id/dateInfo"
             android:layout_width="wrap_content"
@@ -146,13 +139,25 @@
             android:text="Checking events for:"
             android:textColor="@color/dark_gray_txt"
             android:textSize="12sp" />
+    </RelativeLayout>
+        <Button
+            android:id="@+id/btnDatePick"
+            android:layout_width="96dp"
+            android:layout_height="40dp"
+
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/input_box"
+            android:text="Filter Date"
+            android:textSize="12sp"
+            android:textColor="@color/black_txt" />
 
         <ImageButton
             android:id="@+id/btnClearEvents"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="6dp"
             android:layout_toLeftOf="@+id/btnDatePick"
             android:background="@drawable/clear" />
 

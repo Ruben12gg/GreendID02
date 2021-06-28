@@ -121,7 +121,7 @@ public class Favorites extends AppCompatActivity {
         btnEventTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.alld);
+                btnAllTag.setBackgroundResource(R.drawable.allfd);
                 btnImageTag.setBackgroundResource(R.drawable.postd);
                 btnEventTag.setBackgroundResource(R.drawable.events);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
@@ -216,7 +216,7 @@ public class Favorites extends AppCompatActivity {
         btnAllTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.alls);
+                btnAllTag.setBackgroundResource(R.drawable.allfs);
                 btnImageTag.setBackgroundResource(R.drawable.postd);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
@@ -276,7 +276,7 @@ public class Favorites extends AppCompatActivity {
         btnImageTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.alld);
+                btnAllTag.setBackgroundResource(R.drawable.allfd);
                 btnImageTag.setBackgroundResource(R.drawable.posts);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
                 btnProductTag.setBackgroundResource(R.drawable.productd);
@@ -336,7 +336,7 @@ public class Favorites extends AppCompatActivity {
         btnProductTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnAllTag.setBackgroundResource(R.drawable.alld);
+                btnAllTag.setBackgroundResource(R.drawable.allfd);
                 btnImageTag.setBackgroundResource(R.drawable.postd);
                 btnEventTag.setBackgroundResource(R.drawable.eventd);
                 btnProductTag.setBackgroundResource(R.drawable.products);
