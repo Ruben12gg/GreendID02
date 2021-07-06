@@ -13,7 +13,8 @@
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+
+            android:layout_width="372dp"
             android:layout_height="312dp"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="40dp"
@@ -241,7 +242,7 @@
 
         <RelativeLayout
             android:id="@+id/utilityBarView"
-            android:layout_width="match_parent"
+            android:layout_width="372dp"
             android:layout_height="wrap_content">
 
             <ImageView

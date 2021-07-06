@@ -300,8 +300,6 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("ACTIVITY FEED", document.getId() + " => " + document.getData());
-
 
                                 String author = document.getString("author");
                                 String authorId = document.getString("authorId");
@@ -314,9 +312,7 @@ public class Search extends AppCompatActivity implements DatePickerDialog.OnDate
                                 String description = document.getString("description");
                                 String postId = document.getId().toString();
 
-
                                 contentEvents.add(new ContentEvents(authorPfp, author, contentUrl, likeVal, date, commentVal, location, description, postId, userId, authorId));
-
 
                             }
                         } else {

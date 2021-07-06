@@ -84,8 +84,8 @@ public class CheckUser extends AppCompatActivity {
         pfp = findViewById(R.id.pfp);
         username = findViewById(R.id.pfName_Check);
         bio = findViewById(R.id.bio_Check);
-        followers = findViewById(R.id.followersVal_Check);
-        following = findViewById(R.id.followingVal_Check);
+        followers = findViewById(R.id.followersVal);
+        following = findViewById(R.id.followingVal);
 
         notificationDot = findViewById(R.id.notificationDot);
         notificationDot.setVisibility(View.GONE);
