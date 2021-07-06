@@ -19,7 +19,7 @@
         android:id="@+id/blanck"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="32dp"
+        android:padding="40dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/login_bottom_panel">
 
@@ -34,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:padding="10dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="Welcome to GreenID!"
@@ -47,6 +48,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textView"
             android:layout_marginTop="32dp"
+            android:padding="10dp"
             android:contentDescription="@string/app_logo"
             app:srcCompat="@drawable/logo_greenid" />
 
@@ -58,6 +60,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="40dp"
             android:layout_marginTop="32dp"
+            android:padding="10dp"
             android:textSize="15sp" />
 
     </RelativeLayout>

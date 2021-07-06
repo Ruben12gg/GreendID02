@@ -7,14 +7,10 @@
     android:background="@color/white"
     android:padding="12dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-
-            android:layout_width="372dp"
+            android:id="@+id/card"
+            android:layout_width="match_parent"
             android:layout_height="312dp"
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="40dp"
@@ -53,7 +49,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/pfName"
                     android:textColor="@color/white_txt"
-                    android:textSize="40px" />
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/location_icon"
@@ -71,7 +67,7 @@
                     android:layout_marginStart="4dp"
                     android:text="@string/Location"
                     android:textColor="@color/white_txt"
-                    android:textSize="40px" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -84,7 +80,7 @@
                 android:layout_marginBottom="54dp"
                 android:text="@string/date"
                 android:textColor="@color/white_txt"
-                android:textSize="40px" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/descriptionText"
@@ -95,7 +91,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="@string/description"
                 android:textColor="@color/white_txt"
-                android:textSize="40px" />
+                android:textSize="16sp" />
 
             <RelativeLayout
                 android:id="@+id/modalView"
@@ -242,14 +238,11 @@
 
         <RelativeLayout
             android:id="@+id/utilityBarView"
-            android:layout_width="372dp"
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_below="@+id/card"
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/utilityBar"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:background="@drawable/post_card" />
 
             <ImageButton
                 android:id="@+id/favorites_icon"
@@ -266,22 +259,20 @@
                 android:id="@+id/likes_val"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/utilityBar"
-                android:layout_alignBottom="@id/utilityBar"
-                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/favorites_icon"
                 android:text="@string/LikesVal"
                 android:textAlignment="center"
                 android:textColor="@color/black_txt_num"
-                android:textSize="40px" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:id="@+id/comments_icon"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="32dp"
                 android:layout_toEndOf="@+id/likes_val"
+                android:layout_marginStart="32dp"
                 android:background="@drawable/comment"
                 android:scaleType="fitXY"
                 android:src="@drawable/comment" />
@@ -290,14 +281,12 @@
                 android:id="@+id/comments_val"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/utilityBar"
-                android:layout_alignBottom="@+id/utilityBar"
-                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/comments_icon"
                 android:text="@string/CommentsVal"
                 android:textAlignment="center"
                 android:textColor="@color/black_txt_num"
-                android:textSize="40px" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:id="@+id/btnSaved"
@@ -321,8 +310,5 @@
 
 
         </RelativeLayout>
-
-
-    </LinearLayout>
 
 </RelativeLayout>

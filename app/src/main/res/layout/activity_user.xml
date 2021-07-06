@@ -80,10 +80,12 @@
 
         <RelativeLayout
             android:id="@+id/stats"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_toolbar"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:layout_centerInParent="true"
+            android:padding="10dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/pfp"
@@ -108,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="24dp"
+                    android:layout_margin="10dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="16dp">
 
@@ -141,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/pfStats"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
+                    android:layout_margin="10dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginEnd="24dp">
 
@@ -168,9 +170,7 @@
 
                 </RelativeLayout>
 
-
             </RelativeLayout>
-
 
         </RelativeLayout>
 
@@ -315,6 +315,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_toolbar"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginTop="80dp"
             android:background="@drawable/btnwhite"
             android:padding="16dp">

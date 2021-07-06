@@ -32,8 +32,9 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <RelativeLayout
+        android:id="@+id/tool"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_toolbar"
@@ -68,11 +69,11 @@
     <RelativeLayout
         android:id="@+id/selected_pic_view"
         android:layout_width="match_parent"
-        android:layout_height="312dp"
-        android:layout_marginTop="64dp">
+        android:layout_height="304dp"
+        android:layout_below="@id/tool">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="372dp"
+            android:layout_width="match_parent"
             android:layout_height="360dp"
             android:layout_centerInParent="true"
             app:cardBackgroundColor="@color/white">
@@ -103,8 +104,8 @@
         android:id="@+id/post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/event"
-        android:layout_marginEnd="24dp">
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="64dp">
 
 
         <TextView
@@ -161,8 +162,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/selected_pic_view"
         android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@id/event"
-        android:layout_marginStart="24dp">
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="64dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -190,7 +191,7 @@
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="318dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/post"
         android:fillViewport="true"
         android:paddingTop="16dp"

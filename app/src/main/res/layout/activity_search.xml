@@ -76,7 +76,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/outline"
                 android:hint="@string/SearchKeywords"
-                android:padding="16dp"
+                android:padding="24dp"
                 android:textColor="@color/black_txt"
                 android:textColorHint="@color/light_gray_txt"
                 android:textSize="16dp" />
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
-        android:padding="16dp"
+        android:padding="24dp"
         android:layout_marginBottom="24dp"
         android:layout_below="@id/main_toolbar">
 
@@ -117,11 +117,13 @@
         android:id="@+id/eventsTitleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sb_view">
+        android:layout_below="@+id/sb_view"
+        android:padding="8dp">
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_centerVertical="true">
+    android:layout_centerVertical="true"
+    >
         <TextView
             android:id="@+id/eventsTitle"
             android:layout_width="wrap_content"

@@ -47,10 +47,12 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="300dp"
-                android:layout_height="136dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="196dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 app:srcCompat="@drawable/illu_home" />
 
             <TextView
@@ -59,13 +61,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_centerVertical="true"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:text="You can start by\nfollowing someone!"
                 android:textAlignment="center"
                 android:textColor="@color/light_green_bg"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHome"
